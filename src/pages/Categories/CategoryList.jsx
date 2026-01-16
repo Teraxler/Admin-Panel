@@ -65,7 +65,7 @@ function CategoryList() {
               <use href="#plus"></use>
             </svg>
             <span className="text-sm lg:text-base hidden sm:inline">
-              New Product
+              New Category
             </span>
           </Link>
           <SearchBar

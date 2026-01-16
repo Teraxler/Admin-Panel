@@ -73,7 +73,7 @@ function OrderList() {
               <use href="#plus"></use>
             </svg>
             <span className="text-sm lg:text-base hidden sm:inline">
-              New Product
+              New Order
             </span>
           </Link>
           <SearchBar
