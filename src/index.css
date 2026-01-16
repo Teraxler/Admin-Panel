@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+@theme {
+  --breakpoint-xs: 30rem;
+
+  --font-neue-montreal: "Neue Montreal", sans-serif, Arial;
+  --color-carbon-black: #212529;
+  --color-gunmental: #343a40;
+  --color-platinum: #e9ecef;
+  --color-racing-red: #ff1f25;
+  --color-slate-grey: #6c757d;
+  --color-full-spectrum-blue: #0057fc;
+  --color-pale-slate: #adb5bd;
+
+  --color-neutral-100: #f8f9fa;
+  --color-neutral-200: #e9ecef;
+  --color-neutral-400: #ced4da;
+  --color-secondary: #6c757d;
+
+  --color-primary-selected: #cbe4fe;
+  --color-primary-hover: #3f87fd;
+  --color-primary-normal: #0057fc;
+  --color-primary-click: #0043d8;
+
+  --color-blue-100: #cbe4fe;
+  --color-blue-200: #98c6fe;
+  --color-blue-300: #65a5fe;
+  --color-blue-400: #3f87fd;
+  --color-blue-500: #0057fc;
+  --color-blue-600: #0043d8;
+  --color-blue-700: #0031b5;
+  --color-blue-800: #002292;
+  --color-blue-900: #001878;
+
+  --color-text-heading: #212529;
+  --color-text-heading-inverted: #f8f9fa;
+  --color-text-normal: #343a40;
+  --color-text-normal-inverted: #e9ecef;
+  --color-text-secondary: #6c757d;
+  --color-text-secondary-inverted: #ced4da;
+  --color-text-button: #ffffff;
+  --color-text-button-inverted: #212529;
+  --color-text-disabled: #ced4da;
+}
+
+@font-face {
+  font-family: "Neue Montreal";
+  src: url("/fonts/NeueMontreal/NeueMontreal-Light.otf") format("opentype");
+  font-display: swap;
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Neue Montreal";
+  src: url("/fonts/NeueMontreal/NeueMontreal-Regular.otf") format("opentype");
+  font-display: swap;
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Neue Montreal";
+  src: url("/fonts/NeueMontreal/NeueMontreal-Medium.otf") format("opentype");
+  font-display: swap;
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Neue Montreal";
+  src: url("/fonts/NeueMontreal/NeueMontreal-Bold.otf") format("opentype");
+  font-display: swap;
+  font-weight: 700;
+  font-style: normal;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-neue-montreal);
+  }
+}
+
+@layer components {
+  .title {
+    @apply font-medium text-3xl lg:text-4xl;
+  }
+  .input {
+    @apply w-full px-3 py-2 outline-0 text-sm lg:text-base bg-white/10 border border-pale-slate rounded-lg focus:border-primary-click;
+  }
+  .input--search {
+    @apply pl-9;
+  }
+}
