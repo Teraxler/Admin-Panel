@@ -8,7 +8,8 @@ import { productSchema } from "../../../validators/productValidator";
 import Breadcrumb from "../../components/Breadcrumb";
 import Button from "../../components/Button";
 
-function ProductCreate() {
+function OrderCreate() {
+
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
@@ -191,4 +192,4 @@ function ProductCreate() {
   );
 }
 
-export default ProductCreate;
+export default OrderCreate;

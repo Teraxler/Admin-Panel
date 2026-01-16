@@ -9,6 +9,7 @@ import { searchProduct, removeItemFromList } from "../../utils/array.util";
 import Breadcrumb from "../../components/Breadcrumb";
 import SearchBar from "../../components/Searchbar";
 import Pagination from "../../components/Pagination/Pagination";
+import { useTitle } from "../../hooks/useTitle";
 
 const tableColumns = [
   "#",
@@ -25,6 +26,8 @@ const removeProductById = (products, id) =>
   removeItemFromList(products, "productId", id);
 
 function ProductList() {
+  useTitle("Admin Panel - Products");
+
   const location = useLocation();
   const navigate = useNavigate();
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -104,14 +107,14 @@ function ProductList() {
               </span>
             )}
           </div>
-          {filteredProducts?.length ? (
-            <Pagination
-              items={filteredProducts}
-              itemsPerPage={ITEMS_PER_PAGE}
-              setCurrentPageItems={setCurrentPageProducts}
-            />
-          ) : null}
         </div>
+        {filteredProducts?.length ? (
+          <Pagination
+            items={filteredProducts}
+            itemsPerPage={ITEMS_PER_PAGE}
+            setCurrentPageItems={setCurrentPageProducts}
+          />
+        ) : null} 
       </section>
     </>
   );

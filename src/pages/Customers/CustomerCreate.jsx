@@ -5,8 +5,11 @@ import { API_URL } from "../../constants";
 import { registerSchema } from "../../../validators/registerValidator";
 import Breadcrumb from "../../components/Breadcrumb";
 import Button from "../../components/Button";
+import { useTitle } from "../../hooks/useTitle";
 
 function CustomerCreate() {
+  useTitle("Admin Panel - Create Customer");
+
   const navigate = useNavigate();
 
   const [name, setName] = useState("");

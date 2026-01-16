@@ -7,8 +7,11 @@ import { useEffect } from "react";
 import { productSchema } from "../../../validators/productValidator";
 import Breadcrumb from "../../components/Breadcrumb";
 import Button from "../../components/Button";
+import { useTitle } from "../../hooks/useTitle";
 
 function ProductCreate() {
+  useTitle("Admin Panel - Create Product");
+
   const navigate = useNavigate();
 
   const [name, setName] = useState("");

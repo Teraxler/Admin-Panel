@@ -9,6 +9,7 @@ import { removeItemFromList, searchCustomer } from "../../utils/array.util";
 import Breadcrumb from "../../components/Breadcrumb";
 import SearchBar from "../../components/Searchbar";
 import Pagination from "../../components/Pagination/Pagination";
+import { useTitle } from "../../hooks/useTitle";
 
 const tableColumns = [
   "#",
@@ -24,6 +25,8 @@ const removeCustomerById = (customers, id) =>
   removeItemFromList(customers, "customerId", id);
 
 function CustomerList() {
+    useTitle("Admin Panel - Customers");
+
   const location = useLocation();
   const navigate = useNavigate();
   const [filteredCustomers, setFilteredCategories] = useState([]);

@@ -5,8 +5,11 @@ import { API_URL } from "../../constants";
 import { categorySchema } from "../../../validators/categoryValidator";
 import Breadcrumb from "../../components/Breadcrumb";
 import Button from "../../components/Button";
+import { useTitle } from "../../hooks/useTitle";
 
 function CategoryCareate() {
+  useTitle("Admin Panel - Create Category");
+
   const navigate = useNavigate();
 
   const [categoryName, setCategoryName] = useState("");

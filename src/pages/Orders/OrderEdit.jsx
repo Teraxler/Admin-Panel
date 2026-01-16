@@ -9,6 +9,8 @@ import Breadcrumb from "../../components/Breadcrumb";
 import Button from "../../components/Button";
 
 function OrderEdit() {
+    useTitle("Admin Panel - Edit Order");
+
   const navigate = useNavigate();
   const { orderId } = useParams();
 

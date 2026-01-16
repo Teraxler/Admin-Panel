@@ -9,6 +9,7 @@ import TableRowOrder from "../../components/Table/TableRowOrder";
 import Breadcrumb from "../../components/Breadcrumb";
 import SearchBar from "../../components/Searchbar";
 import Pagination from "../../components/Pagination/Pagination";
+import { useTitle } from "../../hooks/useTitle";
 
 const tableColumns = [
   "#",
@@ -26,6 +27,8 @@ const removeOrderById = (orders, id) =>
   removeItemFromList(orders, "orderId", id);
 
 function OrderList() {
+    useTitle("Admin Panel - Orders");
+
   const location = useLocation();
   const navigate = useNavigate();
   const [filteredOrders, setFilteredOrders] = useState([]);

@@ -6,8 +6,11 @@ import { API_URL } from "../../constants";
 import { productSchema } from "../../../validators/productValidator";
 import Breadcrumb from "../../components/Breadcrumb";
 import Button from "../../components/Button";
+import { useTitle } from "../../hooks/useTitle";
 
 function ProductEdit() {
+  useTitle("Admin Panel - Edit Product");
+
   const navigate = useNavigate();
   const { productId } = useParams();
 

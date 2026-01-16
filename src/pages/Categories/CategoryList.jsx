@@ -9,12 +9,15 @@ import TableRowCategory from "../../components/Table/TableRowCategory";
 import Breadcrumb from "../../components/Breadcrumb";
 import SearchBar from "../../components/Searchbar";
 import Pagination from "../../components/Pagination/Pagination";
+import { useTitle } from "../../hooks/useTitle";
 const tableColumns = ["#", "Category", ""];
 
 const removeCategoryById = (categories, id) =>
   removeItemFromList(categories, "categoryId", id);
 
 function CategoryList() {
+  useTitle("Admin Panel - Categories");
+
   const location = useLocation();
   const navigate = useNavigate();
   const [filteredCategories, setFilteredCategories] = useState([]);

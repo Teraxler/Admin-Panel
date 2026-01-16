@@ -7,8 +7,11 @@ import { useEffect } from "react";
 import { registerSchema } from "../../../validators/registerValidator";
 import Breadcrumb from "../../components/Breadcrumb";
 import Button from "../../components/Button";
+import { useTitle } from "../../hooks/useTitle";
 
 function CustomerEdit() {
+    useTitle("Admin Panel - Edit Customer");
+
   const navigate = useNavigate();
   const { customerId } = useParams();
 

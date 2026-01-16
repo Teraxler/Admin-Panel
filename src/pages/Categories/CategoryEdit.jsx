@@ -7,8 +7,11 @@ import { useEffect } from "react";
 import { categorySchema } from "../../../validators/categoryValidator";
 import Breadcrumb from "../../components/Breadcrumb";
 import Button from "../../components/Button";
+import { useTitle } from "../../hooks/useTitle";
 
 function CategoryEdit() {
+    useTitle("Admin Panel - Edit Category");
+
   const navigate = useNavigate();
   const { categoryId } = useParams();
 
