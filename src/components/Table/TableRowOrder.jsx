@@ -40,7 +40,9 @@ function TableRowOrder({
         <span className="line-clamp-1">{formattedDateTime.date}</span>
       </td>
       <td>
-        <span className="line-clamp-1 min-w-50" title={deliveredAddress}>{deliveredAddress}</span>
+        <span className="line-clamp-1 min-w-50" title={deliveredAddress}>
+          {deliveredAddress}
+        </span>
       </td>
       <td>
         <span className="line-clamp-1">{discountPercent}%</span>
@@ -65,7 +67,7 @@ function TableRowOrder({
             </svg>
           </Link> */}
           <Link
-            to={`${orderId}`}
+            to={``}
             className="size-9 lg:size-10 flex items-center justify-center border border-pale-slate rounded-lg text-carbon-black cursor-pointer"
           >
             <svg className="size-4 lg:size-5">
