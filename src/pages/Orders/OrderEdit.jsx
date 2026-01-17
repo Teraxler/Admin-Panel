@@ -9,7 +9,7 @@ import Breadcrumb from "../../components/Breadcrumb";
 import Button from "../../components/Button";
 
 function OrderEdit() {
-    useTitle("Admin Panel - Edit Order");
+  useTitle("Admin Panel - Edit Order");
 
   const navigate = useNavigate();
   const { orderId } = useParams();
@@ -21,10 +21,12 @@ function OrderEdit() {
   const [email, setEmail] = useState("");
   const [birthday, setBirthday] = useState("");
 
-  const [customer, isCustomerLoaded] = useFetch(`${API_URL}/orders/${orderId}`);
+  const { data: customer, isLoaded: isCustomerLoaded } = useFetch(
+    `${API_URL}/orders/${orderId}`
+  );
 
   useEffect(() => {
-    if (customer == null) return;
+    if (!isCustomerLoaded) return;
 
     setName(customer.name);
     setFamily(customer.family);
@@ -162,7 +164,6 @@ function OrderEdit() {
           </div>
         </div>
         <div className="flex justify-end gap-x-2 mt-10 sm:mt-25">
-
           <Button type="submit">Update</Button>
           <Link to={"/customers"}>
             <Button>Cancel</Button>

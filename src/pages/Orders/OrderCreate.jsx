@@ -9,7 +9,6 @@ import Breadcrumb from "../../components/Breadcrumb";
 import Button from "../../components/Button";
 
 function OrderCreate() {
-
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
@@ -21,7 +20,9 @@ function OrderCreate() {
   const [description, setDescription] = useState("");
   const [coverFile, setCoverFile] = useState(null);
 
-  const [categories, isCategoriesLoaded] = useFetch(`${API_URL}/categories`);
+  const { data: categories, isLoaded: isCategoriesLoaded } = useFetch(
+    `${API_URL}/categories`
+  );
 
   useEffect(() => {
     if (!coverFile) return;
@@ -181,7 +182,6 @@ function OrderCreate() {
           </div>
         </div>
         <div className="flex justify-end gap-x-2">
-
           <Button type="submit">Update</Button>
           <Link to={"/products"}>
             <Button>Cancel</Button>

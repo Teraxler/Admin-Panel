@@ -24,9 +24,11 @@ function ProductEdit() {
   const [description, setDescription] = useState("");
   const [coverFile, setCoverFile] = useState("");
 
-  const [categories, isCategoriesLoaded] = useFetch(`${API_URL}/categories`);
+  const { data: categories, isLoaded: isCategoriesLoaded } = useFetch(
+    `${API_URL}/categories`
+  );
 
-  const [product, isProductLoaded] = useFetch(
+  const { data: product, isLoaded: isProductLoaded } = useFetch(
     `${API_URL}/products/${productId}`
   );
 
@@ -43,7 +45,7 @@ function ProductEdit() {
   }, [coverFile]);
 
   useEffect(() => {
-    if (product == null) return;
+    if (!isProductLoaded) return;
 
     setName(product.name);
     setPrice(product.price);

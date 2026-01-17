@@ -10,6 +10,7 @@ import Breadcrumb from "../../components/Breadcrumb";
 import SearchBar from "../../components/Searchbar";
 import Pagination from "../../components/Pagination/Pagination";
 import { useTitle } from "../../hooks/useTitle";
+import { useToastMessage } from "../../hooks/useToastMessage";
 
 const tableColumns = [
   "#",
@@ -27,15 +28,16 @@ const removeProductById = (products, id) =>
 
 function ProductList() {
   useTitle("Admin Panel - Products");
+  useToastMessage();
 
-  const location = useLocation();
-  const navigate = useNavigate();
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [currentPageProducts, setCurrentPageProducts] = useState([]);
 
-  const [products, isProductsLoaded, error, setProducts] = useFetch(
-    `${API_URL}/products`
-  );
+  const {
+    data: products,
+    isLoaded: isProductsLoaded,
+    setData: setProducts,
+  } = useFetch(`${API_URL}/products`);
 
   async function deleteProductHandler(productId) {
     try {
@@ -52,14 +54,6 @@ function ProductList() {
       toast.error("Something is wrong please try again");
     }
   }
-
-  useEffect(() => {
-    if (location.state) {
-      toast.success(location.state.message);
-
-      navigate(location.pathname, { replace: true, state: null });
-    }
-  }, []);
 
   return (
     <>
@@ -114,7 +108,7 @@ function ProductList() {
             itemsPerPage={ITEMS_PER_PAGE}
             setCurrentPageItems={setCurrentPageProducts}
           />
-        ) : null} 
+        ) : null}
       </section>
     </>
   );

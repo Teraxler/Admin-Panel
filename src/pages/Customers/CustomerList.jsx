@@ -10,6 +10,7 @@ import Breadcrumb from "../../components/Breadcrumb";
 import SearchBar from "../../components/Searchbar";
 import Pagination from "../../components/Pagination/Pagination";
 import { useTitle } from "../../hooks/useTitle";
+import { useToastMessage } from "../../hooks/useToastMessage";
 
 const tableColumns = [
   "#",
@@ -25,15 +26,16 @@ const removeCustomerById = (customers, id) =>
   removeItemFromList(customers, "customerId", id);
 
 function CustomerList() {
-    useTitle("Admin Panel - Customers");
+  useTitle("Admin Panel - Customers");
+  useToastMessage();
 
-  const location = useLocation();
-  const navigate = useNavigate();
   const [filteredCustomers, setFilteredCategories] = useState([]);
   const [currentPageCustomers, setCurrentPageCustomers] = useState([]);
-  const [customers, isCustomersLoaded, error, setCustomers] = useFetch(
-    `${API_URL}/customers`
-  );
+  const {
+    data: customers,
+    isLoaded: isCustomersLoaded,
+    setData: setCustomers,
+  } = useFetch(`${API_URL}/customers`);
 
   async function deleteCustomerHandler(customerId) {
     try {
@@ -52,14 +54,6 @@ function CustomerList() {
       toast.error("Something is wrong please try again");
     }
   }
-
-  useEffect(() => {
-    if (location.state) {
-      toast.success(location.state.message);
-
-      navigate(location.pathname, { replace: true, state: null });
-    }
-  }, []);
 
   return (
     <>

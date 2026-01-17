@@ -10,6 +10,7 @@ import Breadcrumb from "../../components/Breadcrumb";
 import SearchBar from "../../components/Searchbar";
 import Pagination from "../../components/Pagination/Pagination";
 import { useTitle } from "../../hooks/useTitle";
+import { useToastMessage } from "../../hooks/useToastMessage";
 
 const tableColumns = [
   "#",
@@ -27,15 +28,17 @@ const removeOrderById = (orders, id) =>
   removeItemFromList(orders, "orderId", id);
 
 function OrderList() {
-    useTitle("Admin Panel - Orders");
+  useTitle("Admin Panel - Orders");
+  useToastMessage();
 
-  const location = useLocation();
-  const navigate = useNavigate();
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [currentPageOrders, setCurrentPageOrders] = useState([]);
-  const [orders, isOrdersLoaded, error, setOrders] = useFetch(
-    `${API_URL}/orders`
-  );
+
+  const {
+    data: orders,
+    isLoaded: isOrdersLoaded,
+    setData: setOrders,
+  } = useFetch(`${API_URL}/orders`);
 
   async function deleteOrderHandler(orderId) {
     try {
@@ -51,14 +54,6 @@ function OrderList() {
       toast.error("Something is wrong please try again");
     }
   }
-
-  useEffect(() => {
-    if (location.state) {
-      toast.success(location.state.message);
-
-      navigate(location.pathname, { replace: true, state: null });
-    }
-  }, []);
 
   return (
     <>

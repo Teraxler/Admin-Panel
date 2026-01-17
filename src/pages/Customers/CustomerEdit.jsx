@@ -10,7 +10,7 @@ import Button from "../../components/Button";
 import { useTitle } from "../../hooks/useTitle";
 
 function CustomerEdit() {
-    useTitle("Admin Panel - Edit Customer");
+  useTitle("Admin Panel - Edit Customer");
 
   const navigate = useNavigate();
   const { customerId } = useParams();
@@ -22,12 +22,12 @@ function CustomerEdit() {
   const [email, setEmail] = useState("");
   const [birthday, setBirthday] = useState("");
 
-  const [customer, isCustomerLoaded] = useFetch(
+  const { data: customer, isLoaded: isCustomerLoaded } = useFetch(
     `${API_URL}/customers/${customerId}`
   );
 
   useEffect(() => {
-    if (customer == null) return;
+    if (!isCustomerLoaded) return;
 
     setName(customer.name);
     setFamily(customer.family);
@@ -167,7 +167,6 @@ function CustomerEdit() {
           </div>
         </div>
         <div className="flex justify-end gap-x-2 mt-10 sm:mt-25">
-
           <Button type="submit">Update</Button>
           <Link to={"/customers"}>
             <Button>Cancel</Button>

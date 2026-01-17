@@ -10,6 +10,7 @@ import Breadcrumb from "../../components/Breadcrumb";
 import SearchBar from "../../components/Searchbar";
 import Pagination from "../../components/Pagination/Pagination";
 import { useTitle } from "../../hooks/useTitle";
+import { useToastMessage } from "../../hooks/useToastMessage";
 const tableColumns = ["#", "Category", ""];
 
 const removeCategoryById = (categories, id) =>
@@ -17,15 +18,16 @@ const removeCategoryById = (categories, id) =>
 
 function CategoryList() {
   useTitle("Admin Panel - Categories");
+  useToastMessage();
 
-  const location = useLocation();
-  const navigate = useNavigate();
   const [filteredCategories, setFilteredCategories] = useState([]);
   const [currentPageCategories, setCurrentPageCategories] = useState([]);
 
-  const [categories, isCategoriesLoaded, error, setCategories] = useFetch(
-    `${API_URL}/categories`
-  );
+  const {
+    data: categories,
+    isLoaded: isCategoriesLoaded,
+    setData: setCategories,
+  } = useFetch(`${API_URL}/categories`);
 
   async function deleteCategoryHandler(categoryId) {
     try {
@@ -43,14 +45,6 @@ function CategoryList() {
       toast.error("Something is wrong please try again");
     }
   }
-
-  useEffect(() => {
-    if (location.state) {
-      toast.success(location.state.message);
-
-      navigate(location.pathname, { replace: true, state: null });
-    }
-  }, []);
 
   return (
     <>

@@ -10,21 +10,19 @@ import Button from "../../components/Button";
 import { useTitle } from "../../hooks/useTitle";
 
 function CategoryEdit() {
-    useTitle("Admin Panel - Edit Category");
+  useTitle("Admin Panel - Edit Category");
 
   const navigate = useNavigate();
   const { categoryId } = useParams();
 
   const [categoryName, setCategoryName] = useState("");
 
-  const [category, isCategoryLoaded] = useFetch(
+  const { data: category, isLoaded: isCategoryLoaded } = useFetch(
     `${API_URL}/categories/${categoryId}`
   );
 
   useEffect(() => {
-    if (category == null) return;
-
-    setCategoryName(category.name);
+    isCategoryLoaded && setCategoryName(category.name);
   }, [isCategoryLoaded]);
 
   function updateCustomerHandler(e) {
