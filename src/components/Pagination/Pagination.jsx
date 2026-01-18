@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import PaginationButton from "./components/PaginationButton";
 import { paginateItems } from "../../utils/array.util";
 
@@ -11,6 +11,9 @@ const Pagination = ({ items, setCurrentPageItems, itemsPerPage }) => {
   }, [currentPage, items]);
 
   useEffect(() => setCurrentPage(1), [countPages]);
+
+  const nextPage = () => setCurrentPage((currentPage) => currentPage + 1);
+  const previousPage = () => setCurrentPage((currentPage) => currentPage - 1);
 
   const renderPageNumbers = () => {
     const buttons = [];
@@ -38,10 +41,7 @@ const Pagination = ({ items, setCurrentPageItems, itemsPerPage }) => {
 
   return countPages > 1 ? (
     <div className="flex justify-center gap-x-2 mt-10">
-      <PaginationButton
-        isDisabled={currentPage === 1}
-        onClick={() => setCurrentPage(currentPage - 1)}
-      >
+      <PaginationButton isDisabled={currentPage === 1} onClick={previousPage}>
         <svg className="size-5 rotate-90">
           <use href="#chevron-down"></use>
         </svg>
@@ -51,7 +51,7 @@ const Pagination = ({ items, setCurrentPageItems, itemsPerPage }) => {
 
       <PaginationButton
         isDisabled={currentPage === countPages}
-        onClick={() => setCurrentPage(currentPage + 1)}
+        onClick={nextPage}
       >
         <svg className="size-5 -rotate-90">
           <use href="#chevron-down"></use>
