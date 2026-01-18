@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router";
+import { useState } from "react";
+import { Link } from "react-router";
 import Table from "../../components/Table/Table";
 import useFetch from "../../hooks/useFetch";
 import { API_URL, ITEMS_PER_PAGE } from "../../constants";

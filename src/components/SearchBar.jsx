@@ -21,6 +21,8 @@ const SearchBar = ({
     return () => clearTimeout(timeoutId);
   }, [searchValue]);
 
+  const updateSearchValue = (e) => setSearchValue(e.target.value);
+
   return (
     <div>
       <form className="relative flex bg-white">
@@ -37,7 +39,7 @@ const SearchBar = ({
           placeholder={placeholder}
           id="search-input"
           value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
+          onChange={updateSearchValue}
           className="input pl-9"
         />
       </form>
