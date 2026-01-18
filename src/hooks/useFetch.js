@@ -1,95 +1,6 @@
 import { useEffect, useState } from "react";
 
-const useFetch2 = (url) => {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [error, setError] = useState(null);
-  const [data, setData] = useState(null);
-
-  useEffect(() => {
-    const controller = new AbortController();
-
-    async function fetchData() {
-      try {
-        const response = await fetch(url, {
-          signal: controller.signal,
-        });
-
-        if (!response.ok) throw Error(`Http Error: ${response.statusText}`);
-
-        const result = await response.json();
-
-        setData(result);
-        setError(null);
-      } catch (error) {
-        setError(error);
-      } finally {
-        setIsLoaded(true);
-      }
-    }
-
-    setIsLoaded(false);
-    fetchData();
-
-    return () => {
-      controller.abort();
-    };
-  }, []);
-
-  return [data, isLoaded, error, setData];
-};
-
 const useFetch = (url) => {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [error, setError] = useState(null);
-  const [data, setData] = useState(null);
-
-  useEffect(() => {
-    const controller = new AbortController();
-
-    async function fetchData() {
-      const retry = 3;
-      let backOffTime;
-
-      for (let attempt = 1; attempt <= retry; attempt++) {
-        try {
-          const response = await fetch(url, {
-            signal: controller.signal,
-          });
-
-          if (!response.ok) throw Error(`Http Error: ${response.statusText}`);
-
-          const result = await response.json();
-
-          setData(result);
-          setError(null);
-          break;
-        } catch (error) {
-          if (attempt === retry) {
-            setError(error);
-            break;
-          }
-
-          backOffTime = 2 ** (attempt - 1) * 1000;
-
-          await new Promise((resolve) => setTimeout(resolve, backOffTime));
-        } finally {
-          setIsLoaded(true);
-        }
-      }
-    }
-
-    setIsLoaded(false);
-    fetchData();
-
-    return () => {
-      controller.abort();
-    };
-  }, []);
-
-  return [data, isLoaded, error, setData];
-};
-
-const useFetchObj = (url) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
@@ -141,7 +52,7 @@ const useFetchObj = (url) => {
   return { data, isLoaded, error, setData };
 };
 
-const useFetch1 = (url) => {
+const useFetchRecursive = (url) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
@@ -176,6 +87,7 @@ const useFetch1 = (url) => {
     }
 
     setIsLoaded(false);
+    setError(null);
     fetchData();
 
     return () => {
@@ -186,4 +98,4 @@ const useFetch1 = (url) => {
   return [data, isLoaded, error, setData];
 };
 
-export default useFetchObj;
+export default useFetch;
