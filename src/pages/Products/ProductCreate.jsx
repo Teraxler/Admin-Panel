@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useReducer } from "react";
 import { toast } from "sonner";
 import { Link, useParams, useNavigate } from "react-router";
 import useFetch from "../../hooks/useFetch";
@@ -8,48 +8,59 @@ import { productSchema } from "../../../validators/productValidator";
 import Breadcrumb from "../../components/Breadcrumb";
 import Button from "../../components/Button";
 import { useTitle } from "../../hooks/useTitle";
+import productReducer from "../../reducers/product";
+import {
+  CATEGORY_ID,
+  COVER,
+  COVER_FILE,
+  DESCRIPTION,
+  INVENTORY,
+  NAME,
+  PRICE,
+} from "../../actions/product";
 
 function ProductCreate() {
   useTitle("Admin Panel - Create Product");
 
   const navigate = useNavigate();
 
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-  const [cover, setCover] = useState("");
-  const [isCoverBlob, setIsCoverBlog] = useState(false);
-
-  const [categoryId, setCategoryId] = useState("");
-  const [inventory, setInventory] = useState("");
-  const [description, setDescription] = useState("");
-  const [coverFile, setCoverFile] = useState(null);
+  const [product, dispatch] = useReducer(productReducer, {
+    name: "",
+    price: "",
+    cover: "",
+    categoryId: "",
+    inventory: "",
+    description: "",
+    coverFile: null,
+    isCoverBlob: false,
+  });
 
   const { data: categories, isLoaded: isCategoriesLoaded } = useFetch(
     `${API_URL}/categories`
   );
 
   useEffect(() => {
-    if (!coverFile) return;
+    if (!product.coverFile) return;
 
     const reader = new FileReader();
-    reader.readAsDataURL(coverFile);
+    reader.readAsDataURL(product.coverFile);
 
     reader.onload = (e) => {
-      setCover(e.target.result);
-      setIsCoverBlog(true);
+      dispatch({ type: COVER, payload: e.target.result });
     };
-  }, [coverFile]);
+  }, [product.coverFile]);
 
   function createProductHandler(e) {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("name", name);
-    formData.append("price", price);
-    formData.append("inventory", inventory);
-    formData.append("categoryId", categoryId);
-    formData.append("description", description);
-    isCoverBlob && formData.append("cover", coverFile);
+
+    formData.append("name", product.name);
+    formData.append("price", product.price);
+    formData.append("inventory", product.inventory);
+    formData.append("categoryId", product.categoryId);
+    formData.append("description", product.description);
+    product.isCoverBlob && formData.append("cover", product.coverFile);
 
     const editedProduct = Object.fromEntries(formData.entries());
 
@@ -99,16 +110,20 @@ function ProductCreate() {
                 type="text"
                 placeholder="espresso"
                 className="input"
-                onChange={(e) => setName(e.target.value)}
-                value={name}
+                onChange={(e) =>
+                  dispatch({ type: NAME, payload: e.target.value })
+                }
+                value={product.name}
               />
             </div>
             <div className="w-1/2">
               <label htmlFor="category">Category</label>
               <select
                 id="category"
-                onChange={(e) => setCategoryId(e.target.value)}
-                value={categoryId}
+                onChange={(e) =>
+                  dispatch({ type: CATEGORY_ID, payload: e.target.value })
+                }
+                value={product.categoryId}
                 className="input capitalize"
               >
                 <option value={""}>Please Select Category</option>
@@ -139,9 +154,11 @@ function ProductCreate() {
                   type="number"
                   placeholder="10"
                   className="input ps-5"
-                  value={price}
+                  value={product.price}
                   min={0}
-                  onChange={(e) => setPrice(e.target.value)}
+                  onChange={(e) =>
+                    dispatch({ type: PRICE, payload: e.target.value })
+                  }
                 />
               </div>
             </div>
@@ -152,9 +169,11 @@ function ProductCreate() {
                 type="number"
                 placeholder="15"
                 className="input"
-                value={inventory}
+                value={product.inventory}
                 min={0}
-                onChange={(e) => setInventory(e.target.value)}
+                onChange={(e) =>
+                  dispatch({ type: INVENTORY, payload: e.target.value })
+                }
               />
             </div>
           </div>
@@ -162,8 +181,10 @@ function ProductCreate() {
             <label htmlFor="description">Description</label>
             <textarea
               id="description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              value={product.description}
+              onChange={(e) =>
+                dispatch({ type: DESCRIPTION, payload: e.target.value })
+              }
               placeholder="Shot of espresso extracted the Italian way."
               className="input h-36"
             />
@@ -172,15 +193,15 @@ function ProductCreate() {
             <label className="inline-block cursor-pointer" htmlFor="cover">
               <span>Cover</span>
               <div className="input flex items-center justify-center size-27">
-                {cover ? (
+                {product.cover ? (
                   <img
                     className="max-w-full max-h-full rounded-sm"
                     src={
-                      isCoverBlob
-                        ? cover
-                        : `${API_URL}/images/products/${cover}`
+                      product.isCoverBlob
+                        ? product.cover
+                        : `${API_URL}/images/products/${product.cover}`
                     }
-                    alt={name}
+                    alt={product.name}
                   />
                 ) : (
                   <svg className="w-full h-full">
@@ -191,9 +212,10 @@ function ProductCreate() {
               <input
                 id="cover"
                 type="file"
-                onChange={(e) => setCoverFile(e.target.files[0])}
-                placeholder="eg. johnfrans@gmail.com"
                 className="hidden"
+                onChange={(e) =>
+                  dispatch({ type: COVER_FILE, payload: e.target.files[0] })
+                }
               />
             </label>
           </div>

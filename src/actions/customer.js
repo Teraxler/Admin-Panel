@@ -1,0 +1,10 @@
+const NAME = "NAME";
+const FAMILY = "FAMILY";
+const USERNAME = "USERNAME";
+const EMAIL = "EMAIL";
+const PHONE = "PHONE";
+const BIRTHDAY = "BIRTHDAY";
+const PASSWORD = "PASSWORD";
+const ALL = "ALL";
+
+export { NAME, FAMILY, USERNAME, EMAIL, PHONE, BIRTHDAY, PASSWORD, ALL };

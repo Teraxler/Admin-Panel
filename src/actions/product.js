@@ -1,0 +1,19 @@
+const NAME = "NAME";
+const PRICE = "PRCIE";
+const COVER = "COVER";
+const COVER_FILE = "COVER_FILE";
+const CATEGORY_ID = "CATEGORY_ID";
+const INVENTORY = "INVENTORY";
+const DESCRIPTION = "DESCRIPTION";
+const ALL = "ALL";
+
+export {
+  NAME,
+  PRICE,
+  COVER,
+  COVER_FILE,
+  CATEGORY_ID,
+  INVENTORY,
+  DESCRIPTION,
+  ALL,
+};

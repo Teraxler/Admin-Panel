@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { toast } from "sonner";
 import { Link, useNavigate } from "react-router";
 import { API_URL } from "../../constants";
@@ -6,36 +5,43 @@ import { registerSchema } from "../../../validators/registerValidator";
 import Breadcrumb from "../../components/Breadcrumb";
 import Button from "../../components/Button";
 import { useTitle } from "../../hooks/useTitle";
+import { useReducer } from "react";
+import customerReducer from "../../reducers/customer";
+import {
+  NAME,
+  FAMILY,
+  USERNAME,
+  EMAIL,
+  PHONE,
+  BIRTHDAY,
+  PASSWORD,
+} from "../../actions/customer";
 
 function CustomerCreate() {
   useTitle("Admin Panel - Create Customer");
-
   const navigate = useNavigate();
 
-  const [name, setName] = useState("");
-  const [family, setFamily] = useState("");
-  const [username, setUsername] = useState("");
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
-  const [birthday, setBirthday] = useState("");
-  const [password, setPassword] = useState("");
+  const [customer, dispatch] = useReducer(customerReducer, {
+    family: "",
+    username: "",
+    phone: "",
+    email: "",
+    birthday: "",
+    password: "",
+  });
 
   function createCustomerHandler(e) {
     e.preventDefault();
 
-    const editedCustomer = {
-      name,
-      family,
-      email,
-      username,
-      phone: phone || null,
-      birthday: birthday ? new Date(birthday) : null,
-      password,
+    const newCustomer = {
+      ...customer,
+      phone: customer.phone || null,
+      birthday: customer.birthday ? new Date(customer.birthday) : null,
     };
 
-    const { success, error } = registerSchema.safeParse(editedCustomer);
+    const { success, error } = registerSchema.safeParse(newCustomer);
 
-    if (success) return createCustomer(editedCustomer);
+    if (success) return createCustomer(newCustomer);
 
     toast.error(error.issues[0].message);
   }
@@ -80,8 +86,10 @@ function CustomerCreate() {
                 type="text"
                 placeholder="John"
                 className="input"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                value={customer.name}
+                onChange={(e) =>
+                  dispatch({ type: NAME, payload: e.target.value })
+                }
               />
             </div>
             <div className="w-1/2">
@@ -91,8 +99,10 @@ function CustomerCreate() {
                 type="text"
                 placeholder="Francisco"
                 className="input"
-                value={family}
-                onChange={(e) => setFamily(e.target.value)}
+                value={customer.family}
+                onChange={(e) =>
+                  dispatch({ type: FAMILY, payload: e.target.value })
+                }
               />
             </div>
           </div>
@@ -104,8 +114,10 @@ function CustomerCreate() {
                 type="text"
                 placeholder="john"
                 className="input"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                value={customer.username}
+                onChange={(e) =>
+                  dispatch({ type: USERNAME, payload: e.target.value })
+                }
               />
             </div>
             <div className="w-1/2">
@@ -117,8 +129,10 @@ function CustomerCreate() {
                 type="date"
                 placeholder="eg. Francisco"
                 className="input "
-                value={birthday}
-                onChange={(e) => setBirthday(e.target.value)}
+                value={customer.birthday}
+                onChange={(e) =>
+                  dispatch({ type: BIRTHDAY, payload: e.target.value })
+                }
               />
             </div>
           </div>
@@ -132,8 +146,10 @@ function CustomerCreate() {
                 type="tel"
                 placeholder="09123456789"
                 className="input"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
+                value={customer.phone}
+                onChange={(e) =>
+                  dispatch({ type: PHONE, payload: e.target.value })
+                }
               />
             </div>
             <div className="w-1/2">
@@ -143,8 +159,10 @@ function CustomerCreate() {
                 type="email"
                 placeholder="johnfrans@gmail.com"
                 className="input"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={customer.email}
+                onChange={(e) =>
+                  dispatch({ type: EMAIL, payload: e.target.value })
+                }
               />
             </div>
           </div>
@@ -155,8 +173,10 @@ function CustomerCreate() {
               type="password"
               placeholder="12G@H33s"
               className="input"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={customer.password}
+              onChange={(e) =>
+                dispatch({ type: PASSWORD, payload: e.target.value })
+              }
             />
           </div>
         </div>
