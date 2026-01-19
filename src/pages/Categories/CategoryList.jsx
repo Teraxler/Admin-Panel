@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router";
+import { useState } from "react";
+import { Link } from "react-router";
 import Table from "../../components/Table/Table";
 import useFetch from "../../hooks/useFetch";
 import { API_URL, ITEMS_PER_PAGE } from "../../constants";
@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { removeItemFromList, searchCategory } from "../../utils/array.util";
 import TableRowCategory from "../../components/Table/TableRowCategory";
 import Breadcrumb from "../../components/Breadcrumb";
-import SearchBar from "../../components/Searchbar";
+import SearchBar from "../../components/SearchBar";
 import Pagination from "../../components/Pagination/Pagination";
 import { useTitle } from "../../hooks/useTitle";
 import { useToastMessage } from "../../hooks/useToastMessage";
@@ -23,11 +23,9 @@ function CategoryList() {
   const [filteredCategories, setFilteredCategories] = useState([]);
   const [currentPageCategories, setCurrentPageCategories] = useState([]);
 
-  const {
-    data: categories,
-    isLoaded: isCategoriesLoaded,
-    setData: setCategories,
-  } = useFetch(`${API_URL}/categories`);
+  const { data: categories, isLoaded: isCategoriesLoaded } = useFetch(
+    `${API_URL}/categories`
+  );
 
   async function deleteCategoryHandler(categoryId) {
     try {
@@ -37,7 +35,7 @@ function CategoryList() {
 
       if (!response.ok) throw new Error("Failed to delete");
 
-      setCategories((prevCategories) =>
+      setFilteredCategories((prevCategories) =>
         removeCategoryById(prevCategories, categoryId)
       );
       toast.success("Category delete successfully");

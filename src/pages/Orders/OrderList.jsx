@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { removeItemFromList, searchOrder } from "../../utils/array.util";
 import TableRowOrder from "../../components/Table/TableRowOrder";
 import Breadcrumb from "../../components/Breadcrumb";
-import SearchBar from "../../components/Searchbar";
+import SearchBar from "../../components/SearchBar";
 import Pagination from "../../components/Pagination/Pagination";
 import { useTitle } from "../../hooks/useTitle";
 import { useToastMessage } from "../../hooks/useToastMessage";
@@ -34,11 +34,9 @@ function OrderList() {
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [currentPageOrders, setCurrentPageOrders] = useState([]);
 
-  const {
-    data: orders,
-    isLoaded: isOrdersLoaded,
-    setData: setOrders,
-  } = useFetch(`${API_URL}/orders`);
+  const { data: orders, isLoaded: isOrdersLoaded } = useFetch(
+    `${API_URL}/orders`
+  );
 
   async function deleteOrderHandler(orderId) {
     try {
@@ -48,7 +46,7 @@ function OrderList() {
 
       if (!response.ok) throw new Error("Failed to delete");
 
-      setOrders((prevOrders) => removeOrderById(prevOrders, orderId));
+      setFilteredOrders((prevOrders) => removeOrderById(prevOrders, orderId));
       toast.success("Order delete successfully");
     } catch (error) {
       toast.error("Something is wrong please try again");

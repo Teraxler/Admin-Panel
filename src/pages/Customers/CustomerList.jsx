@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router";
+import { useState } from "react";
+import { Link } from "react-router";
 import Table from "../../components/Table/Table";
 import useFetch from "../../hooks/useFetch";
 import { API_URL, ITEMS_PER_PAGE } from "../../constants";
@@ -7,7 +7,7 @@ import TableRowCustomer from "../../components/Table/TableRowCustomer";
 import { toast } from "sonner";
 import { removeItemFromList, searchCustomer } from "../../utils/array.util";
 import Breadcrumb from "../../components/Breadcrumb";
-import SearchBar from "../../components/Searchbar";
+import SearchBar from "../../components/SearchBar";
 import Pagination from "../../components/Pagination/Pagination";
 import { useTitle } from "../../hooks/useTitle";
 import { useToastMessage } from "../../hooks/useToastMessage";
@@ -29,13 +29,12 @@ function CustomerList() {
   useTitle("Admin Panel - Customers");
   useToastMessage();
 
-  const [filteredCustomers, setFilteredCategories] = useState([]);
+  const [filteredCustomers, setFilteredCustomers] = useState([]);
   const [currentPageCustomers, setCurrentPageCustomers] = useState([]);
-  const {
-    data: customers,
-    isLoaded: isCustomersLoaded,
-    setData: setCustomers,
-  } = useFetch(`${API_URL}/customers`);
+  
+  const { data: customers, isLoaded: isCustomersLoaded } = useFetch(
+    `${API_URL}/customers`
+  );
 
   async function deleteCustomerHandler(customerId) {
     try {
@@ -45,7 +44,7 @@ function CustomerList() {
 
       if (!response.ok) throw new Error("Failed to delete");
 
-      setCustomers((prevCustomers) =>
+      setFilteredCustomers((prevCustomers) =>
         removeCustomerById(prevCustomers, customerId)
       );
 
@@ -79,7 +78,7 @@ function CustomerList() {
             placeholder="Search (name, username)"
             searchHandler={searchCustomer}
             isItemsLoaded={isCustomersLoaded}
-            setFilteredItems={setFilteredCategories}
+            setFilteredItems={setFilteredCustomers}
           />
         </div>
         <div className="p-2 sm:p-4 bg-white rounded-lg">

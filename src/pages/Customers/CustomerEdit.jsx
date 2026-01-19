@@ -1,4 +1,4 @@
-import { useReducer, useState } from "react";
+import { useReducer } from "react";
 import { toast } from "sonner";
 import { Link, useParams, useNavigate } from "react-router";
 import useFetch from "../../hooks/useFetch";

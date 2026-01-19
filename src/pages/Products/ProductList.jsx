@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router";
+import { useState } from "react";
+import { Link } from "react-router";
 import Table from "../../components/Table/Table";
 import useFetch from "../../hooks/useFetch";
 import { API_URL, ITEMS_PER_PAGE } from "../../constants";
@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import TableRowProduct from "../../components/Table/TableRowProduct";
 import { searchProduct, removeItemFromList } from "../../utils/array.util";
 import Breadcrumb from "../../components/Breadcrumb";
-import SearchBar from "../../components/Searchbar";
+import SearchBar from "../../components/SearchBar";
 import Pagination from "../../components/Pagination/Pagination";
 import { useTitle } from "../../hooks/useTitle";
 import { useToastMessage } from "../../hooks/useToastMessage";
@@ -33,11 +33,9 @@ function ProductList() {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [currentPageProducts, setCurrentPageProducts] = useState([]);
 
-  const {
-    data: products,
-    isLoaded: isProductsLoaded,
-    setData: setProducts,
-  } = useFetch(`${API_URL}/products`);
+  const { data: products, isLoaded: isProductsLoaded } = useFetch(
+    `${API_URL}/products`
+  );
 
   async function deleteProductHandler(productId) {
     try {
@@ -47,7 +45,9 @@ function ProductList() {
 
       if (!response.ok) throw new Error("Failed to delete");
 
-      setProducts((prevProducts) => removeProductById(prevProducts, productId));
+      setFilteredProducts((prevProducts) =>
+        removeProductById(prevProducts, productId)
+      );
 
       toast.success("Product delete successfully");
     } catch (error) {
