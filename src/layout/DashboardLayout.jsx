@@ -9,25 +9,21 @@ import { Overlay } from "../components/Overlay";
 function DashboardLayout() {
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);
 
+  const hideSidebar = () => setIsSidebarVisible(false);
+  const toggleSidebar = () => setIsSidebarVisible((prevValue) => !prevValue);
+
   return (
     <>
       <SvgIcons />
+      <Toaster richColors position="top-right" />
 
       <div className="flex bg-neutral-100 min-h-svh">
-        <Sidebar
-          isVisible={isSidebarVisible}
-          onClick={() => setIsSidebarVisible(false)}
-        />
+        <Sidebar isVisible={isSidebarVisible} onClick={hideSidebar} />
         <div className="w-[calc(100%-190px)] lg:w-[calc(100%-260px)] grow shrink">
-          <Header
-            onClick={() => setIsSidebarVisible((prevValue) => !prevValue)}
-          />
+          <Header onClick={toggleSidebar} />
           <main className="px-4 sm:px-6 lg:px-8 pt-4 pb-18">
             <Outlet />
-            <Toaster richColors position="top-right" />
-            {isSidebarVisible ? (
-              <Overlay onClick={() => setIsSidebarVisible(false)} />
-            ) : null}
+            {isSidebarVisible ? <Overlay onClick={hideSidebar} /> : null}
           </main>
         </div>
       </div>
