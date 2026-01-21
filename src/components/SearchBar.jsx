@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 
 const SearchBar = ({
   items,
@@ -8,6 +8,7 @@ const SearchBar = ({
   searchHandler,
 }) => {
   const [searchValue, setSearchValue] = useState("");
+  const [isPending, startTransaction] = useTransition();
 
   useEffect(() => setFilteredItems(items), [isItemsLoaded]);
 
@@ -15,7 +16,9 @@ const SearchBar = ({
     if (!isItemsLoaded) return;
 
     const timeoutId = setTimeout(() => {
-      setFilteredItems(() => searchHandler(items, searchValue));
+      const result = searchHandler(items, searchValue);
+
+      startTransaction(() => setFilteredItems(result));
     }, 250);
 
     return () => clearTimeout(timeoutId);
