@@ -1,24 +1,21 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import { Link, useParams, useNavigate } from "react-router";
-import useFetch from "../../hooks/useFetch";
-import { API_URL } from "../../constants";
+import useFetch from "@/hooks/useFetch";
+import { API_URL } from "@/constants";
 import { useEffect } from "react";
-import { categorySchema } from "../../../validators/categoryValidator";
-import Breadcrumb from "../../components/Breadcrumb";
-import Button from "../../components/Button";
-import { useTitle } from "../../hooks/useTitle";
+import { categorySchema } from "@/../validators/categoryValidator";
+import Breadcrumb from "@/components/Breadcrumb";
+import Head from "@/components/common/Head";
 
 function CategoryEdit() {
-  useTitle("Admin Panel - Edit Category");
-
   const navigate = useNavigate();
   const { categoryId } = useParams();
 
   const [categoryName, setCategoryName] = useState("");
 
   const { data: category, isLoaded: isCategoryLoaded } = useFetch(
-    `${API_URL}/categories/${categoryId}`
+    `${API_URL}/categories/${categoryId}`,
   );
 
   useEffect(() => {
@@ -57,6 +54,10 @@ function CategoryEdit() {
 
   return (
     <>
+      <Head>
+        <title>Admin Panel - Edit Category</title>
+      </Head>
+
       <div>
         <h1 className="font-medium text-4xl">Edit Cateogry</h1>
         <Breadcrumb />
@@ -82,10 +83,11 @@ function CategoryEdit() {
           </div>
         </div>
         <div className="flex justify-end gap-x-2 mt-10 sm:mt-25">
-          {/* <Button>Discard Changes</Button> */}
-          <Button type="submit">Update</Button>
+          <button className="btn btn--small btn--secondary" type="submit">
+            Update
+          </button>
           <Link to={"/categories"}>
-            <Button>Cancel</Button>
+            <button className="btn btn--small btn--secondary">Cancel</button>
           </Link>
         </div>
       </form>

@@ -1,12 +1,11 @@
+import { useReducer } from "react";
 import { toast } from "sonner";
 import { Link, useNavigate } from "react-router";
-import { API_URL } from "../../constants";
-import { registerSchema } from "../../../validators/registerValidator";
-import Breadcrumb from "../../components/Breadcrumb";
-import Button from "../../components/Button";
-import { useTitle } from "../../hooks/useTitle";
-import { useReducer } from "react";
-import customerReducer from "../../reducers/customer";
+import { API_URL } from "@/constants";
+import { registerSchema } from "@/../validators/registerValidator";
+import Breadcrumb from "@/components/Breadcrumb";
+import customerReducer from "@/reducers/customer";
+import Head from "@/components/common/Head";
 import {
   NAME,
   FAMILY,
@@ -18,7 +17,6 @@ import {
 } from "../../actions/customer";
 
 function CustomerCreate() {
-  useTitle("Admin Panel - Create Customer");
   const navigate = useNavigate();
 
   const [customer, dispatch] = useReducer(customerReducer, {
@@ -68,6 +66,10 @@ function CustomerCreate() {
 
   return (
     <>
+      <Head>
+        <title>Admin Panel - Create Customer</title>
+      </Head>
+
       <div>
         <h1 className="title">Create Customer</h1>
         <Breadcrumb />
@@ -127,7 +129,6 @@ function CustomerCreate() {
               <input
                 id="birthday"
                 type="date"
-                placeholder="eg. Francisco"
                 className="input "
                 value={customer.birthday}
                 onChange={(e) =>
@@ -146,6 +147,7 @@ function CustomerCreate() {
                 type="tel"
                 placeholder="09123456789"
                 className="input"
+                inputMode="numeric"
                 value={customer.phone}
                 onChange={(e) =>
                   dispatch({ type: PHONE, payload: e.target.value })
@@ -157,6 +159,7 @@ function CustomerCreate() {
               <input
                 id="email"
                 type="email"
+                inputMode="email"
                 placeholder="johnfrans@gmail.com"
                 className="input"
                 value={customer.email}
@@ -182,9 +185,11 @@ function CustomerCreate() {
         </div>
 
         <div className="flex justify-end gap-x-2 mt-10">
-          <Button type="submit">Create</Button>
+          <button type="submit" className="btn btn--small btn--secondary">
+            Create
+          </button>
           <Link to={"/customers"}>
-            <Button>Cancel</Button>
+            <button className="btn btn--small btn--secondary">Cancel</button>
           </Link>
         </div>
       </form>

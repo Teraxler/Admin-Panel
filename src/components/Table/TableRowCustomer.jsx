@@ -1,6 +1,6 @@
 import { Link } from "react-router";
-import { formattingDateTime, normalizeDateTime } from "../../utils/dateTime";
-import AlertModalWarning from "../AlertModalWarning";
+import { formattingDateTime, normalizeDateTime } from "@/utils/dateTime";
+import AlertModalWarning from "@/components/AlertModalWarning";
 
 function TableRowCustomer({
   number,
@@ -52,17 +52,9 @@ function TableRowCustomer({
         </td>
         <td>
           <div className="flex justify-center gap-x-2">
-            {/* <Link
-              to={`${customerId}`}
-              className="size-10 flex items-center justify-center border border-pale-slate rounded-lg text-carbon-black cursor-pointer"
-            >
-              <svg className="size-5">
-                <use href="#arrow-up-right"></use>
-              </svg>
-            </Link> */}
             <Link
               to={`${customerId}`}
-              className="size-9 lg:size-10 flex items-center justify-center border border-pale-slate rounded-lg text-carbon-black cursor-pointer"
+              className="btn btn--square btn--secondary"
             >
               <svg className="size-4 lg:size-5">
                 <use href="#pencil-square"></use>
@@ -73,7 +65,7 @@ function TableRowCustomer({
               description={"This can't be undo!!"}
               onConfirm={onDelete}
             >
-              <button className="size-9 lg:size-10 flex items-center justify-center border border-pale-slate rounded-lg text-carbon-black cursor-pointer">
+              <button className="btn btn--square btn--secondary">
                 <svg className="size-4 lg:size-5">
                   <use href="#trash"></use>
                 </svg>

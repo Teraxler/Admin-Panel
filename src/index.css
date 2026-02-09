@@ -15,12 +15,23 @@
   --color-neutral-100: #f8f9fa;
   --color-neutral-200: #e9ecef;
   --color-neutral-400: #ced4da;
-  --color-secondary: #6c757d;
 
+  --color-secondary: #6c757d;
+  --color-secondary-hover: #6c757d;
+  --color-secondary-click: #6c757d;
+
+  --color-primary: #0057fc;
   --color-primary-selected: #cbe4fe;
   --color-primary-hover: #3f87fd;
-  --color-primary-normal: #0057fc;
   --color-primary-click: #0043d8;
+
+  --color-danger: #ff1f25;
+  --color-danger-hover: #ff6157;
+  --color-danger-click: #db162d;
+
+  --color-warning: #ff881a;
+  --color-warning-hover: #ffae53;
+  --color-warning-click: #db6813;
 
   --color-blue-100: #cbe4fe;
   --color-blue-200: #98c6fe;
@@ -83,9 +94,47 @@
     @apply font-medium text-3xl lg:text-4xl;
   }
   .input {
-    @apply w-full px-3 py-2 outline-0 text-sm lg:text-base bg-white/10 border border-pale-slate rounded-lg focus:border-primary-click;
+    @apply w-full h-10 px-3 py-2 outline-0 text-sm lg:text-base bg-white/10 border border-pale-slate rounded-lg focus:border-primary-click;
   }
   .input--search {
     @apply pl-9;
+  }
+
+  .btn {
+    @apply flex items-center justify-center gap-x-1 lg:gap-x-2 rounded-lg font-medium text-sm/6 tracking-wide uppercase transition cursor-pointer;
+  }
+  .btn--square {
+    @apply size-9 lg:size-10;
+  }
+  .btn--small {
+    @apply h-10 min-w-10 p-2 lg:p-2.5;
+  }
+  .btn--medium {
+    @apply h-12 min-w-12 p-3.5;
+  }
+  .btn--large {
+    @apply h-14 min-w-14 p-4.5;
+  }
+  .btn--primary {
+    @apply bg-white border border-primary text-primary 
+          hover:border-primary-hover hover:text-primary-hover 
+          active:border-primary-click active:text-primary-click;
+  }
+  .btn--secondary {
+    @apply bg-white border border-neutral-400 text-text-button-inverted 
+          hover:bg-neutral-100 active:bg-neutral-200;
+  }
+  .btn--danger {
+    @apply bg-white border border-danger text-danger 
+          hover:border-danger-hover hover:text-danger-hover 
+          active:border-danger-click active:text-danger-click;
+  }
+  .btn--warning {
+    @apply bg-white border border-warning text-warning 
+          hover:border-warning-hover hover:text-warning-hover 
+          active:border-warning-click active:text-warning-click;
+  }
+  .btn--disabled {
+    @apply text-text-disabled bg-neutral-200 pointer-events-none;
   }
 }

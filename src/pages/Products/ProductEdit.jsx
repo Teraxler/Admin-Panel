@@ -1,13 +1,12 @@
 import { useEffect, useReducer } from "react";
 import { Link, useParams, useNavigate } from "react-router";
 import { toast } from "sonner";
-import useFetch from "../../hooks/useFetch";
-import { API_URL } from "../../constants";
-import { productSchema } from "../../../validators/productValidator";
-import Breadcrumb from "../../components/Breadcrumb";
-import Button from "../../components/Button";
-import { useTitle } from "../../hooks/useTitle";
-import productReducer from "../../reducers/product";
+import { API_URL } from "@/constants";
+import useFetch from "@/hooks/useFetch";
+import productReducer from "@/reducers/product";
+import { productSchema } from "@/../validators/productValidator";
+import Breadcrumb from "@/components/Breadcrumb";
+import Head from "@/components/common/Head";
 import {
   ALL,
   CATEGORY_ID,
@@ -17,10 +16,9 @@ import {
   INVENTORY,
   NAME,
   PRICE,
-} from "../../actions/product";
+} from "@/actions/product";
 
 function ProductEdit() {
-  useTitle("Admin Panel - Edit Product");
   const navigate = useNavigate();
   const { productId } = useParams();
 
@@ -36,11 +34,11 @@ function ProductEdit() {
   });
 
   const { data: categories, isLoaded: isCategoriesLoaded } = useFetch(
-    `${API_URL}/categories`
+    `${API_URL}/categories`,
   );
 
   const { data: fetchedProduct, isLoaded: isProductLoaded } = useFetch(
-    `${API_URL}/products/${productId}`
+    `${API_URL}/products/${productId}`,
   );
 
   useEffect(() => {
@@ -97,6 +95,10 @@ function ProductEdit() {
 
   return (
     <>
+      <Head>
+        <title>Admin Panel - Edit Product</title>
+      </Head>
+
       <div>
         <h1 className="title">Edit Product</h1>
         <Breadcrumb />
@@ -157,6 +159,7 @@ function ProductEdit() {
                 <input
                   id="price"
                   type="number"
+                  inputMode="numeric"
                   placeholder="10"
                   className="input ps-5"
                   value={product.price}
@@ -172,6 +175,7 @@ function ProductEdit() {
               <input
                 id="inventory"
                 type="number"
+                inputMode="numeric"
                 placeholder="15"
                 className="input"
                 value={product.inventory}
@@ -226,9 +230,11 @@ function ProductEdit() {
           </div>
         </div>
         <div className="flex justify-end gap-x-2">
-          <Button type="submit">Update</Button>
+          <button className="btn btn--small btn--secondary" type="submit">
+            Update
+          </button>
           <Link to={"/products"}>
-            <Button>Cancel</Button>
+            <button className="btn btn--small btn--secondary">Cancel</button>
           </Link>
         </div>
       </form>

@@ -1,14 +1,12 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import { Link, useNavigate } from "react-router";
-import { API_URL } from "../../constants";
-import { categorySchema } from "../../../validators/categoryValidator";
-import Breadcrumb from "../../components/Breadcrumb";
-import Button from "../../components/Button";
-import { useTitle } from "../../hooks/useTitle";
+import { API_URL } from "@/constants";
+import { categorySchema } from "@/../validators/categoryValidator";
+import Breadcrumb from "@/components/Breadcrumb";
+import Head from "@/components/common/Head";
 
 function CategoryCareate() {
-  useTitle("Admin Panel - Create Category");
   const navigate = useNavigate();
   const [categoryName, setCategoryName] = useState("");
 
@@ -44,6 +42,10 @@ function CategoryCareate() {
 
   return (
     <>
+      <Head>
+        <title>Admin Panel - Create Category</title>
+      </Head>
+
       <div>
         <h1 className="title">Create Cateogry</h1>
         <Breadcrumb />
@@ -69,9 +71,11 @@ function CategoryCareate() {
           </div>
         </div>
         <div className="flex justify-end gap-x-2 mt-10 sm:mt-25">
-          <Button type="submit">Create</Button>
+          <button className="btn btn--small btn--secondary" type="submit">
+            Create
+          </button>
           <Link to={"/categories"}>
-            <Button>Cancel</Button>
+            <button className="btn btn--small btn--secondary">Cancel</button>
           </Link>
         </div>
       </form>

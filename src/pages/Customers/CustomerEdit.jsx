@@ -1,14 +1,13 @@
 import { useReducer } from "react";
 import { toast } from "sonner";
 import { Link, useParams, useNavigate } from "react-router";
-import useFetch from "../../hooks/useFetch";
-import { API_URL } from "../../constants";
+import useFetch from "@/hooks/useFetch";
+import { API_URL } from "@/constants";
 import { useEffect } from "react";
-import { registerSchema } from "../../../validators/registerValidator";
-import Breadcrumb from "../../components/Breadcrumb";
-import Button from "../../components/Button";
-import { useTitle } from "../../hooks/useTitle";
-import customerReducer from "../../reducers/customer";
+import { registerSchema } from "@/../validators/registerValidator";
+import Breadcrumb from "@/components/Breadcrumb";
+import customerReducer from "@/reducers/customer";
+import Head from "@/components/common/Head";
 import {
   NAME,
   FAMILY,
@@ -16,11 +15,9 @@ import {
   EMAIL,
   PHONE,
   BIRTHDAY,
-} from "../../actions/customer";
+} from "@/actions/customer";
 
 function CustomerEdit() {
-  useTitle("Admin Panel - Edit Customer");
-
   const navigate = useNavigate();
   const { customerId } = useParams();
 
@@ -35,7 +32,7 @@ function CustomerEdit() {
   });
 
   const { data: customer, isLoaded: isCustomerLoaded } = useFetch(
-    `${API_URL}/customers/${customerId}`
+    `${API_URL}/customers/${customerId}`,
   );
 
   useEffect(() => {
@@ -89,6 +86,10 @@ function CustomerEdit() {
 
   return (
     <>
+      <Head>
+        <title>Admin Panel - Edit Customer</title>
+      </Head>
+
       <div>
         <h1 className="title">Edit Customer</h1>
         <Breadcrumb />
@@ -148,7 +149,6 @@ function CustomerEdit() {
               <input
                 id="birthday"
                 type="date"
-                placeholder="eg. Francisco"
                 className="input"
                 value={customerState.birthday}
                 onChange={(e) =>
@@ -165,6 +165,7 @@ function CustomerEdit() {
               <input
                 id="phone"
                 type="tel"
+                inputMode="numeric"
                 placeholder="09123456789"
                 className="input"
                 value={customerState.phone}
@@ -178,7 +179,8 @@ function CustomerEdit() {
               <input
                 id="email"
                 type="email"
-                placeholder="eg. johnfrans@gmail.com"
+                placeholder="johnfrans@gmail.com"
+                inputMode="email"
                 className="input"
                 value={customerState.email}
                 onChange={(e) =>
@@ -189,9 +191,11 @@ function CustomerEdit() {
           </div>
         </div>
         <div className="flex justify-end gap-x-2 mt-10 sm:mt-25">
-          <Button type="submit">Update</Button>
+          <button className="btn btn--small btn--secondary" type="submit">
+            Update
+          </button>
           <Link to={"/customers"}>
-            <Button>Cancel</Button>
+            <button className="btn btn--small btn--secondary">Cancel</button>
           </Link>
         </div>
       </form>

@@ -12,18 +12,7 @@ function TableRowCategory({ number, categoryId, name, onDelete }) {
       </td>
       <td>
         <div className="flex justify-center gap-x-2">
-          {/* <Link
-            to={`${categoryId}`}
-            className="size-10 flex items-center justify-center border border-pale-slate rounded-lg text-carbon-black cursor-pointer"
-          >
-            <svg className="size-5">
-              <use href="#arrow-up-right"></use>
-            </svg>
-          </Link> */}
-          <Link
-            to={`${categoryId}`}
-            className="size-9 lg:size-10 flex items-center justify-center border border-pale-slate rounded-lg text-carbon-black cursor-pointer"
-          >
+          <Link to={`${categoryId}`} className="btn btn--square btn--secondary">
             <svg className="size-4 lg:size-5">
               <use href="#pencil-square"></use>
             </svg>
@@ -33,7 +22,7 @@ function TableRowCategory({ number, categoryId, name, onDelete }) {
             description={"This can't be undo!!"}
             onConfirm={onDelete}
           >
-            <button className="size-9 lg:size-10 flex items-center justify-center border border-pale-slate rounded-lg text-carbon-black cursor-pointer">
+            <button className="btn btn--square btn--secondary">
               <svg className="size-4 lg:size-5">
                 <use href="#trash"></use>
               </svg>

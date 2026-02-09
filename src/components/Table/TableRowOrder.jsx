@@ -1,11 +1,6 @@
 import { Link } from "react-router";
-import AlertModalWarning from "../AlertModalWarning";
-import { API_URL } from "../../constants";
-import {
-  formattingDateTime,
-  getDateTime,
-  normalizeDateTime,
-} from "../../utils/dateTime";
+import AlertModalWarning from "@/components/AlertModalWarning";
+import { formattingDateTime, normalizeDateTime } from "@/utils/dateTime";
 
 function TableRowOrder({
   number,
@@ -58,20 +53,12 @@ function TableRowOrder({
       </td>
       <td>
         <div className="flex justify-center gap-x-2">
-          {/* <Link
-            to={`${productId}`}
-            className="size-10 flex items-center justify-center border border-pale-slate rounded-lg text-carbon-black cursor-pointer"
-          >
-            <svg className="size-5">
-              <use href="#arrow-up-right"></use>
-            </svg>
-          </Link> */}
           <Link
             to={``}
             className="size-9 lg:size-10 flex items-center justify-center border border-pale-slate rounded-lg text-carbon-black cursor-pointer"
           >
             <svg className="size-4 lg:size-5">
-              <use href="#pencil-square"></use>
+              <use href="#arrow-up-right"></use>
             </svg>
           </Link>
           <AlertModalWarning

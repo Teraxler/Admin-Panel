@@ -1,14 +1,12 @@
 import { useReducer } from "react";
 import { toast } from "sonner";
-import { Link, useParams, useNavigate } from "react-router";
-import useFetch from "../../hooks/useFetch";
-import { API_URL } from "../../constants";
+import { Link, useNavigate } from "react-router";
+import useFetch from "@/hooks/useFetch";
+import { API_URL } from "@/constants";
 import { useEffect } from "react";
-import { productSchema } from "../../../validators/productValidator";
-import Breadcrumb from "../../components/Breadcrumb";
-import Button from "../../components/Button";
-import { useTitle } from "../../hooks/useTitle";
-import productReducer from "../../reducers/product";
+import { productSchema } from "@/../validators/productValidator";
+import Breadcrumb from "@/components/Breadcrumb";
+import productReducer from "@/reducers/product";
 import {
   CATEGORY_ID,
   COVER,
@@ -17,11 +15,10 @@ import {
   INVENTORY,
   NAME,
   PRICE,
-} from "../../actions/product";
+} from "@/actions/product";
+import Head from "@/components/common/Head";
 
 function ProductCreate() {
-  useTitle("Admin Panel - Create Product");
-
   const navigate = useNavigate();
 
   const [product, dispatch] = useReducer(productReducer, {
@@ -36,7 +33,7 @@ function ProductCreate() {
   });
 
   const { data: categories, isLoaded: isCategoriesLoaded } = useFetch(
-    `${API_URL}/categories`
+    `${API_URL}/categories`,
   );
 
   useEffect(() => {
@@ -92,6 +89,10 @@ function ProductCreate() {
 
   return (
     <>
+      <Head>
+        <title>Admin Panel - Create Product</title>
+      </Head>
+
       <div>
         <h1 className="title">Create Product</h1>
         <Breadcrumb />
@@ -153,6 +154,7 @@ function ProductCreate() {
                   id="price"
                   type="number"
                   placeholder="10"
+                  inputMode="numeric"
                   className="input ps-5"
                   value={product.price}
                   min={0}
@@ -167,6 +169,7 @@ function ProductCreate() {
               <input
                 id="inventory"
                 type="number"
+                inputMode="numeric"
                 placeholder="15"
                 className="input"
                 value={product.inventory}
@@ -221,9 +224,11 @@ function ProductCreate() {
           </div>
         </div>
         <div className="flex justify-end gap-x-2">
-          <Button type="submit">Create</Button>
+          <button className="btn btn--small btn--secondary" type="submit">
+            Create
+          </button>
           <Link to={"/products"}>
-            <Button>Cancel</Button>
+            <button className="btn btn--small btn--secondary">Cancel</button>
           </Link>
         </div>
       </form>

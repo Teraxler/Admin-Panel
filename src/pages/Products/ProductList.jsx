@@ -4,8 +4,8 @@ import { toast } from "sonner";
 import { API_URL, ITEMS_PER_PAGE } from "@/constants";
 import { searchProduct, removeItemFromList } from "@/utils/array.util";
 import useFetch from "@/hooks/useFetch";
-import { useTitle } from "@/hooks/useTitle";
 import { useToastMessage } from "@/hooks/useToastMessage";
+import Head from "@/components/common/Head";
 import Table from "@/components/Table/Table";
 import SearchBar from "@/components/SearchBar";
 import Breadcrumb from "@/components/Breadcrumb";
@@ -27,7 +27,6 @@ const removeProductById = (products, id) =>
   removeItemFromList(products, "productId", id);
 
 function ProductList() {
-  useTitle("Admin Panel - Products");
   useToastMessage();
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -61,22 +60,21 @@ function ProductList() {
 
   return (
     <>
+      <Head>
+        <title>Admin Panel - Products</title>
+      </Head>
+
       <div>
         <h1 className="title">Products</h1>
         <Breadcrumb />
       </div>
       <section className="mt-8">
         <div className="flex justify-between mb-4">
-          <Link
-            to={"create"}
-            className="flex items-center justify-center gap-x-1 lg:gap-x-2 size-9.5 sm:w-auto p-2 lg:p-2.5 bg-white hover:bg-full-spectrum-blue text-full-spectrum-blue hover:text-white text-sm font-medium uppercase border border-full-spectrum-blue rounded-lg transition"
-          >
+          <Link to={"create"} className="btn btn--small btn--primary">
             <svg className="size-4">
               <use href="#plus"></use>
             </svg>
-            <span className="text-sm lg:text-base hidden sm:inline">
-              New Product
-            </span>
+            <span className="hidden sm:inline">New Product</span>
           </Link>
           <SearchBar
             items={products}
