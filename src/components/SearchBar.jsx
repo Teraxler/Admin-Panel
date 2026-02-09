@@ -8,7 +8,7 @@ const SearchBar = ({
   searchHandler,
 }) => {
   const [searchValue, setSearchValue] = useState("");
-  const [isPending, startTransaction] = useTransition();
+  const [isPending, startTransition] = useTransition();
 
   useEffect(() => setFilteredItems(items), [isItemsLoaded]);
 
@@ -18,7 +18,7 @@ const SearchBar = ({
     const timeoutId = setTimeout(() => {
       const result = searchHandler(items, searchValue);
 
-      startTransaction(() => setFilteredItems(result));
+      startTransition(() => setFilteredItems(result));
     }, 250);
 
     return () => clearTimeout(timeoutId);
