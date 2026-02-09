@@ -7,7 +7,7 @@ import {
   DESCRIPTION,
   ALL,
   COVER_FILE,
-} from "./../actions/product";
+} from "@/actions/product";
 
 const productReducer = (product, action) => {
   const { type, payload } = action;

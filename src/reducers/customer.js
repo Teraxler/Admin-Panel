@@ -7,7 +7,7 @@ import {
   BIRTHDAY,
   PASSWORD,
   ALL,
-} from "../actions/customer";
+} from "@/actions/customer";
 
 const customerReducer = (customer, action) => {
   const { type, payload } = action;
