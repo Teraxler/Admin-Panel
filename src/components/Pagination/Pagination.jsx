@@ -1,9 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import PaginationButton from "./components/PaginationButton";
-import { paginateItems } from "../../utils/array.util";
+import { paginateItems } from "@/utils/array.util";
 
-const Pagination = ({ items, setCurrentPageItems, itemsPerPage }) => {
-  const [currentPage, setCurrentPage] = useState(1);
+const Pagination = ({
+  items,
+  setCurrentPageItems,
+  itemsPerPage,
+  currentPage,
+  setCurrentPage,
+}) => {
   const countPages = Math.ceil(items.length / itemsPerPage);
 
   useEffect(() => {
@@ -32,7 +37,7 @@ const Pagination = ({ items, setCurrentPageItems, itemsPerPage }) => {
           onClick={() => setCurrentPage(i)}
         >
           {i}
-        </PaginationButton>
+        </PaginationButton>,
       );
     }
 
@@ -40,7 +45,7 @@ const Pagination = ({ items, setCurrentPageItems, itemsPerPage }) => {
   };
 
   return countPages > 1 ? (
-    <div className="flex justify-center gap-x-2 mt-10">
+    <div className="flex justify-center gap-x-2 mt-4">
       <PaginationButton isDisabled={currentPage === 1} onClick={previousPage}>
         <svg className="size-5 rotate-90">
           <use href="#chevron-down"></use>

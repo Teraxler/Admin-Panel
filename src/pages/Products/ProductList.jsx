@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import Table from "../../components/Table/Table";
-import useFetch from "../../hooks/useFetch";
-import { API_URL, ITEMS_PER_PAGE } from "../../constants";
 import { toast } from "sonner";
-import TableRowProduct from "../../components/Table/TableRowProduct";
-import { searchProduct, removeItemFromList } from "../../utils/array.util";
-import Breadcrumb from "../../components/Breadcrumb";
-import SearchBar from "../../components/SearchBar";
-import Pagination from "../../components/Pagination/Pagination";
-import { useTitle } from "../../hooks/useTitle";
-import { useToastMessage } from "../../hooks/useToastMessage";
+import { API_URL, ITEMS_PER_PAGE } from "@/constants";
+import { searchProduct, removeItemFromList } from "@/utils/array.util";
+import useFetch from "@/hooks/useFetch";
+import { useTitle } from "@/hooks/useTitle";
+import { useToastMessage } from "@/hooks/useToastMessage";
+import Table from "@/components/Table/Table";
+import SearchBar from "@/components/SearchBar";
+import Breadcrumb from "@/components/Breadcrumb";
+import Pagination from "@/components/Pagination/Pagination";
+import TableRowProduct from "@/components/Table/TableRowProduct";
 
 const tableColumns = [
   "#",
@@ -30,11 +30,15 @@ function ProductList() {
   useTitle("Admin Panel - Products");
   useToastMessage();
 
+  const [currentPage, setCurrentPage] = useState(1);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [currentPageProducts, setCurrentPageProducts] = useState([]);
 
+  const calcItemNumber = (index) =>
+    (currentPage - 1) * ITEMS_PER_PAGE + index + 1;
+
   const { data: products, isLoaded: isProductsLoaded } = useFetch(
-    `${API_URL}/products`
+    `${API_URL}/products`,
   );
 
   async function deleteProductHandler(productId) {
@@ -46,7 +50,7 @@ function ProductList() {
       if (!response.ok) throw new Error("Failed to delete");
 
       setFilteredProducts((prevProducts) =>
-        removeProductById(prevProducts, productId)
+        removeProductById(prevProducts, productId),
       );
 
       toast.success("Product delete successfully");
@@ -89,7 +93,7 @@ function ProductList() {
                 {currentPageProducts.map((product, i) => (
                   <TableRowProduct
                     key={product.productId}
-                    number={i + 1}
+                    number={calcItemNumber(i)}
                     onDelete={() => deleteProductHandler(product.productId)}
                     {...product}
                   />
@@ -101,14 +105,16 @@ function ProductList() {
               </span>
             )}
           </div>
+          {filteredProducts?.length ? (
+            <Pagination
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              items={filteredProducts}
+              itemsPerPage={ITEMS_PER_PAGE}
+              setCurrentPageItems={setCurrentPageProducts}
+            />
+          ) : null}
         </div>
-        {filteredProducts?.length ? (
-          <Pagination
-            items={filteredProducts}
-            itemsPerPage={ITEMS_PER_PAGE}
-            setCurrentPageItems={setCurrentPageProducts}
-          />
-        ) : null}
       </section>
     </>
   );

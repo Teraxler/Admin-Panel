@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import Table from "../../components/Table/Table";
-import useFetch from "../../hooks/useFetch";
-import { API_URL, ITEMS_PER_PAGE } from "../../constants";
-import TableRowCustomer from "../../components/Table/TableRowCustomer";
 import { toast } from "sonner";
-import { removeItemFromList, searchCustomer } from "../../utils/array.util";
-import Breadcrumb from "../../components/Breadcrumb";
-import SearchBar from "../../components/SearchBar";
-import Pagination from "../../components/Pagination/Pagination";
-import { useTitle } from "../../hooks/useTitle";
-import { useToastMessage } from "../../hooks/useToastMessage";
+import { API_URL, ITEMS_PER_PAGE } from "@/constants";
+import { removeItemFromList, searchCustomer } from "@/utils/array.util";
+import useFetch from "@/hooks/useFetch";
+import { useTitle } from "@/hooks/useTitle";
+import { useToastMessage } from "@/hooks/useToastMessage";
+import Table from "@/components/Table/Table";
+import SearchBar from "@/components/SearchBar";
+import Breadcrumb from "@/components/Breadcrumb";
+import Pagination from "@/components/Pagination/Pagination";
+import TableRowCustomer from "@/components/Table/TableRowCustomer";
 
 const tableColumns = [
   "#",
@@ -29,12 +29,16 @@ function CustomerList() {
   useTitle("Admin Panel - Customers");
   useToastMessage();
 
+  const [currentPage, setCurrentPage] = useState(1);
   const [filteredCustomers, setFilteredCustomers] = useState([]);
   const [currentPageCustomers, setCurrentPageCustomers] = useState([]);
-  
+
   const { data: customers, isLoaded: isCustomersLoaded } = useFetch(
-    `${API_URL}/customers`
+    `${API_URL}/customers`,
   );
+
+  const calcItemNumber = (index) =>
+    (currentPage - 1) * ITEMS_PER_PAGE + index + 1;
 
   async function deleteCustomerHandler(customerId) {
     try {
@@ -45,7 +49,7 @@ function CustomerList() {
       if (!response.ok) throw new Error("Failed to delete");
 
       setFilteredCustomers((prevCustomers) =>
-        removeCustomerById(prevCustomers, customerId)
+        removeCustomerById(prevCustomers, customerId),
       );
 
       toast.success("Customer delete successfully");
@@ -87,7 +91,7 @@ function CustomerList() {
               {currentPageCustomers.map((customer, i) => (
                 <TableRowCustomer
                   key={customer.customerId}
-                  number={i + 1}
+                  number={calcItemNumber(i)}
                   onDelete={() => deleteCustomerHandler(customer.customerId)}
                   {...customer}
                 />
@@ -98,14 +102,16 @@ function CustomerList() {
               No Customer Found :{"("}
             </span>
           )}
+          {filteredCustomers?.length ? (
+            <Pagination
+              items={filteredCustomers}
+              itemsPerPage={ITEMS_PER_PAGE}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              setCurrentPageItems={setCurrentPageCustomers}
+            />
+          ) : null}
         </div>
-        {filteredCustomers?.length ? (
-          <Pagination
-            items={filteredCustomers}
-            itemsPerPage={ITEMS_PER_PAGE}
-            setCurrentPageItems={setCurrentPageCustomers}
-          />
-        ) : null}
       </section>
     </>
   );

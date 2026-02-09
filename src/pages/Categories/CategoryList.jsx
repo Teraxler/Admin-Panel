@@ -1,16 +1,17 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import Table from "../../components/Table/Table";
-import useFetch from "../../hooks/useFetch";
-import { API_URL, ITEMS_PER_PAGE } from "../../constants";
 import { toast } from "sonner";
-import { removeItemFromList, searchCategory } from "../../utils/array.util";
-import TableRowCategory from "../../components/Table/TableRowCategory";
-import Breadcrumb from "../../components/Breadcrumb";
-import SearchBar from "../../components/SearchBar";
-import Pagination from "../../components/Pagination/Pagination";
-import { useTitle } from "../../hooks/useTitle";
-import { useToastMessage } from "../../hooks/useToastMessage";
+import { API_URL, ITEMS_PER_PAGE } from "@/constants";
+import { removeItemFromList, searchCategory } from "@/utils/array.util";
+import useFetch from "@/hooks/useFetch";
+import { useTitle } from "@/hooks/useTitle";
+import { useToastMessage } from "@/hooks/useToastMessage";
+import Table from "@/components/Table/Table";
+import SearchBar from "@/components/SearchBar";
+import Breadcrumb from "@/components/Breadcrumb";
+import Pagination from "@/components/Pagination/Pagination";
+import TableRowCategory from "@/components/Table/TableRowCategory";
+
 const tableColumns = ["#", "Category", ""];
 
 const removeCategoryById = (categories, id) =>
@@ -20,11 +21,15 @@ function CategoryList() {
   useTitle("Admin Panel - Categories");
   useToastMessage();
 
+  const [currentPage, setCurrentPage] = useState(1);
   const [filteredCategories, setFilteredCategories] = useState([]);
   const [currentPageCategories, setCurrentPageCategories] = useState([]);
 
+  const calcItemNumber = (index) =>
+    (currentPage - 1) * ITEMS_PER_PAGE + index + 1;
+
   const { data: categories, isLoaded: isCategoriesLoaded } = useFetch(
-    `${API_URL}/categories`
+    `${API_URL}/categories`,
   );
 
   async function deleteCategoryHandler(categoryId) {
@@ -36,7 +41,7 @@ function CategoryList() {
       if (!response.ok) throw new Error("Failed to delete");
 
       setFilteredCategories((prevCategories) =>
-        removeCategoryById(prevCategories, categoryId)
+        removeCategoryById(prevCategories, categoryId),
       );
       toast.success("Category delete successfully");
     } catch (error) {
@@ -78,7 +83,7 @@ function CategoryList() {
                 {currentPageCategories.map((category, i) => (
                   <TableRowCategory
                     key={category.categoryId}
-                    number={i + 1}
+                    number={calcItemNumber(i)}
                     onDelete={() => deleteCategoryHandler(category.categoryId)}
                     {...category}
                   />
@@ -90,14 +95,16 @@ function CategoryList() {
               No Category Found!!!
             </span>
           )}
+          {filteredCategories?.length ? (
+            <Pagination
+              itemsPerPage={ITEMS_PER_PAGE}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              items={filteredCategories}
+              setCurrentPageItems={setCurrentPageCategories}
+            />
+          ) : null}
         </div>
-        {filteredCategories?.length ? (
-          <Pagination
-            itemsPerPage={ITEMS_PER_PAGE}
-            items={filteredCategories}
-            setCurrentPageItems={setCurrentPageCategories}
-          />
-        ) : null}
       </section>
     </>
   );

@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import Table from "../../components/Table/Table";
-import useFetch from "../../hooks/useFetch";
-import { API_URL, ITEMS_PER_PAGE } from "../../constants";
 import { toast } from "sonner";
-import { removeItemFromList, searchOrder } from "../../utils/array.util";
-import TableRowOrder from "../../components/Table/TableRowOrder";
-import Breadcrumb from "../../components/Breadcrumb";
-import SearchBar from "../../components/SearchBar";
-import Pagination from "../../components/Pagination/Pagination";
-import { useTitle } from "../../hooks/useTitle";
-import { useToastMessage } from "../../hooks/useToastMessage";
+import { API_URL, ITEMS_PER_PAGE } from "@/constants";
+import { removeItemFromList, searchOrder } from "@/utils/array.util";
+import useFetch from "@/hooks/useFetch";
+import { useTitle } from "@/hooks/useTitle";
+import { useToastMessage } from "@/hooks/useToastMessage";
+import Table from "@/components/Table/Table";
+import SearchBar from "@/components/SearchBar";
+import Breadcrumb from "@/components/Breadcrumb";
+import Pagination from "@/components/Pagination/Pagination";
+import TableRowOrder from "@/components/Table/TableRowOrder";
 
 const tableColumns = [
   "#",
@@ -31,12 +31,16 @@ function OrderList() {
   useTitle("Admin Panel - Orders");
   useToastMessage();
 
+  const [currentPage, setCurrentPage] = useState(1);
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [currentPageOrders, setCurrentPageOrders] = useState([]);
 
   const { data: orders, isLoaded: isOrdersLoaded } = useFetch(
-    `${API_URL}/orders`
+    `${API_URL}/orders`,
   );
+
+  const calcItemNumber = (index) =>
+    (currentPage - 1) * ITEMS_PER_PAGE + index + 1;
 
   async function deleteOrderHandler(orderId) {
     try {
@@ -86,7 +90,7 @@ function OrderList() {
               {currentPageOrders.map((order, i) => (
                 <TableRowOrder
                   key={order.orderId}
-                  number={i + 1}
+                  number={calcItemNumber(i)}
                   onDelete={() => deleteOrderHandler(order.orderId)}
                   {...order}
                 />
@@ -97,14 +101,16 @@ function OrderList() {
               No Order Found!!!
             </span>
           )}
+          {filteredOrders?.length ? (
+            <Pagination
+              items={filteredOrders}
+              itemsPerPage={ITEMS_PER_PAGE}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              setCurrentPageItems={setCurrentPageOrders}
+            />
+          ) : null}
         </div>
-        {filteredOrders?.length ? (
-          <Pagination
-            items={filteredOrders}
-            itemsPerPage={ITEMS_PER_PAGE}
-            setCurrentPageItems={setCurrentPageOrders}
-          />
-        ) : null}
       </section>
     </>
   );
