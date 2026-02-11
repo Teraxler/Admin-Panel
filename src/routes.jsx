@@ -9,9 +9,9 @@ const ProductList = lazy(() => import("./pages/Products/ProductList"));
 const ProductEdit = lazy(() => import("./pages/Products/ProductEdit"));
 const ProductCreate = lazy(() => import("./pages/Products/ProductCreate"));
 
-const CustomerList = lazy(() => import("./pages/Customers/CustomerList"));
-const CustomerEdit = lazy(() => import("./pages/Customers/CustomerEdit"));
-const CustomerCreate = lazy(() => import("./pages/Customers/CustomerCreate"));
+const UserList = lazy(() => import("./pages/Users/UserList"));
+const UserEdit = lazy(() => import("./pages/Users/UserEdit"));
+const UserCreate = lazy(() => import("./pages/Users/UserCreate"));
 
 const CategoryList = lazy(() => import("./pages/Categories/CategoryList"));
 const CategoryEdit = lazy(() => import("./pages/Categories/CategoryEdit"));
@@ -25,22 +25,22 @@ export const router = createBrowserRouter([
     children: [
       // { path: "/", element: <Dashboard /> },
       {
-        path: "customers",
-        handle: { breadcrumb: "Customers" },
+        path: "users",
+        handle: { breadcrumb: "Users" },
         children: [
-          { index: true, element: <CustomerList /> },
+          { index: true, element: <UserList /> },
           {
             path: "create",
-            element: <CustomerCreate />,
+            element: <UserCreate />,
             handle: {
-              breadcrumb: "New Customer",
+              breadcrumb: "New User",
             },
           },
           {
-            path: ":customerId",
-            element: <CustomerEdit />,
+            path: ":userId",
+            element: <UserEdit />,
             handle: {
-              breadcrumb: "Customer Edit",
+              breadcrumb: "User Edit",
             },
           },
         ],

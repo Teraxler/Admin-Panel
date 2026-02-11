@@ -32,7 +32,7 @@ function Sidebar({ isVisible, onClick }) {
         </li>
         <li>
           <NavLink
-            to="customers"
+            to="users"
             onClick={onClick}
             className={({ isActive }) =>
               `flex items-center gap-x-2 p-3 rounded-lg ${
@@ -44,7 +44,7 @@ function Sidebar({ isVisible, onClick }) {
               <use href="#users"></use>
             </svg>
             <span className="xs:hidden text-sm lg:text-base md:inline">
-              Customers
+              Users
             </span>
           </NavLink>
         </li>

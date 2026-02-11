@@ -1,27 +1,19 @@
-import { useReducer } from "react";
-import { toast } from "sonner";
+import { useEffect, useReducer } from "react";
 import { Link, useParams, useNavigate } from "react-router";
+import { toast } from "sonner";
 import useFetch from "@/hooks/useFetch";
 import { API_URL } from "@/constants";
-import { useEffect } from "react";
-import { registerSchema } from "@/../validators/registerValidator";
+import { registerSchema } from "@/../validators/authValidator";
 import Breadcrumb from "@/components/Breadcrumb";
-import customerReducer from "@/reducers/customer";
+import userReducer from "@/reducers/user";
 import Head from "@/components/common/Head";
-import {
-  NAME,
-  FAMILY,
-  USERNAME,
-  EMAIL,
-  PHONE,
-  BIRTHDAY,
-} from "@/actions/customer";
+import { NAME, FAMILY, USERNAME, EMAIL, PHONE, BIRTHDAY } from "@/actions/user";
 
-function CustomerEdit() {
+function UserEdit() {
   const navigate = useNavigate();
-  const { customerId } = useParams();
+  const { userId } = useParams();
 
-  const [customerState, dispatch] = useReducer(customerReducer, {
+  const [userState, dispatch] = useReducer(userReducer, {
     name: "",
     family: "",
     username: "",
@@ -31,53 +23,53 @@ function CustomerEdit() {
     password: "",
   });
 
-  const { data: customer, isLoaded: isCustomerLoaded } = useFetch(
-    `${API_URL}/customers/${customerId}`,
+  const { data: user, isLoaded: isUserLoaded } = useFetch(
+    `${API_URL}/users/${userId}`,
   );
 
   useEffect(() => {
-    if (!isCustomerLoaded) return;
+    if (!isUserLoaded) return;
 
     dispatch({
       type: "ALL",
       payload: {
-        ...customer,
-        phone: customer.phone ?? "",
-        birthday: customer.birthday?.slice(0, 10) ?? "",
+        ...user,
+        phone: user.phone ?? "",
+        birthday: user.birthday?.slice(0, 10) ?? "",
       },
     });
-  }, [isCustomerLoaded]);
+  }, [isUserLoaded]);
 
-  function updateCustomerHandler(e) {
+  function updateUserHandler(e) {
     e.preventDefault();
 
-    const editedCustomer = {
-      ...customerState,
-      phone: customerState.phone || null,
-      birthday: customerState.birthday || null,
+    const editedUser = {
+      ...userState,
+      phone: userState.phone || null,
+      birthday: userState.birthday || null,
     };
 
-    const { success, error } = registerSchema.safeParse(editedCustomer);
+    const { success, error } = registerSchema.safeParse(editedUser);
 
-    if (success) return updateCustomer(editedCustomer);
+    if (success) return updateUser(editedUser);
 
     toast.error(error.issues[0].message);
   }
 
-  async function updateCustomer(customer) {
+  async function updateUser(user) {
     try {
-      const response = await fetch(`${API_URL}/customers/${customerId}`, {
+      const response = await fetch(`${API_URL}/users/${userId}`, {
         headers: {
           "Content-Type": "application/json",
         },
         method: "PUT",
-        body: JSON.stringify(customer),
+        body: JSON.stringify(user),
       });
 
       if (!response.ok) throw await response.json();
 
-      navigate("/customers", {
-        state: { message: "Customer updated successfully" },
+      navigate("/users", {
+        state: { message: "User updated successfully" },
       });
     } catch (error) {
       toast.error(error.message);
@@ -87,17 +79,17 @@ function CustomerEdit() {
   return (
     <>
       <Head>
-        <title>Admin Panel - Edit Customer</title>
+        <title>Admin Panel - Edit User</title>
       </Head>
 
       <div>
-        <h1 className="title">Edit Customer</h1>
+        <h1 className="title">Edit User</h1>
         <Breadcrumb />
       </div>
 
       <form
         className="w-full bg-white p-2.5 sm:px-4 py-4 mt-8 rounded-md shadow text-sm font-medium"
-        onSubmit={updateCustomerHandler}
+        onSubmit={updateUserHandler}
       >
         <div className="flex flex-col gap-y-4 sm:gap-y-6 lg:gap-y-8 leading-6">
           <div className="flex gap-x-2 sm:gap-x-4">
@@ -108,7 +100,7 @@ function CustomerEdit() {
                 type="text"
                 placeholder="John"
                 className="input"
-                value={customerState.name}
+                value={userState.name}
                 onChange={(e) =>
                   dispatch({ type: NAME, payload: e.target.value })
                 }
@@ -121,7 +113,7 @@ function CustomerEdit() {
                 type="text"
                 placeholder="Francisco"
                 className="input"
-                value={customerState.family}
+                value={userState.family}
                 onChange={(e) =>
                   dispatch({ type: FAMILY, payload: e.target.value })
                 }
@@ -136,7 +128,7 @@ function CustomerEdit() {
                 type="text"
                 placeholder="john"
                 className="input"
-                value={customerState.username}
+                value={userState.username}
                 onChange={(e) =>
                   dispatch({ type: USERNAME, payload: e.target.value })
                 }
@@ -150,7 +142,7 @@ function CustomerEdit() {
                 id="birthday"
                 type="date"
                 className="input"
-                value={customerState.birthday}
+                value={userState.birthday}
                 onChange={(e) =>
                   dispatch({ type: BIRTHDAY, payload: e.target.value })
                 }
@@ -168,7 +160,7 @@ function CustomerEdit() {
                 inputMode="numeric"
                 placeholder="09123456789"
                 className="input"
-                value={customerState.phone}
+                value={userState.phone}
                 onChange={(e) =>
                   dispatch({ type: PHONE, payload: e.target.value })
                 }
@@ -182,7 +174,7 @@ function CustomerEdit() {
                 placeholder="johnfrans@gmail.com"
                 inputMode="email"
                 className="input"
-                value={customerState.email}
+                value={userState.email}
                 onChange={(e) =>
                   dispatch({ type: EMAIL, payload: e.target.value })
                 }
@@ -194,7 +186,7 @@ function CustomerEdit() {
           <button className="btn btn--small btn--secondary" type="submit">
             Update
           </button>
-          <Link to={"/customers"}>
+          <Link to={"/users"}>
             <button className="btn btn--small btn--secondary">Cancel</button>
           </Link>
         </div>
@@ -203,4 +195,4 @@ function CustomerEdit() {
   );
 }
 
-export default CustomerEdit;
+export default UserEdit;

@@ -44,7 +44,7 @@ function isProductExists(list, productId) {
 
 function filterProductsByCategory(products = [], category) {
   return products.filter(
-    (product) => category == null || product.category === category
+    (product) => category == null || product.category === category,
   );
 }
 
@@ -61,18 +61,15 @@ const searchProduct = (products = [], param) => {
   });
 };
 
-const searchCustomer = (customers = [], param) => {
-  if (param.trim() === "") return customers;
+const searchUser = (users = [], param) => {
+  if (param.trim() === "") return users;
 
-  return customers?.filter((customer) => {
-    const isNameMatch = isStartsWith(customer.name, param);
-    const isFamilyMatch = isStartsWith(customer.family, param);
-    const isUsernameMatch = isStartsWith(customer.username, param);
+  return users?.filter((user) => {
+    const isNameMatch = isStartsWith(user.name, param);
+    const isFamilyMatch = isStartsWith(user.family, param);
+    const isUsernameMatch = isStartsWith(user.username, param);
 
-    const isFullNameMatch = isStartsWith(
-      `${customer.name} ${customer.family}`,
-      param
-    );
+    const isFullNameMatch = isStartsWith(`${user.name} ${user.family}`, param);
 
     return isNameMatch || isFamilyMatch || isUsernameMatch || isFullNameMatch;
   });
@@ -82,22 +79,22 @@ const searchOrder = (orders = [], param) => {
   if (param.trim() === "") return orders;
 
   return orders?.filter((order) => {
-    const isCustomerNameMatch = isStartsWith(order.customerName, param);
-    const isCustomerFamilyMatch = isStartsWith(order.customerFamily, param);
+    const isUserNameMatch = isStartsWith(order.userName, param);
+    const isUserFamilyMatch = isStartsWith(order.userFamily, param);
     const isStatusMatch = order.status === normalizeText(param);
     const isOrderDateMatch = isDateMatch(order.createdAt, param);
     const isAddressMatch = isIncludes(order.deliveredAddress, param);
 
-    const isCustomerFullNameMatch = isStartsWith(
-      `${order.customerName} ${order.customerFamily}`,
-      param
+    const isUserFullNameMatch = isStartsWith(
+      `${order.userName} ${order.userFamily}`,
+      param,
     );
 
     return (
-      isCustomerNameMatch ||
-      isCustomerFamilyMatch ||
+      isUserNameMatch ||
+      isUserFamilyMatch ||
       isAddressMatch ||
-      isCustomerFullNameMatch ||
+      isUserFullNameMatch ||
       isStatusMatch ||
       isOrderDateMatch
     );
@@ -123,7 +120,7 @@ export {
   filterProductsByCategory,
   removeItemFromList,
   searchProduct,
-  searchCustomer,
+  searchUser,
   searchCategory,
   searchOrder,
   paginateItems,

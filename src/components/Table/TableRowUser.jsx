@@ -2,9 +2,9 @@ import { Link } from "react-router";
 import { formattingDateTime, normalizeDateTime } from "@/utils/dateTime";
 import AlertModalWarning from "@/components/AlertModalWarning";
 
-function TableRowCustomer({
+function TableRowUser({
   number,
-  customerId,
+  userId,
   name,
   family,
   username,
@@ -53,7 +53,7 @@ function TableRowCustomer({
         <td>
           <div className="flex justify-center gap-x-2">
             <Link
-              to={`${customerId}`}
+              to={`${userId}`}
               className="btn btn--square btn--secondary"
             >
               <svg className="size-4 lg:size-5">
@@ -61,7 +61,7 @@ function TableRowCustomer({
               </svg>
             </Link>
             <AlertModalWarning
-              title={"Are you sure want to delete customer?"}
+              title={"Are you sure want to delete user?"}
               description={"This can't be undo!!"}
               onConfirm={onDelete}
             >
@@ -78,4 +78,4 @@ function TableRowCustomer({
   );
 }
 
-export default TableRowCustomer;
+export default TableRowUser;

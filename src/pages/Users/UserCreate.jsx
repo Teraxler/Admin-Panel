@@ -1,11 +1,11 @@
 import { useReducer } from "react";
-import { toast } from "sonner";
 import { Link, useNavigate } from "react-router";
+import { toast } from "sonner";
 import { API_URL } from "@/constants";
-import { registerSchema } from "@/../validators/registerValidator";
+import { registerSchema } from "@/../validators/authValidator";
 import Breadcrumb from "@/components/Breadcrumb";
-import customerReducer from "@/reducers/customer";
 import Head from "@/components/common/Head";
+import userReducer from "@/reducers/user";
 import {
   NAME,
   FAMILY,
@@ -14,12 +14,13 @@ import {
   PHONE,
   BIRTHDAY,
   PASSWORD,
-} from "../../actions/customer";
+} from "../../actions/user";
 
-function CustomerCreate() {
+function UserCreate() {
   const navigate = useNavigate();
 
-  const [customer, dispatch] = useReducer(customerReducer, {
+  const [user, dispatch] = useReducer(userReducer, {
+    name: "",
     family: "",
     username: "",
     phone: "",
@@ -28,36 +29,36 @@ function CustomerCreate() {
     password: "",
   });
 
-  function createCustomerHandler(e) {
+  function createUserHandler(e) {
     e.preventDefault();
 
-    const newCustomer = {
-      ...customer,
-      phone: customer.phone || null,
-      birthday: customer.birthday ? new Date(customer.birthday) : null,
+    const newUser = {
+      ...user,
+      phone: user.phone || null,
+      birthday: user.birthday || null,
     };
 
-    const { success, error } = registerSchema.safeParse(newCustomer);
+    const { success, error } = registerSchema.safeParse(newUser);
 
-    if (success) return createCustomer(newCustomer);
+    if (success) return createUser(newUser);
 
     toast.error(error.issues[0].message);
   }
 
-  async function createCustomer(customer) {
+  async function createUser(user) {
     try {
       const response = await fetch(`${API_URL}/auth/register`, {
         headers: {
           "Content-Type": "application/json",
         },
         method: "POST",
-        body: JSON.stringify(customer),
+        body: JSON.stringify(user),
       });
 
       if (!response.ok) throw await response.json();
 
-      navigate("/customers", {
-        state: { message: "Customer created successfully" },
+      navigate("/users", {
+        state: { message: "User created successfully" },
       });
     } catch (error) {
       toast.error(error.message);
@@ -67,17 +68,17 @@ function CustomerCreate() {
   return (
     <>
       <Head>
-        <title>Admin Panel - Create Customer</title>
+        <title>Admin Panel - Create User</title>
       </Head>
 
       <div>
-        <h1 className="title">Create Customer</h1>
+        <h1 className="title">Create User</h1>
         <Breadcrumb />
       </div>
 
       <form
         className="w-full bg-white p-2.5 sm:px-4 py-4 mt-8 rounded-md shadow text-sm font-medium"
-        onSubmit={createCustomerHandler}
+        onSubmit={createUserHandler}
       >
         <div className="flex flex-col gap-y-4 sm:gap-y-6 lg:gap-y-8 leading-6">
           <div className="flex gap-x-2 sm:gap-x-4">
@@ -88,7 +89,7 @@ function CustomerCreate() {
                 type="text"
                 placeholder="John"
                 className="input"
-                value={customer.name}
+                value={user.name}
                 onChange={(e) =>
                   dispatch({ type: NAME, payload: e.target.value })
                 }
@@ -101,7 +102,7 @@ function CustomerCreate() {
                 type="text"
                 placeholder="Francisco"
                 className="input"
-                value={customer.family}
+                value={user.family}
                 onChange={(e) =>
                   dispatch({ type: FAMILY, payload: e.target.value })
                 }
@@ -116,7 +117,7 @@ function CustomerCreate() {
                 type="text"
                 placeholder="john"
                 className="input"
-                value={customer.username}
+                value={user.username}
                 onChange={(e) =>
                   dispatch({ type: USERNAME, payload: e.target.value })
                 }
@@ -130,7 +131,7 @@ function CustomerCreate() {
                 id="birthday"
                 type="date"
                 className="input "
-                value={customer.birthday}
+                value={user.birthday}
                 onChange={(e) =>
                   dispatch({ type: BIRTHDAY, payload: e.target.value })
                 }
@@ -148,7 +149,7 @@ function CustomerCreate() {
                 placeholder="09123456789"
                 className="input"
                 inputMode="numeric"
-                value={customer.phone}
+                value={user.phone}
                 onChange={(e) =>
                   dispatch({ type: PHONE, payload: e.target.value })
                 }
@@ -162,7 +163,7 @@ function CustomerCreate() {
                 inputMode="email"
                 placeholder="johnfrans@gmail.com"
                 className="input"
-                value={customer.email}
+                value={user.email}
                 onChange={(e) =>
                   dispatch({ type: EMAIL, payload: e.target.value })
                 }
@@ -176,7 +177,7 @@ function CustomerCreate() {
               type="password"
               placeholder="12G@H33s"
               className="input"
-              value={customer.password}
+              value={user.password}
               onChange={(e) =>
                 dispatch({ type: PASSWORD, payload: e.target.value })
               }
@@ -188,7 +189,7 @@ function CustomerCreate() {
           <button type="submit" className="btn btn--small btn--secondary">
             Create
           </button>
-          <Link to={"/customers"}>
+          <Link to={"/users"}>
             <button className="btn btn--small btn--secondary">Cancel</button>
           </Link>
         </div>
@@ -197,4 +198,4 @@ function CustomerCreate() {
   );
 }
 
-export default CustomerCreate;
+export default UserCreate;
