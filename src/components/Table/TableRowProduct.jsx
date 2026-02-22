@@ -1,6 +1,6 @@
 import { Link } from "react-router";
-import AlertModalWarning from "@/components/AlertModalWarning";
 import { API_URL } from "@/constants";
+import AlertModalWarning from "@/components/AlertModalWarning";
 
 function TableRowProduct({
   productId,
@@ -63,7 +63,7 @@ function TableRowProduct({
             onConfirm={onDelete}
           >
             <button className="btn btn--square btn--secondary">
-              <svg className="size-4 lg:size-5">
+              <svg className="size-4 lg:size-5 text-red-600">
                 <use href="#trash"></use>
               </svg>
             </button>

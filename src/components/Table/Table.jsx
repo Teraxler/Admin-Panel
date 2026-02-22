@@ -1,6 +1,6 @@
 function Table({ children, columns }) {
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto scroll-thin">
       <table className="text-sm lg:text-base w-full text-center">
         <thead className="">
           <tr className="text-secondary *:font-medium *:not-last:border-r *:border-r-neutral-200">

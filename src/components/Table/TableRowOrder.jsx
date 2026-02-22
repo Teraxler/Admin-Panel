@@ -1,18 +1,24 @@
 import { Link } from "react-router";
-import AlertModalWarning from "@/components/AlertModalWarning";
 import { formattingDateTime, normalizeDateTime } from "@/utils/dateTime";
+import AlertModalWarning from "@/components/AlertModalWarning";
+
+const statusColor = {
+  canceled: "bg-red-100 text-red-700",
+  delivered: "bg-green-100 text-green-700",
+  "in progress": "bg-blue-100 text-blue-700",
+};
 
 function TableRowOrder({
+  noAction = false,
   number,
-  orderId,
   discountPercent,
   status,
   createdAt,
   deliveredAddress,
   itemCount,
   totalPrice,
-  customerName,
-  customerFamily,
+  userName,
+  userFamily,
   onDelete,
 }) {
   const normalizedDateTime = normalizeDateTime(createdAt);
@@ -26,9 +32,9 @@ function TableRowOrder({
       <td>
         <span
           className="line-clamp-1 capitalize min-w-30"
-          title={`${customerName} ${customerFamily}`}
+          title={userName || userFamily ? `${userName} ${userFamily}` : ""}
         >
-          {customerName} {customerFamily}
+          {userName || userFamily ? `${userName} ${userFamily}` : "Unknown"}
         </span>
       </td>
       <td>
@@ -49,31 +55,34 @@ function TableRowOrder({
         <span className="line-clamp-1">${totalPrice}</span>
       </td>
       <td>
-        <span className="line-clamp-1 min-w-25">{status}</span>
+        <span
+          className={`line-clamp-1 w-max py-0.5 px-2 mx-auto rounded ${statusColor[status]}`}
+        >
+          {status}
+        </span>
       </td>
-      <td>
-        <div className="flex justify-center gap-x-2">
-          <Link
-            to={``}
-            className="size-9 lg:size-10 flex items-center justify-center border border-pale-slate rounded-lg text-carbon-black cursor-pointer"
-          >
-            <svg className="size-4 lg:size-5">
-              <use href="#arrow-up-right"></use>
-            </svg>
-          </Link>
-          <AlertModalWarning
-            title={"Are you sure want to delete product?"}
-            description={"This can't be undo!!"}
-            onConfirm={onDelete}
-          >
-            <button className="size-9 lg:size-10 flex items-center justify-center border border-pale-slate rounded-lg text-carbon-black cursor-pointer">
+      {!noAction ? (
+        <td>
+          <div className="flex justify-center gap-x-2">
+            <Link to={``} className="btn btn--square btn--secondary">
               <svg className="size-4 lg:size-5">
-                <use href="#trash"></use>
+                <use href="#arrow-up-right"></use>
               </svg>
-            </button>
-          </AlertModalWarning>
-        </div>
-      </td>
+            </Link>
+            <AlertModalWarning
+              title={"Are you sure want to delete product?"}
+              description={"This can't be undo!!"}
+              onConfirm={onDelete}
+            >
+              <button className="btn btn--square btn--secondary">
+                <svg className="size-4 lg:size-5 text-red-600">
+                  <use href="#trash"></use>
+                </svg>
+              </button>
+            </AlertModalWarning>
+          </div>
+        </td>
+      ) : null}
     </tr>
   );
 }
