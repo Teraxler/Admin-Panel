@@ -31,12 +31,12 @@ const ProfileDropDown = ({ user }) => {
         <li>
           <Link
             className="flex gap-x-2 p-2 m-1 rounded-sm hover:bg-neutral-100 active:bg-neutral-200 transition"
-            to={`/users/${userId}`}
+            to={`/myprofile`}
           >
             <svg className="size-5">
               <use href="#user"></use>
             </svg>
-            <span>View Profile</span>
+            <span>My Profile</span>
           </Link>
         </li>
         <li>

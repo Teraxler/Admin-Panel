@@ -3,6 +3,8 @@ import { lazy } from "react";
 import { AuthProvider } from "@/contexts/AuthContext";
 import ProtectedRoute from "@/pages/ProtectedRoute/ProtectedRoute";
 
+const MyProfile = lazy(() => import("@/pages/Profile/MyProfile"));
+
 const Dashboard = lazy(() => import("@/pages/Dashboard/Dashboard"));
 
 const Login = lazy(() => import("@/pages/Auth/Login"));
@@ -36,6 +38,11 @@ export const router = createBrowserRouter([
     handle: { breadcrumb: "Dashboard" },
     children: [
       { path: "/", element: <Dashboard /> },
+      {
+        path: "myprofile",
+        element: <MyProfile />,
+        handle: { breadcrumb: "My Profile" },
+      },
       {
         path: "users",
         handle: { breadcrumb: "Users" },

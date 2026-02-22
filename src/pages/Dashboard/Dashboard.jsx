@@ -1,5 +1,6 @@
 import { API_URL } from "@/constants";
 import useFetch from "@/hooks/useFetch";
+import { useToastMessage } from "@/hooks/useToastMessage";
 import Head from "@/components/common/Head";
 import Breadcrumb from "@/components/Breadcrumb";
 import Table from "@/components/Table/Table";
@@ -19,6 +20,7 @@ const tableColumns = [
 ];
 
 const Dashboard = () => {
+  useToastMessage();
   const { data: recentOrders, isLoaded } = useFetch(`${API_URL}/orders`);
 
   return (

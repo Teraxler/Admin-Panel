@@ -6,6 +6,7 @@ import {
   PHONE,
   BIRTHDAY,
   PASSWORD,
+  NEW_PASSWORD,
   ALL,
 } from "@/actions/user";
 
@@ -33,6 +34,9 @@ const userReducer = (user, action) => {
     }
     case PASSWORD: {
       return { ...user, password: payload };
+    }
+    case NEW_PASSWORD: {
+      return { ...user, newPassword: payload };
     }
     case ALL: {
       return payload;
