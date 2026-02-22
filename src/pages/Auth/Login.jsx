@@ -33,7 +33,12 @@ function Login() {
       const result = await response.json();
       setUserId(result.userId);
 
-      navigate("/");
+      navigate("/", {
+        state: {
+          message: "You logged in successfully",
+          messageType: "success",
+        },
+      });
     } catch (error) {
       toast.error(error.message);
     }

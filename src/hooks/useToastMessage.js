@@ -8,7 +8,9 @@ export const useToastMessage = () => {
 
   useEffect(() => {
     if (location.state) {
-      toast.success(location.state.message);
+      const messageType = location.state.messageType || "success";
+
+      toast[messageType](location.state.message);
 
       navigate(location.pathname, { replace: true, state: null });
     }

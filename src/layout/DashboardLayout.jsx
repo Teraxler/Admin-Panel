@@ -1,12 +1,15 @@
-import { Outlet } from "react-router";
-import Sidebar from "@/components/common/Sidebar";
-import Header from "@/components/common/Header";
-import SvgIcons from "@/components/common/SvgIcons";
-import { Toaster } from "sonner";
 import { useState } from "react";
+import { Outlet } from "react-router";
+import { Toaster } from "sonner";
 import { Overlay } from "@/components/Overlay";
+import Header from "@/components/common/Header";
+import Sidebar from "@/components/common/Sidebar";
+import SvgIcons from "@/components/common/SvgIcons";
+import { useToastMessage } from "@/hooks/useToastMessage";
 
 function DashboardLayout() {
+  useToastMessage();
+
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);
 
   const hideSidebar = () => setIsSidebarVisible(false);
