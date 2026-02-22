@@ -1,6 +1,8 @@
 import { createBrowserRouter } from "react-router";
 import { lazy } from "react";
 
+const Login = lazy(() => import("./pages/Auth/Login"));
+
 const OrderList = lazy(() => import("./pages/Orders/OrderList"));
 
 const MainLayout = lazy(() => import("./layout/DashboardLayout.jsx"));
@@ -86,6 +88,7 @@ export const router = createBrowserRouter([
       },
     ],
   },
+  { path: "auth", children: [{ path: "login", element: <Login /> }] },
 
   // { path: "*", element: <NotFound /> },
 ]);

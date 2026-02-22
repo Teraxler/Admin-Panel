@@ -138,3 +138,9 @@
     @apply text-text-disabled bg-neutral-200 pointer-events-none;
   }
 }
+
+@layer utilities {
+  .scroll-thin {
+    scrollbar-width: thin;
+  }
+}
