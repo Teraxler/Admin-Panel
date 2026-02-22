@@ -5,8 +5,10 @@ import { API_URL } from "@/constants";
 import { categorySchema } from "@/../validators/categoryValidator";
 import Breadcrumb from "@/components/Breadcrumb";
 import Head from "@/components/common/Head";
+import { useCookie } from "@/hooks/useCookie";
 
 function CategoryCareate() {
+  const [userId, setUserId] = useCookie("userId");
   const navigate = useNavigate();
   const [categoryName, setCategoryName] = useState("");
 
@@ -24,6 +26,7 @@ function CategoryCareate() {
     try {
       const response = await fetch(`${API_URL}/categories`, {
         headers: {
+          Authorization: `Bearer ${userId}`,
           "Content-Type": "application/json",
         },
         method: "POST",

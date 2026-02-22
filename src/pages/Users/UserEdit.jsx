@@ -3,7 +3,7 @@ import { Link, useParams, useNavigate } from "react-router";
 import { toast } from "sonner";
 import useFetch from "@/hooks/useFetch";
 import { API_URL } from "@/constants";
-import { registerSchema } from "@/../validators/authValidator";
+import { editUserSchema } from "@/../validators/authValidator";
 import Breadcrumb from "@/components/Breadcrumb";
 import userReducer from "@/reducers/user";
 import Head from "@/components/common/Head";
@@ -47,9 +47,10 @@ function UserEdit() {
       ...userState,
       phone: userState.phone || null,
       birthday: userState.birthday || null,
+      password: userState.password || null,
     };
 
-    const { success, error } = registerSchema.safeParse(editedUser);
+    const { success, error } = editUserSchema.safeParse(editedUser);
 
     if (success) return updateUser(editedUser);
 

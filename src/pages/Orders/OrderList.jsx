@@ -14,7 +14,7 @@ import TableRowOrder from "@/components/Table/TableRowOrder";
 
 const tableColumns = [
   "#",
-  "Customer",
+  "User",
   "Date",
   "Address",
   "Discount",
@@ -79,7 +79,7 @@ function OrderList() {
             searchHandler={searchOrder}
             isItemsLoaded={isOrdersLoaded}
             setFilteredItems={setFilteredOrders}
-            placeholder="Search (customer, date ,status)"
+            placeholder="Search (user, date ,status)"
           />
         </div>
         <div className="p-2 sm:p-4 bg-white rounded-lg">
