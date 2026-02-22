@@ -1,39 +1,41 @@
 import { createBrowserRouter } from "react-router";
 import { lazy } from "react";
-import AuthContext from "./contexts/AuthContext";
-import ProtectedRoute from "./pages/ProtectedRoute/ProtectedRoute";
+import { AuthProvider } from "@/contexts/AuthContext";
+import ProtectedRoute from "@/pages/ProtectedRoute/ProtectedRoute";
 
-const Login = lazy(() => import("./pages/Auth/Login"));
+const Dashboard = lazy(() => import("@/pages/Dashboard/Dashboard"));
 
-const OrderList = lazy(() => import("./pages/Orders/OrderList"));
+const Login = lazy(() => import("@/pages/Auth/Login"));
 
-const MainLayout = lazy(() => import("./layout/DashboardLayout.jsx"));
+const OrderList = lazy(() => import("@/pages/Orders/OrderList"));
 
-const ProductList = lazy(() => import("./pages/Products/ProductList"));
-const ProductEdit = lazy(() => import("./pages/Products/ProductEdit"));
-const ProductCreate = lazy(() => import("./pages/Products/ProductCreate"));
+const MainLayout = lazy(() => import("@/layout/DashboardLayout.jsx"));
 
-const UserList = lazy(() => import("./pages/Users/UserList"));
-const UserEdit = lazy(() => import("./pages/Users/UserEdit"));
-const UserCreate = lazy(() => import("./pages/Users/UserCreate"));
+const ProductList = lazy(() => import("@/pages/Products/ProductList"));
+const ProductEdit = lazy(() => import("@/pages/Products/ProductEdit"));
+const ProductCreate = lazy(() => import("@/pages/Products/ProductCreate"));
 
-const CategoryList = lazy(() => import("./pages/Categories/CategoryList"));
-const CategoryEdit = lazy(() => import("./pages/Categories/CategoryEdit"));
-const CategoryCreate = lazy(() => import("./pages/Categories/CategoryCreate"));
+const UserList = lazy(() => import("@/pages/Users/UserList"));
+const UserEdit = lazy(() => import("@/pages/Users/UserEdit"));
+const UserCreate = lazy(() => import("@/pages/Users/UserCreate"));
+
+const CategoryList = lazy(() => import("@/pages/Categories/CategoryList"));
+const CategoryEdit = lazy(() => import("@/pages/Categories/CategoryEdit"));
+const CategoryCreate = lazy(() => import("@/pages/Categories/CategoryCreate"));
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <AuthContext>
+      <AuthProvider>
         <ProtectedRoute>
           <MainLayout />
         </ProtectedRoute>
-      </AuthContext>
+      </AuthProvider>
     ),
     handle: { breadcrumb: "Dashboard" },
     children: [
-      // { path: "/", element: <Dashboard /> },
+      { path: "/", element: <Dashboard /> },
       {
         path: "users",
         handle: { breadcrumb: "Users" },
