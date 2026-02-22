@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const useFetch = (url) => {
+export const useFetch = (url) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
@@ -52,7 +52,7 @@ const useFetch = (url) => {
   return { data, isLoaded, error, setData };
 };
 
-const useFetchRecursive = (url) => {
+export const useFetchRecursive = (url) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
@@ -76,7 +76,10 @@ const useFetchRecursive = (url) => {
         console.log("Try", retry, "Failed...", backOffTime);
         if (retry > 1) {
           await new Promise(() =>
-            setTimeout(() => fetchData(retry - 1, backOffTime * 2), backOffTime)
+            setTimeout(
+              () => fetchData(retry - 1, backOffTime * 2),
+              backOffTime,
+            ),
           );
         }
 
@@ -97,5 +100,3 @@ const useFetchRecursive = (url) => {
 
   return [data, isLoaded, error, setData];
 };
-
-export default useFetch;

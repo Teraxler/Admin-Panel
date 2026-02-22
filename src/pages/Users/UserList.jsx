@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import { toast } from "sonner";
 import { API_URL, ITEMS_PER_PAGE } from "@/constants";
 import { removeItemFromList, searchUser } from "@/utils/array.util";
-import useFetch from "@/hooks/useFetch";
+import { useFetch } from "@/hooks/useFetch";
 import { useToastMessage } from "@/hooks/useToastMessage";
 import Head from "@/components/common/Head";
 import Table from "@/components/Table/Table";
@@ -22,8 +22,7 @@ const tableColumns = [
   "",
 ];
 
-const removeUserById = (users, id) =>
-  removeItemFromList(users, "userId", id);
+const removeUserById = (users, id) => removeItemFromList(users, "userId", id);
 
 function UserList() {
   useToastMessage();
@@ -32,9 +31,7 @@ function UserList() {
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [currentPageUsers, setCurrentPageUsers] = useState([]);
 
-  const { data: users, isLoaded: isUsersLoaded } = useFetch(
-    `${API_URL}/users`,
-  );
+  const { data: users, isLoaded: isUsersLoaded } = useFetch(`${API_URL}/users`);
 
   const calcItemNumber = (index) =>
     (currentPage - 1) * ITEMS_PER_PAGE + index + 1;
@@ -47,9 +44,7 @@ function UserList() {
 
       if (!response.ok) throw new Error("Failed to delete");
 
-      setFilteredUsers((prevUsers) =>
-        removeUserById(prevUsers, userId),
-      );
+      setFilteredUsers((prevUsers) => removeUserById(prevUsers, userId));
 
       toast.success("User delete successfully");
     } catch (error) {

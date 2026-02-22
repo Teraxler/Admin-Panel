@@ -175,7 +175,7 @@ function UserCreate() {
             <input
               id="password"
               type="password"
-              placeholder="12G@H33s"
+              placeholder="****"
               className="input"
               value={user.password}
               onChange={(e) =>

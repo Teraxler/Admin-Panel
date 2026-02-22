@@ -1,5 +1,5 @@
 import { API_URL } from "@/constants";
-import useFetch from "@/hooks/useFetch";
+import { useFetch } from "@/hooks/useFetch";
 import { useToastMessage } from "@/hooks/useToastMessage";
 import Head from "@/components/common/Head";
 import Breadcrumb from "@/components/Breadcrumb";

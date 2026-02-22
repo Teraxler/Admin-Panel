@@ -1,10 +1,9 @@
-import { useState } from "react";
-import { toast } from "sonner";
+import { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router";
-import useFetch from "@/hooks/useFetch";
+import { toast } from "sonner";
 import { API_URL } from "@/constants";
-import { useEffect } from "react";
 import { categorySchema } from "@/../validators/categoryValidator";
+import { useFetch } from "@/hooks/useFetch";
 import Breadcrumb from "@/components/Breadcrumb";
 import Head from "@/components/common/Head";
 

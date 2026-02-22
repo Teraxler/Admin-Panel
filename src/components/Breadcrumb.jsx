@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { Link, useMatches } from "react-router";
 
-function Breadcrumb() {
+const Breadcrumb = () => {
   const matches = useMatches();
   const filteredMatches = matches.filter((match) => match.handle);
 
@@ -27,6 +27,6 @@ function Breadcrumb() {
       })}
     </div>
   );
-}
+};
 
 export default Breadcrumb;

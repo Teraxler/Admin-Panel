@@ -1,7 +1,7 @@
 import { AlertDialog, Button, Flex } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
 
-function AlertModalWarning({ title, description, onConfirm, children }) {
+const AlertModalWarning = ({ title, description, onConfirm, children }) => {
   return (
     <AlertDialog.Root>
       <AlertDialog.Trigger asChild>{children}</AlertDialog.Trigger>
@@ -29,6 +29,6 @@ function AlertModalWarning({ title, description, onConfirm, children }) {
       </AlertDialog.Content>
     </AlertDialog.Root>
   );
-}
+};
 
 export default AlertModalWarning;

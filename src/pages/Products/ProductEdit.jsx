@@ -1,12 +1,12 @@
 import { useEffect, useReducer } from "react";
 import { Link, useParams, useNavigate } from "react-router";
 import { toast } from "sonner";
-import { API_URL } from "@/constants";
-import useFetch from "@/hooks/useFetch";
-import productReducer from "@/reducers/product";
 import { productSchema } from "@/../validators/productValidator";
+import { API_URL } from "@/constants";
+import { useFetch } from "@/hooks/useFetch";
 import Breadcrumb from "@/components/Breadcrumb";
 import Head from "@/components/common/Head";
+import productReducer from "@/reducers/product";
 import {
   ALL,
   CATEGORY_ID,

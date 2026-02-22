@@ -1,12 +1,12 @@
 import { useEffect, useReducer } from "react";
 import { Link, useParams, useNavigate } from "react-router";
 import { toast } from "sonner";
-import useFetch from "@/hooks/useFetch";
 import { API_URL } from "@/constants";
 import { editUserSchema } from "@/../validators/authValidator";
+import { useFetch } from "@/hooks/useFetch";
 import Breadcrumb from "@/components/Breadcrumb";
-import userReducer from "@/reducers/user";
 import Head from "@/components/common/Head";
+import userReducer from "@/reducers/user";
 import { NAME, FAMILY, USERNAME, EMAIL, PHONE, BIRTHDAY } from "@/actions/user";
 
 function UserEdit() {

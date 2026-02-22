@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import { toast } from "sonner";
 import { API_URL, ITEMS_PER_PAGE } from "@/constants";
 import { searchProduct, removeItemFromList } from "@/utils/array.util";
-import useFetch from "@/hooks/useFetch";
+import { useFetch } from "@/hooks/useFetch";
 import { useToastMessage } from "@/hooks/useToastMessage";
 import Head from "@/components/common/Head";
 import Table from "@/components/Table/Table";

@@ -1,6 +1,6 @@
 import { createContext } from "react";
 import { API_URL } from "@/constants";
-import useFetch from "@/hooks/useFetch";
+import { useFetch } from "@/hooks/useFetch";
 import { useCookie } from "@/hooks/useCookie";
 
 const AuthContext = createContext();
