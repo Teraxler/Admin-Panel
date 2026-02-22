@@ -1,5 +1,7 @@
 import { createBrowserRouter } from "react-router";
 import { lazy } from "react";
+import AuthContext from "./contexts/AuthContext";
+import ProtectedRoute from "./pages/ProtectedRoute/ProtectedRoute";
 
 const Login = lazy(() => import("./pages/Auth/Login"));
 
@@ -22,7 +24,13 @@ const CategoryCreate = lazy(() => import("./pages/Categories/CategoryCreate"));
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <MainLayout />,
+    element: (
+      <AuthContext>
+        <ProtectedRoute>
+          <MainLayout />
+        </ProtectedRoute>
+      </AuthContext>
+    ),
     handle: { breadcrumb: "Dashboard" },
     children: [
       // { path: "/", element: <Dashboard /> },
