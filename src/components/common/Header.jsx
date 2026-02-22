@@ -1,7 +1,11 @@
+import { useContext } from "react";
 import { API_URL } from "@/constants";
+import AuthContext from "@/contexts/AuthContext";
 import { useScroll } from "@/hooks/useScroll";
+import ProfileDropDown from "@/components/ProfileDropDown/ProfileDropDown";
 
 function Header({ onClick }) {
+  const { user } = useContext(AuthContext);
   const offset = useScroll();
 
   return (
@@ -30,17 +34,22 @@ function Header({ onClick }) {
             <use href="#envelop"></use>
           </svg>
         </div>
-        <div className="btn btn--small btn--secondary max-lg:h-9">
-          <div className="rounded-xs overflow-hidden size-5 lg:size-6">
-            <img
-              src={`${API_URL}/images/customers/customer1.png`}
-              alt="User Profile"
-            />
+        <div className="group relative btn btn--small btn--secondary justify-between max-lg:h-9 w-9 min-w-auto sm:w-50">
+          <div className="flex items-center gap-x-2">
+            <div className="shrink-0 rounded-xs overflow-hidden size-5 lg:size-6">
+              <img
+                src={`${API_URL}/images/users/user-1.png`}
+                alt="User Profile"
+              />
+            </div>
+            <span className="capitalize invisible opacity-0 hidden sm:line-clamp-1 sm:visible sm:opacity-100">
+              {user?.name} {user?.family}
+            </span>
           </div>
-          <span className="line-clamp-1">Derek Alvarado</span>
-          <svg className="size-4 lg:size-5">
+          <svg className="hidden sm:block sm:size-4 lg:size-5 shrink-0">
             <use href="#chevron-down"></use>
           </svg>
+          <ProfileDropDown user={user} />
         </div>
       </div>
     </header>
