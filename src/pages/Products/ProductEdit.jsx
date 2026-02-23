@@ -53,7 +53,15 @@ function ProductEdit() {
   }, [product.coverFile]);
 
   useEffect(() => {
-    if (isProductLoaded) dispatch({ type: ALL, payload: fetchedProduct });
+    if (!isProductLoaded) return;
+
+    if (fetchedProduct == null) {
+      navigate("/products", {
+        state: { message: "Product ID is invalid!", messageType: "error" },
+      });
+    }
+
+    dispatch({ type: ALL, payload: fetchedProduct });
   }, [isProductLoaded]);
 
   function updateProductHandler(e) {

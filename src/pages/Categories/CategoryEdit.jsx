@@ -18,7 +18,15 @@ function CategoryEdit() {
   );
 
   useEffect(() => {
-    isCategoryLoaded && setCategoryName(category.name);
+    if (!isCategoryLoaded) return;
+
+    if (category == null) {
+      navigate("/categories", {
+        state: { message: "Category ID is invalid!", messageType: "error" },
+      });
+    }
+
+    setCategoryName(category.name);
   }, [isCategoryLoaded]);
 
   function updateCustomerHandler(e) {

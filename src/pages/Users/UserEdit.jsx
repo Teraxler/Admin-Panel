@@ -30,6 +30,12 @@ function UserEdit() {
   useEffect(() => {
     if (!isUserLoaded) return;
 
+    if (user == null) {
+      navigate("/users", {
+        state: { message: "User ID is invalid!", messageType: "error" },
+      });
+    }
+
     dispatch({
       type: "ALL",
       payload: {
