@@ -3,6 +3,8 @@ import { lazy } from "react";
 import { AuthProvider } from "@/contexts/AuthContext";
 import ProtectedRoute from "@/pages/ProtectedRoute/ProtectedRoute";
 
+const NotFound = lazy(() => import("@/pages/NotFound/NotFound"));
+
 const MyProfile = lazy(() => import("@/pages/Profile/MyProfile"));
 
 const Dashboard = lazy(() => import("@/pages/Dashboard/Dashboard"));
@@ -107,5 +109,5 @@ export const router = createBrowserRouter([
   },
   { path: "auth", children: [{ path: "login", element: <Login /> }] },
 
-  // { path: "*", element: <NotFound /> },
+  { path: "*", element: <NotFound /> },
 ]);
