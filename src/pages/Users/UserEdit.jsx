@@ -7,7 +7,16 @@ import { useFetch } from "@/hooks/useFetch";
 import Breadcrumb from "@/components/Breadcrumb";
 import Head from "@/components/common/Head";
 import userReducer from "@/reducers/user";
-import { NAME, FAMILY, USERNAME, EMAIL, PHONE, BIRTHDAY } from "@/actions/user";
+import {
+  NAME,
+  FAMILY,
+  USERNAME,
+  EMAIL,
+  PHONE,
+  BIRTHDAY,
+  PASSWORD,
+  NEW_PASSWORD,
+} from "@/actions/user";
 
 function UserEdit() {
   const navigate = useNavigate();
@@ -21,6 +30,7 @@ function UserEdit() {
     email: "",
     birthday: "",
     password: "",
+    newPassword: "",
   });
 
   const { data: user, isLoaded: isUserLoaded } = useFetch(
@@ -42,6 +52,8 @@ function UserEdit() {
         ...user,
         phone: user.phone ?? "",
         birthday: user.birthday?.slice(0, 10) ?? "",
+        password: "",
+        newPassword: "",
       },
     });
   }, [isUserLoaded]);
@@ -54,6 +66,7 @@ function UserEdit() {
       phone: userState.phone || null,
       birthday: userState.birthday || null,
       password: userState.password || null,
+      newPassword: userState.newPassword || null,
     };
 
     const { success, error } = editUserSchema.safeParse(editedUser);
@@ -184,6 +197,34 @@ function UserEdit() {
                 value={userState.email}
                 onChange={(e) =>
                   dispatch({ type: EMAIL, payload: e.target.value })
+                }
+              />
+            </div>
+          </div>
+          <div className="flex gap-x-2 sm:gap-x-4">
+            <div className="w-1/2">
+              <label htmlFor="password">Current Password</label>
+              <input
+                id="password"
+                type="password"
+                placeholder="****"
+                className="input"
+                value={userState.password}
+                onChange={(e) =>
+                  dispatch({ type: PASSWORD, payload: e.target.value })
+                }
+              />
+            </div>
+            <div className="w-1/2">
+              <label htmlFor="new-password">New Password</label>
+              <input
+                id="new-password"
+                type="password"
+                placeholder="****"
+                className="input"
+                value={userState.newPassword}
+                onChange={(e) =>
+                  dispatch({ type: NEW_PASSWORD, payload: e.target.value })
                 }
               />
             </div>
