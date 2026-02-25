@@ -52,7 +52,7 @@ function TableRowUser({
         </td>
         <td>
           <div className="flex justify-center gap-x-2">
-            <Link to={`${userId}`} className="btn btn--square btn--secondary">
+            <Link to={userId} className="btn btn--square btn--secondary">
               <svg className="size-4 lg:size-5">
                 <use href="#pencil-square"></use>
               </svg>
