@@ -1,4 +1,3 @@
-import { data } from "react-router";
 import { pad } from "./string.util.js";
 
 const WEEKDAYS = [

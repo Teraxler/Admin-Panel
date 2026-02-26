@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 import { formattingDateTime, normalizeDateTime } from "@/utils/dateTime";
 import AlertModalWarning from "@/components/AlertModalWarning";
+import { phoneFormat } from "@/utils/string.util";
 
 function TableRowUser({
   number,
@@ -41,8 +42,8 @@ function TableRowUser({
           </span>
         </td>
         <td>
-          <span className="line-clamp-1" title={phone}>
-            {phone ?? "___"}
+          <span className="line-clamp-1 w-max mx-auto" title={phone}>
+            {phone ? phoneFormat(phone) : "___"}
           </span>
         </td>
         <td>

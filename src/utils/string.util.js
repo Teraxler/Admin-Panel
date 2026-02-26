@@ -12,4 +12,15 @@ const isStartsWith = (mainString, param) =>
 const isIncludes = (mainString, param) =>
   normalizeText(mainString).includes(normalizeText(param));
 
-export { normalizeText, pad, isStartsWith, isIncludes };
+const phoneFormat = (phone) => {
+  try {
+    phone = String(phone);
+    if (phone.length !== 11) throw new Error("Phone must contain 11 digit");
+
+    return phone.replace(/(\d{4})(\d{3})(\d{4})/, "$1-$2-$3");
+  } catch (error) {
+    console.error(error.message);
+  }
+};
+
+export { normalizeText, pad, isStartsWith, isIncludes, phoneFormat };
