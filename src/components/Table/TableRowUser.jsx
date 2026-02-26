@@ -14,7 +14,7 @@ function TableRowUser({
   onDelete,
 }) {
   const normalizedDateTime = birthday && normalizeDateTime(birthday);
-  const birthdayDateTime = birthday && formattingDateTime(normalizedDateTime);
+  const formatedDateTime = birthday && formattingDateTime(normalizedDateTime);
 
   return (
     <>
@@ -46,8 +46,10 @@ function TableRowUser({
           </span>
         </td>
         <td>
-          <span className="line-clamp-1" title={birthdayDateTime?.date}>
-            {birthdayDateTime?.date ?? "___"}
+          <span className="line-clamp-1 w-max mx-auto">
+            {formatedDateTime
+              ? `${formatedDateTime.monthName.slice(0, 3)} ${formatedDateTime.day}, ${formatedDateTime.year}`
+              : "___"}
           </span>
         </td>
         <td>

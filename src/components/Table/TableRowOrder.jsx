@@ -24,6 +24,7 @@ function TableRowOrder({
 }) {
   const normalizedDateTime = normalizeDateTime(createdAt);
   const formattedDateTime = formattingDateTime(normalizedDateTime);
+  console.log("🚀 ~ TableRowOrder ~ formattedDateTime:", formattedDateTime);
 
   return (
     <tr className="*:px-2 *:sm:px-4 *:lg:px-6 *:py-2 capitalize">
@@ -39,7 +40,9 @@ function TableRowOrder({
         </span>
       </td>
       <td>
-        <span className="line-clamp-1">{formattedDateTime.date}</span>
+        <span className="line-clamp-1 w-max mx-auto">
+          {`${formattedDateTime.monthName.slice(0, 3)} ${formattedDateTime.day}, ${formattedDateTime.year}`}
+        </span>
       </td>
       <td>
         <span className="line-clamp-1 min-w-50" title={deliveredAddress}>
