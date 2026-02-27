@@ -32,7 +32,7 @@ function Sidebar({ isVisible, onClick }) {
         </li>
         <li>
           <NavLink
-            to="users"
+            to="/users"
             onClick={onClick}
             className={({ isActive }) =>
               `flex items-center gap-x-2 p-3 rounded-lg ${
@@ -50,7 +50,7 @@ function Sidebar({ isVisible, onClick }) {
         </li>
         <li>
           <NavLink
-            to="products"
+            to="/products"
             onClick={onClick}
             className={({ isActive }) =>
               `flex items-center gap-x-2 p-3 rounded-lg ${
@@ -68,7 +68,7 @@ function Sidebar({ isVisible, onClick }) {
         </li>
         <li>
           <NavLink
-            to="orders"
+            to="/orders"
             onClick={onClick}
             className={({ isActive }) =>
               `flex items-center gap-x-2 p-3 rounded-lg ${
@@ -86,7 +86,7 @@ function Sidebar({ isVisible, onClick }) {
         </li>
         <li>
           <NavLink
-            to="categories"
+            to="/categories"
             onClick={onClick}
             className={({ isActive }) =>
               `flex items-center gap-x-2 p-3 rounded-lg ${

@@ -52,7 +52,10 @@ function TableRowProduct({
       </td>
       <td>
         <div className="flex justify-center gap-x-2">
-          <Link to={productId} className="btn btn--square btn--secondary">
+          <Link
+            to={`/products/${productId}`}
+            className="btn btn--square btn--secondary"
+          >
             <svg className="size-4 lg:size-5">
               <use href="#pencil-square"></use>
             </svg>

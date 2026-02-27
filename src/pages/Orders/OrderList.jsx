@@ -71,7 +71,7 @@ function OrderList() {
       </div>
       <section className="mt-8">
         <div className="flex justify-between mb-4">
-          <Link to={""} className="btn btn--small btn--primary">
+          <Link to={"/orders"} className="btn btn--small btn--primary">
             <svg className="size-4">
               <use href="#plus"></use>
             </svg>

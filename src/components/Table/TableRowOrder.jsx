@@ -68,7 +68,10 @@ function TableRowOrder({
       {!noAction ? (
         <td>
           <div className="flex justify-center gap-x-2">
-            <Link to={orderId} className="btn btn--square btn--secondary">
+            <Link
+              to={`/orders/${orderId}`}
+              className="btn btn--square btn--secondary"
+            >
               <svg className="size-4 lg:size-5">
                 <use href="#arrow-up-right"></use>
               </svg>

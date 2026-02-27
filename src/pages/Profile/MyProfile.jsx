@@ -233,7 +233,7 @@ function MyProfile() {
           <button className="btn btn--small btn--secondary" type="submit">
             Update
           </button>
-          <Link to={"/users"}>
+          <Link to={-1}>
             <button className="btn btn--small btn--secondary">Cancel</button>
           </Link>
         </div>
