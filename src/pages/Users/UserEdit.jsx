@@ -17,6 +17,7 @@ import {
   PASSWORD,
   NEW_PASSWORD,
 } from "@/actions/user";
+import Loader from "@/components/Loader";
 
 function UserEdit() {
   const navigate = useNavigate();
@@ -95,6 +96,8 @@ function UserEdit() {
       toast.error(error.message);
     }
   }
+
+  if (!isUserLoaded) return <Loader />;
 
   return (
     <>

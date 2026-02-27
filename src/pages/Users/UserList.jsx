@@ -11,6 +11,7 @@ import SearchBar from "@/components/SearchBar";
 import Breadcrumb from "@/components/Breadcrumb";
 import Pagination from "@/components/Pagination/Pagination";
 import TableRowUser from "@/components/Table/TableRowUser";
+import Loader from "@/components/Loader";
 
 const tableColumns = [
   "#",
@@ -51,6 +52,8 @@ function UserList() {
       toast.error("Something is wrong please try again");
     }
   }
+
+  if (!isUsersLoaded) return <Loader />;
 
   return (
     <>

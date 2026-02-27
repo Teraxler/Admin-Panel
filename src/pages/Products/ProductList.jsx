@@ -11,6 +11,7 @@ import SearchBar from "@/components/SearchBar";
 import Breadcrumb from "@/components/Breadcrumb";
 import Pagination from "@/components/Pagination/Pagination";
 import TableRowProduct from "@/components/Table/TableRowProduct";
+import Loader from "@/components/Loader";
 
 const tableColumns = [
   "#",
@@ -57,6 +58,8 @@ function ProductList() {
       toast.error("Something is wrong please try again");
     }
   }
+
+  if (!isProductsLoaded) return <Loader />;
 
   return (
     <>

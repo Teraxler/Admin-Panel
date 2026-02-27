@@ -8,6 +8,7 @@ import Head from "@/components/common/Head";
 import Table from "@/components/Table/Table";
 import Breadcrumb from "@/components/Breadcrumb";
 import TableRowOrderItem from "@/components/Table/TableRowOrderItem";
+import Loader from "@/components/Loader";
 
 const tableColumns = ["#", "Cover", "Name", "Quantity", "Unit Price", "Total"];
 
@@ -42,6 +43,8 @@ function OrderDetails() {
         }, 0)
       : 0;
   };
+
+  if (!isLoaded) return <Loader />;
 
   return (
     <>

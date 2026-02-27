@@ -11,6 +11,7 @@ import SearchBar from "@/components/SearchBar";
 import Breadcrumb from "@/components/Breadcrumb";
 import Pagination from "@/components/Pagination/Pagination";
 import TableRowCategory from "@/components/Table/TableRowCategory";
+import Loader from "@/components/Loader";
 
 const tableColumns = ["#", "Category", ""];
 
@@ -47,6 +48,8 @@ function CategoryList() {
       toast.error("Something is wrong please try again");
     }
   }
+
+  if (!isCategoriesLoaded) return <Loader />;
 
   return (
     <>

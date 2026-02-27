@@ -7,6 +7,7 @@ import Table from "@/components/Table/Table";
 import ColumnChart from "@/components/Charts/ColumnChart";
 import TableRowOrder from "@/components/Table/TableRowOrder";
 import CircularGaugeChart from "@/components/Charts/CircularGaugeChart";
+import Loader from "@/components/Loader";
 
 const tableColumns = [
   "#",
@@ -22,6 +23,8 @@ const tableColumns = [
 const Dashboard = () => {
   useToastMessage();
   const { data: recentOrders, isLoaded } = useFetch(`${API_URL}/orders`);
+
+  if (!isLoaded) return <Loader />;
 
   return (
     <>

@@ -17,6 +17,7 @@ import {
   NEW_PASSWORD,
 } from "@/actions/user";
 import AuthContext from "@/contexts/AuthContext";
+import Loader from "@/components/Loader";
 
 function MyProfile() {
   const { user, isUserLoaded, setUser } = useContext(AuthContext);
@@ -91,6 +92,8 @@ function MyProfile() {
       toast.error(error.message);
     }
   }
+
+  if (!isUserLoaded) return <Loader />;
 
   return (
     <>

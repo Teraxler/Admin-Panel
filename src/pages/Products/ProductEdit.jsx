@@ -17,6 +17,7 @@ import {
   NAME,
   PRICE,
 } from "@/actions/product";
+import Loader from "@/components/Loader";
 
 function ProductEdit() {
   const navigate = useNavigate();
@@ -100,6 +101,8 @@ function ProductEdit() {
       toast.error(error.message);
     }
   }
+
+  if (!isCategoriesLoaded) return <Loader />;
 
   return (
     <>

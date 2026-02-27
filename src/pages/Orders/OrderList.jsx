@@ -11,6 +11,7 @@ import SearchBar from "@/components/SearchBar";
 import Breadcrumb from "@/components/Breadcrumb";
 import Pagination from "@/components/Pagination/Pagination";
 import TableRowOrder from "@/components/Table/TableRowOrder";
+import Loader from "@/components/Loader";
 
 const tableColumns = [
   "#",
@@ -55,6 +56,8 @@ function OrderList() {
       toast.error("Something is wrong please try again");
     }
   }
+
+  if (!isOrdersLoaded) return <Loader />;
 
   return (
     <>
