@@ -12,6 +12,7 @@ const Dashboard = lazy(() => import("@/pages/Dashboard/Dashboard"));
 const Login = lazy(() => import("@/pages/Auth/Login"));
 
 const OrderList = lazy(() => import("@/pages/Orders/OrderList"));
+const OrderDetails = lazy(() => import("@/pages/Orders/OrderDetails"));
 
 const MainLayout = lazy(() => import("@/layout/DashboardLayout.jsx"));
 
@@ -85,8 +86,15 @@ export const router = createBrowserRouter([
       },
       {
         path: "orders",
-        element: <OrderList />,
         handle: { breadcrumb: "Orders" },
+        children: [
+          { index: true, element: <OrderList /> },
+          {
+            path: ":orderId",
+            element: <OrderDetails />,
+            handle: { breadcrumb: "Order Details" },
+          },
+        ],
       },
       {
         path: "categories",
