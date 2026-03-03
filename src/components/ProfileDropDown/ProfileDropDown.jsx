@@ -1,9 +1,9 @@
-import React from "react";
 import { Link, useNavigate } from "react-router";
 import { API_URL } from "@/constants";
 import { useCookie } from "@/hooks/useCookie";
+import Skeleton from "@/components/Skeleton/Skeleton";
 
-const ProfileDropDown = ({ user }) => {
+const ProfileDropDown = ({ user, isUserLoaded }) => {
   const navigate = useNavigate();
   const [userId, setUserId] = useCookie("userId");
 
@@ -16,15 +16,31 @@ const ProfileDropDown = ({ user }) => {
     <div className="group-hover:visible group-hover:opacity-100 group-active:visible group-active:opacity-100 invisible opacity-0 absolute top-full right-0 bg-white rounded-lg overflow-hidden z-20 w-50 shadow-sm text-sm transition duration-300 capitalize">
       <div className="flex items-center gap-x-2 p-2 m-1 cursor-default">
         <div className="shrink-0 size-5 lg:size-6 rounded-xs overflow-hidden">
-          <img src={`${API_URL}/images/users/user-1.png`} alt="User Profile" />
+          {isUserLoaded ? (
+            <img
+              src={`${API_URL}/images/users/user-1.png`}
+              alt="User Profile"
+            />
+          ) : (
+            <Skeleton className="w-full h-full rounded-xs" />
+          )}
         </div>
         <div>
-          <span className="block">
-            {user?.name} {user?.family}
-          </span>
-          <span className="block text-xs text-slate-grey lowercase">
-            {user?.email}
-          </span>
+          {isUserLoaded ? (
+            <>
+              <span className="block">
+                {user?.name} {user?.family}
+              </span>
+              <span className="block text-xs text-slate-grey lowercase">
+                {user?.email}
+              </span>
+            </>
+          ) : (
+            <>
+              <Skeleton className="w-20 h-3.5 ml-0 rounded" />
+              <Skeleton className="w-25 h-3 ml-0 mt-1.75 rounded" />
+            </>
+          )}
         </div>
       </div>
       <ul className="border-t border-black/15">

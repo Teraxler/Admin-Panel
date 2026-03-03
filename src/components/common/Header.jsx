@@ -47,18 +47,18 @@ function Header({ onClick }) {
                 <Skeleton className={"rounded-xs w-full h-full"} />
               )}
             </div>
-            <span className="capitalize invisible opacity-0 hidden sm:line-clamp-1 sm:visible sm:opacity-100">
-              {isUserLoaded ? (
-                `${user?.name} ${user?.family}`
-              ) : (
-                <Skeleton className="w-22 h-4 rounded" />
-              )}
-            </span>
+            {isUserLoaded ? (
+              <span className="capitalize hidden sm:line-clamp-1">
+                {`${user?.name} ${user?.family}`}
+              </span>
+            ) : (
+              <Skeleton className="hidden sm:block w-22 h-3.5 rounded" />
+            )}
           </div>
           <svg className="hidden sm:block sm:size-4 lg:size-5 shrink-0">
             <use href="#chevron-down"></use>
           </svg>
-          <ProfileDropDown user={user} />
+          <ProfileDropDown user={user} isUserLoaded={isUserLoaded} />
         </div>
       </div>
     </header>

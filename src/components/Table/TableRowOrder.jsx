@@ -24,7 +24,6 @@ function TableRowOrder({
 }) {
   const normalizedDateTime = normalizeDateTime(createdAt);
   const formattedDateTime = formattingDateTime(normalizedDateTime);
-  console.log("🚀 ~ TableRowOrder ~ formattedDateTime:", formattedDateTime);
 
   return (
     <tr className="*:px-2 *:sm:px-4 *:lg:px-6 *:py-2 capitalize">
