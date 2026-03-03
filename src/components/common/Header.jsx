@@ -3,9 +3,10 @@ import { API_URL } from "@/constants";
 import AuthContext from "@/contexts/AuthContext";
 import { useScroll } from "@/hooks/useScroll";
 import ProfileDropDown from "@/components/ProfileDropDown/ProfileDropDown";
+import Skeleton from "@/components/Skeleton/Skeleton";
 
 function Header({ onClick }) {
-  const { user } = useContext(AuthContext);
+  const { user, isUserLoaded } = useContext(AuthContext);
   const offset = useScroll();
 
   return (
@@ -37,13 +38,21 @@ function Header({ onClick }) {
         <div className="group relative btn btn--small btn--secondary justify-between max-lg:h-9 w-9 min-w-auto sm:w-50">
           <div className="flex items-center gap-x-2">
             <div className="shrink-0 rounded-xs overflow-hidden size-5 lg:size-6">
-              <img
-                src={`${API_URL}/images/users/user-1.png`}
-                alt="User Profile"
-              />
+              {isUserLoaded ? (
+                <img
+                  src={`${API_URL}/images/users/user-1.png`}
+                  alt="User Profile"
+                />
+              ) : (
+                <Skeleton className={"rounded-xs w-full h-full"} />
+              )}
             </div>
             <span className="capitalize invisible opacity-0 hidden sm:line-clamp-1 sm:visible sm:opacity-100">
-              {user?.name} {user?.family}
+              {isUserLoaded ? (
+                `${user?.name} ${user?.family}`
+              ) : (
+                <Skeleton className="w-22 h-4 rounded" />
+              )}
             </span>
           </div>
           <svg className="hidden sm:block sm:size-4 lg:size-5 shrink-0">

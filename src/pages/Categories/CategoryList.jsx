@@ -2,7 +2,11 @@ import { useState } from "react";
 import { Link } from "react-router";
 import { toast } from "sonner";
 import { API_URL, ITEMS_PER_PAGE } from "@/constants";
-import { removeItemFromList, searchCategory } from "@/utils/array.util";
+import {
+  numberGenerator,
+  removeItemFromList,
+  searchCategory,
+} from "@/utils/array.util";
 import { useFetch } from "@/hooks/useFetch";
 import { useToastMessage } from "@/hooks/useToastMessage";
 import Head from "@/components/common/Head";
@@ -11,7 +15,7 @@ import SearchBar from "@/components/SearchBar";
 import Breadcrumb from "@/components/Breadcrumb";
 import Pagination from "@/components/Pagination/Pagination";
 import TableRowCategory from "@/components/Table/TableRowCategory";
-import Loader from "@/components/Loader";
+import TableRowCategorySkeleton from "@/components/Skeleton/TableRowCategorySkeleton";
 
 const tableColumns = ["#", "Category", ""];
 
@@ -49,8 +53,6 @@ function CategoryList() {
     }
   }
 
-  if (!isCategoriesLoaded) return <Loader />;
-
   return (
     <>
       <Head>
@@ -80,32 +82,32 @@ function CategoryList() {
           />
         </div>
         <div className="p-2 sm:p-4 bg-white rounded-lg">
-          {filteredCategories?.length && currentPageCategories?.length ? (
-            <>
-              <Table columns={tableColumns}>
-                {currentPageCategories.map((category, i) => (
+          <Table columns={tableColumns}>
+            {isCategoriesLoaded
+              ? currentPageCategories.map((category, i) => (
                   <TableRowCategory
                     key={category.categoryId}
                     number={calcItemNumber(i)}
                     onDelete={() => deleteCategoryHandler(category.categoryId)}
                     {...category}
                   />
+                ))
+              : numberGenerator(5, 1).map((number) => (
+                  <TableRowCategorySkeleton key={number} />
                 ))}
-              </Table>
-            </>
-          ) : (
+          </Table>
+          <Pagination
+            itemsPerPage={ITEMS_PER_PAGE}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            items={filteredCategories}
+            setCurrentPageItems={setCurrentPageCategories}
+          />
+
+          {isCategoriesLoaded && !currentPageCategories?.length ? (
             <span className="block h-20 text-center leading-20">
               No Category Found!!!
             </span>
-          )}
-          {filteredCategories?.length ? (
-            <Pagination
-              itemsPerPage={ITEMS_PER_PAGE}
-              currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
-              items={filteredCategories}
-              setCurrentPageItems={setCurrentPageCategories}
-            />
           ) : null}
         </div>
       </section>

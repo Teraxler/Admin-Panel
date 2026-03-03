@@ -2,7 +2,11 @@ import { useState } from "react";
 import { Link } from "react-router";
 import { toast } from "sonner";
 import { API_URL, ITEMS_PER_PAGE } from "@/constants";
-import { searchProduct, removeItemFromList } from "@/utils/array.util";
+import {
+  searchProduct,
+  removeItemFromList,
+  numberGenerator,
+} from "@/utils/array.util";
 import { useFetch } from "@/hooks/useFetch";
 import { useToastMessage } from "@/hooks/useToastMessage";
 import Head from "@/components/common/Head";
@@ -11,7 +15,7 @@ import SearchBar from "@/components/SearchBar";
 import Breadcrumb from "@/components/Breadcrumb";
 import Pagination from "@/components/Pagination/Pagination";
 import TableRowProduct from "@/components/Table/TableRowProduct";
-import Loader from "@/components/Loader";
+import TableRowProductSkeleton from "@/components/Skeleton/TableRowProductSkeleton";
 
 const tableColumns = [
   "#",
@@ -59,8 +63,6 @@ function ProductList() {
     }
   }
 
-  if (!isProductsLoaded) return <Loader />;
-
   return (
     <>
       <Head>
@@ -89,31 +91,33 @@ function ProductList() {
         </div>
         <div className="p-2 sm:p-4 bg-white rounded-lg">
           <div className="overflow-x-auto">
-            {isProductsLoaded && filteredProducts?.length ? (
-              <Table columns={tableColumns}>
-                {currentPageProducts.map((product, i) => (
-                  <TableRowProduct
-                    key={product.productId}
-                    number={calcItemNumber(i)}
-                    onDelete={() => deleteProductHandler(product.productId)}
-                    {...product}
-                  />
-                ))}
-              </Table>
-            ) : (
-              <span className="h-20 block text-center leading-20">
-                No Product Found!!!
-              </span>
-            )}
+            <Table columns={tableColumns}>
+              {isProductsLoaded
+                ? currentPageProducts.map((product, i) => (
+                    <TableRowProduct
+                      key={product.productId}
+                      number={calcItemNumber(i)}
+                      onDelete={() => deleteProductHandler(product.productId)}
+                      {...product}
+                    />
+                  ))
+                : numberGenerator(5, 1).map((item) => (
+                    <TableRowProductSkeleton key={item} />
+                  ))}
+            </Table>
           </div>
-          {filteredProducts?.length ? (
-            <Pagination
-              currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
-              items={filteredProducts}
-              itemsPerPage={ITEMS_PER_PAGE}
-              setCurrentPageItems={setCurrentPageProducts}
-            />
+          <Pagination
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            items={filteredProducts}
+            itemsPerPage={ITEMS_PER_PAGE}
+            setCurrentPageItems={setCurrentPageProducts}
+          />
+
+          {isProductsLoaded && !currentPageProducts?.length ? (
+            <span className="h-20 block text-center leading-20">
+              No Product Found!!!
+            </span>
           ) : null}
         </div>
       </section>

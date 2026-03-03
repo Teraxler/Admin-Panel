@@ -7,7 +7,8 @@ import Table from "@/components/Table/Table";
 import ColumnChart from "@/components/Charts/ColumnChart";
 import TableRowOrder from "@/components/Table/TableRowOrder";
 import CircularGaugeChart from "@/components/Charts/CircularGaugeChart";
-import Loader from "@/components/Loader";
+import TableRowOrderSkeleton from "@/components/Skeleton/TableRowOrderSkeleton";
+import { numberGenerator } from "@/utils/array.util";
 
 const tableColumns = [
   "#",
@@ -22,9 +23,9 @@ const tableColumns = [
 
 const Dashboard = () => {
   useToastMessage();
-  const { data: recentOrders, isLoaded } = useFetch(`${API_URL}/orders`);
-
-  if (!isLoaded) return <Loader />;
+  const { data: orders, isLoaded: isOrdersLoaded } = useFetch(
+    `${API_URL}/orders`,
+  );
 
   return (
     <>
@@ -88,25 +89,29 @@ const Dashboard = () => {
           <h3 className="text-xl font-medium">Recent Orders</h3>
         </div>
         <div className="p-2 sm:p-4">
-          {isLoaded && recentOrders?.length ? (
-            <Table columns={tableColumns}>
-              {recentOrders
-                .reverse()
-                .slice(0, 5)
-                .map((order, i) => (
-                  <TableRowOrder
-                    key={order.orderId}
-                    number={i + 1}
-                    {...order}
-                    noAction
-                  />
+          <Table columns={tableColumns}>
+            {isOrdersLoaded
+              ? orders
+                  .reverse()
+                  .slice(0, 5)
+                  .map((order, i) => (
+                    <TableRowOrder
+                      key={order.orderId}
+                      number={i + 1}
+                      {...order}
+                      noAction
+                    />
+                  ))
+              : numberGenerator(5, 1).map((number) => (
+                  <TableRowOrderSkeleton noAction key={number} />
                 ))}
-            </Table>
-          ) : (
+          </Table>
+
+          {isOrdersLoaded && !orders?.length ? (
             <span className="h-20 block leading-20 text-center">
               No Order Found!!!
             </span>
-          )}
+          ) : null}
         </div>
       </section>
     </>

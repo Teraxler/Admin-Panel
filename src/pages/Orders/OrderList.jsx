@@ -2,7 +2,11 @@ import { useState } from "react";
 import { Link } from "react-router";
 import { toast } from "sonner";
 import { API_URL, ITEMS_PER_PAGE } from "@/constants";
-import { removeItemFromList, searchOrder } from "@/utils/array.util";
+import {
+  numberGenerator,
+  removeItemFromList,
+  searchOrder,
+} from "@/utils/array.util";
 import { useFetch } from "@/hooks/useFetch";
 import { useToastMessage } from "@/hooks/useToastMessage";
 import Head from "@/components/common/Head";
@@ -11,7 +15,7 @@ import SearchBar from "@/components/SearchBar";
 import Breadcrumb from "@/components/Breadcrumb";
 import Pagination from "@/components/Pagination/Pagination";
 import TableRowOrder from "@/components/Table/TableRowOrder";
-import Loader from "@/components/Loader";
+import TableRowOrderSkeleton from "@/components/Skeleton/TableRowOrderSkeleton";
 
 const tableColumns = [
   "#",
@@ -57,8 +61,6 @@ function OrderList() {
     }
   }
 
-  if (!isOrdersLoaded) return <Loader />;
-
   return (
     <>
       <Head>
@@ -86,30 +88,32 @@ function OrderList() {
           />
         </div>
         <div className="p-2 sm:p-4 bg-white rounded-lg">
-          {isOrdersLoaded && filteredOrders?.length ? (
-            <Table columns={tableColumns}>
-              {currentPageOrders.map((order, i) => (
-                <TableRowOrder
-                  key={order.orderId}
-                  number={calcItemNumber(i)}
-                  onDelete={() => deleteOrderHandler(order.orderId)}
-                  {...order}
-                />
-              ))}
-            </Table>
-          ) : (
+          <Table columns={tableColumns}>
+            {isOrdersLoaded
+              ? currentPageOrders.map((order, i) => (
+                  <TableRowOrder
+                    key={order.orderId}
+                    number={calcItemNumber(i)}
+                    onDelete={() => deleteOrderHandler(order.orderId)}
+                    {...order}
+                  />
+                ))
+              : numberGenerator(5, 1).map((number) => (
+                  <TableRowOrderSkeleton key={number} />
+                ))}
+          </Table>
+          <Pagination
+            items={filteredOrders}
+            itemsPerPage={ITEMS_PER_PAGE}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            setCurrentPageItems={setCurrentPageOrders}
+          />
+
+          {isOrdersLoaded && !currentPageOrders?.length ? (
             <span className="h-20 block leading-20 text-center">
               No Order Found!!!
             </span>
-          )}
-          {filteredOrders?.length ? (
-            <Pagination
-              items={filteredOrders}
-              itemsPerPage={ITEMS_PER_PAGE}
-              currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
-              setCurrentPageItems={setCurrentPageOrders}
-            />
           ) : null}
         </div>
       </section>

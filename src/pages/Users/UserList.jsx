@@ -2,7 +2,11 @@ import { useState } from "react";
 import { Link } from "react-router";
 import { toast } from "sonner";
 import { API_URL, ITEMS_PER_PAGE } from "@/constants";
-import { removeItemFromList, searchUser } from "@/utils/array.util";
+import {
+  numberGenerator,
+  removeItemFromList,
+  searchUser,
+} from "@/utils/array.util";
 import { useFetch } from "@/hooks/useFetch";
 import { useToastMessage } from "@/hooks/useToastMessage";
 import Head from "@/components/common/Head";
@@ -11,7 +15,7 @@ import SearchBar from "@/components/SearchBar";
 import Breadcrumb from "@/components/Breadcrumb";
 import Pagination from "@/components/Pagination/Pagination";
 import TableRowUser from "@/components/Table/TableRowUser";
-import Loader from "@/components/Loader";
+import TableRowUserSkeleton from "@/components/Skeleton/TableRowUserSkeleton";
 
 const tableColumns = [
   "#",
@@ -53,8 +57,6 @@ function UserList() {
     }
   }
 
-  if (!isUsersLoaded) return <Loader />;
-
   return (
     <>
       <Head>
@@ -81,30 +83,32 @@ function UserList() {
           />
         </div>
         <div className="p-2 sm:p-4 bg-white rounded-lg">
-          {isUsersLoaded && filteredUsers?.length ? (
-            <Table columns={tableColumns}>
-              {currentPageUsers.map((user, i) => (
-                <TableRowUser
-                  key={user.userId}
-                  number={calcItemNumber(i)}
-                  onDelete={() => deleteUserHandler(user.userId)}
-                  {...user}
-                />
-              ))}
-            </Table>
-          ) : (
+          <Table columns={tableColumns}>
+            {isUsersLoaded
+              ? currentPageUsers.map((user, i) => (
+                  <TableRowUser
+                    key={user.userId}
+                    number={calcItemNumber(i)}
+                    onDelete={() => deleteUserHandler(user.userId)}
+                    {...user}
+                  />
+                ))
+              : numberGenerator(5, 1).map((number) => (
+                  <TableRowUserSkeleton key={number} />
+                ))}
+          </Table>
+          <Pagination
+            items={filteredUsers}
+            itemsPerPage={ITEMS_PER_PAGE}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            setCurrentPageItems={setCurrentPageUsers}
+          />
+
+          {isUsersLoaded && !currentPageUsers?.length ? (
             <span className="block h-20 leading-20 text-center">
               No User Found :{"("}
             </span>
-          )}
-          {filteredUsers?.length ? (
-            <Pagination
-              items={filteredUsers}
-              itemsPerPage={ITEMS_PER_PAGE}
-              currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
-              setCurrentPageItems={setCurrentPageUsers}
-            />
           ) : null}
         </div>
       </section>

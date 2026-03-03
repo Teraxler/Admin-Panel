@@ -9,7 +9,7 @@ const Pagination = ({
   currentPage,
   setCurrentPage,
 }) => {
-  const countPages = Math.ceil(items.length / itemsPerPage);
+  const countPages = Math.ceil(items?.length / itemsPerPage);
 
   useEffect(() => {
     setCurrentPageItems(() => paginateItems(items, currentPage, itemsPerPage));
