@@ -137,6 +137,13 @@
   .btn--disabled {
     @apply text-text-disabled bg-neutral-200 pointer-events-none;
   }
+
+  .skeleton {
+    @apply bg-gray-200 animate-pulse w-full h-full rounded;
+  }
+  .skeleton--text {
+    @apply h-3.5 lg:h-4;
+  }
 }
 
 @layer utilities {

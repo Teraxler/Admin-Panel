@@ -22,7 +22,7 @@ const ProfileDropDown = ({ user, isUserLoaded }) => {
               alt="User Profile"
             />
           ) : (
-            <Skeleton className="w-full h-full rounded-xs" />
+            <Skeleton className="rounded-xs" />
           )}
         </div>
         <div>
@@ -37,8 +37,8 @@ const ProfileDropDown = ({ user, isUserLoaded }) => {
             </>
           ) : (
             <>
-              <Skeleton className="w-20 h-3.5 ml-0 rounded" />
-              <Skeleton className="w-25 h-3 ml-0 mt-1.75 rounded" />
+              <Skeleton className="w-20 h-3.5 ml-0" />
+              <Skeleton className="w-25 h-3 ml-0 mt-1.75" />
             </>
           )}
         </div>

@@ -44,7 +44,7 @@ function Header({ onClick }) {
                   alt="User Profile"
                 />
               ) : (
-                <Skeleton className={"rounded-xs w-full h-full"} />
+                <Skeleton className={"rounded-xs"} />
               )}
             </div>
             {isUserLoaded ? (

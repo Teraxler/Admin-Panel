@@ -67,7 +67,7 @@ function OrderDetails() {
               {isOrderLoaded ? (
                 <span className="line-clamp-1">{`${formatedDateTime?.monthName} ${formatedDateTime?.day}, ${formatedDateTime?.year}`}</span>
               ) : (
-                <Skeleton className="w-26 lg:w-30 h-3.5 lg:h-4 rounded mr-0 my-auto" />
+                <Skeleton className="w-26.25 lg:w-30 skeleton--text mr-0 my-auto" />
               )}
             </div>
             <div className="flex justify-between gap-x-2.5">
@@ -78,7 +78,7 @@ function OrderDetails() {
                   {order?.deliveredAddress}
                 </span>
               ) : (
-                <Skeleton className="w-40 lg:w-50 h-3.5 lg:h-4 rounded mr-0 my-auto" />
+                <Skeleton className="w-40 lg:w-50 skeleton--text mr-0 my-auto" />
               )}
             </div>
             <div className="flex justify-between gap-x-2.5">
@@ -90,7 +90,7 @@ function OrderDetails() {
                   {order?.status}
                 </span>
               ) : (
-                <Skeleton className="w-21.75 lg:w-24.25 h-6 lg:h-7 rounded mr-0 my-auto" />
+                <Skeleton className="w-21.25 lg:w-24.25 skeleton--text my-1.25 lg:my-1.5 mr-0" />
               )}
             </div>
             <div className="flex justify-between gap-x-2.5">
@@ -98,7 +98,7 @@ function OrderDetails() {
               {isOrderLoaded ? (
                 <span>{`${order?.discountPercent}%`}</span>
               ) : (
-                <Skeleton className="w-6 lg:w-7 h-3.5 lg:h-4 rounded mr-0 my-auto" />
+                <Skeleton className="w-6 lg:w-7 skeleton--text mr-0 my-auto" />
               )}
             </div>
             <div className="flex justify-between gap-x-2.5">
@@ -108,7 +108,7 @@ function OrderDetails() {
               {isOrderLoaded ? (
                 <span>{`$${calcTotalPrice(order?.orderItems)}`}</span>
               ) : (
-                <Skeleton className="w-8.75 lg:w-10 h-3.5 lg:h-4 rounded mr-0 my-auto" />
+                <Skeleton className="w-8.75 lg:w-10 skeleton--text mr-0 my-auto" />
               )}
             </div>
           </div>
@@ -128,7 +128,7 @@ function OrderDetails() {
                   {order?.userName} {order?.userFamily}
                 </Link>
               ) : (
-                <Skeleton className="w-26 lg:w-30 lg:6 h-3.5 lg:h-4 rounded mr-0 my-auto" />
+                <Skeleton className="w-26 lg:w-30 skeleton--text mr-0 my-auto" />
               )}
             </div>
             <div className="flex justify-between gap-x-2.5">
@@ -136,7 +136,7 @@ function OrderDetails() {
               {isOrderLoaded ? (
                 <span className="line-clamp-1">{order?.userUsername}</span>
               ) : (
-                <Skeleton className="w-17.5 lg:w-20 h-3.5 lg:h-4 rounded mr-0 my-auto" />
+                <Skeleton className="w-17.5 lg:w-20 skeleton--text mr-0 my-auto" />
               )}
             </div>
             <div className="flex justify-between gap-x-2.5">
@@ -144,7 +144,7 @@ function OrderDetails() {
               {isOrderLoaded ? (
                 <span className="line-clamp-1">{order?.userEmail}</span>
               ) : (
-                <Skeleton className="w-41 lg:w-50 h-3.5 lg:h-4 rounded mr-0 my-auto" />
+                <Skeleton className="w-41 lg:w-50 skeleton--text mr-0 my-auto" />
               )}
             </div>
             <div className="flex justify-between gap-x-2.5">
@@ -154,7 +154,7 @@ function OrderDetails() {
                   {order?.userPhone ? phoneFormat(order?.userPhone) : "___"}
                 </span>
               ) : (
-                <Skeleton className="w-24 lg:w-27 h-3.5 lg:h-4 rounded mr-0 my-auto" />
+                <Skeleton className="w-24 lg:w-27 skeleton--text mr-0 my-auto" />
               )}
             </div>
           </div>

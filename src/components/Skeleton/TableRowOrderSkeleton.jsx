@@ -4,28 +4,28 @@ const TableRowOrderSkeleton = ({ noAction = false }) => {
   return (
     <tr className="*:px-2 *:sm:px-4 *:lg:px-6 *:py-2">
       <td>
-        <Skeleton className="w-6 h-3.5 sm:h-4 rounded" />
+        <Skeleton className="w-5 lg:w-6 skeleton--text" />
       </td>
       <td>
-        <Skeleton className="w-30 h-3.5 rounded" />
+        <Skeleton className="w-26.25 lg:w-30 skeleton--text" />
       </td>
       <td>
-        <Skeleton className="w-20 h-3.5 sm:h-4 rounded" />
+        <Skeleton className="w-17.5 lg:w-20 skeleton--text" />
       </td>
       <td>
-        <Skeleton className="w-50 h-3.5 sm:h-4 rounded" />
+        <Skeleton className="w-43.75 lg:w-50 skeleton--text" />
       </td>
       <td>
-        <Skeleton className="w-5 sm:w-6 h-3.5 sm:h-4 rounded" />
+        <Skeleton className="w-5 lg:w-6 skeleton--text" />
       </td>
       <td>
-        <Skeleton className="w-5 sm:w-6 h-3.5 sm:h-4 rounded" />
+        <Skeleton className="w-5 lg:w-6 skeleton--text" />
       </td>
       <td>
-        <Skeleton className="w-7 sm:w-8 h-3.5 sm:h-4 rounded" />
+        <Skeleton className="w-7 lg:w-8 skeleton--text" />
       </td>
       <td>
-        <Skeleton className="w-21.75 sm:w-24.25 h-6 sm:h-7 rounded" />
+        <Skeleton className="w-21.25 lg:w-24.25 skeleton--text my-1.25 lg:my-1.5" />
       </td>
       {!noAction ? (
         <td>
