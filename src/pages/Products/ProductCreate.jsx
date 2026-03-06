@@ -98,7 +98,7 @@ function ProductCreate() {
       </div>
 
       <form
-        className="w-full bg-white p-2.5 sm:px-4 py-4 mt-8 rounded-md shadow text-sm font-medium"
+        className="w-full bg-white p-2.5 sm:px-4 py-4 mt-8 rounded-lg shadow text-sm font-medium"
         onSubmit={createProductHandler}
       >
         <div className="flex flex-col gap-y-4 sm:gap-y-6 lg:gap-y-8 leading-6">
@@ -197,7 +197,7 @@ function ProductCreate() {
               <div className="input flex items-center justify-center size-27">
                 {product.cover ? (
                   <img
-                    className="max-w-full max-h-full rounded-sm"
+                    className="max-w-full max-h-full rounded-lg"
                     src={
                       product.isCoverBlob
                         ? product.cover

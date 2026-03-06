@@ -139,7 +139,7 @@
   }
 
   .skeleton {
-    @apply bg-gray-200 animate-pulse w-full h-full rounded;
+    @apply bg-gray-200 animate-pulse w-full h-full rounded-lg;
   }
   .skeleton--text {
     @apply h-3.5 lg:h-4;

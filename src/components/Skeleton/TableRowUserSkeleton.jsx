@@ -23,8 +23,8 @@ const TableRowUserSkeleton = () => {
       </td>
       <td>
         <div className="flex justify-center gap-x-2 *:mx-0">
-          <Skeleton className="size-9 lg:size-10 rounded-lg" />
-          <Skeleton className="size-9 lg:size-10 rounded-lg" />
+          <Skeleton className="size-9 lg:size-10" />
+          <Skeleton className="size-9 lg:size-10" />
         </div>
       </td>
     </tr>

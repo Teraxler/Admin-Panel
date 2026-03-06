@@ -46,7 +46,7 @@ const ProfileDropDown = ({ user, isUserLoaded }) => {
       <ul className="border-t border-black/15">
         <li>
           <Link
-            className="flex gap-x-2 p-2 m-1 rounded-sm hover:bg-neutral-100 active:bg-neutral-200 transition"
+            className="flex gap-x-2 p-2 m-1 rounded-lg hover:bg-neutral-100 active:bg-neutral-200 transition"
             to={`/myprofile`}
           >
             <svg className="size-5">
@@ -56,7 +56,7 @@ const ProfileDropDown = ({ user, isUserLoaded }) => {
           </Link>
         </li>
         <li>
-          <Link className="flex gap-x-2 p-2 m-1 rounded-sm hover:bg-neutral-100 active:bg-neutral-200 transition">
+          <Link className="flex gap-x-2 p-2 m-1 rounded-lg hover:bg-neutral-100 active:bg-neutral-200 transition">
             <svg className="size-5">
               <use href="#settings"></use>
             </svg>
@@ -65,7 +65,7 @@ const ProfileDropDown = ({ user, isUserLoaded }) => {
         </li>
         <div className="border-t border-black/15"></div>
         <li
-          className="flex gap-x-2 p-2 m-1 rounded-sm text-red-600 hover:bg-red-600/10 active:bg-red-600/15 transition"
+          className="flex gap-x-2 p-2 m-1 rounded-lg text-red-600 hover:bg-red-600/10 active:bg-red-600/15 transition"
           onClick={logout}
         >
           <svg className="size-5">

@@ -17,7 +17,7 @@ function TableRowOrderItem({
       <td>
         <div className="flex items-center justify-center size-12 sm:size-15 lg:size-18 mx-auto">
           <img
-            className="max-h-full rounded-sm"
+            className="max-h-full rounded-lg"
             src={`${API_URL}/images/products/${productCover}`}
           />
         </div>

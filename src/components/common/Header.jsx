@@ -52,7 +52,7 @@ function Header({ onClick }) {
                 {`${user?.name} ${user?.family}`}
               </span>
             ) : (
-              <Skeleton className="hidden sm:block w-22 h-3.5 rounded" />
+              <Skeleton className="hidden sm:block w-22 h-3.5 rounded-lg" />
             )}
           </div>
           <svg className="hidden sm:block sm:size-4 lg:size-5 shrink-0">

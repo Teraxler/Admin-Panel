@@ -85,7 +85,7 @@ function OrderDetails() {
               <span className="text-secondary font-medium">Status:</span>
               {isOrderLoaded ? (
                 <span
-                  className={`line-clamp-1 w-max py-0.5 px-2 my-auto rounded ${statusColor[order?.status]}`}
+                  className={`line-clamp-1 w-max py-0.5 px-2 my-auto rounded-lg ${statusColor[order?.status]}`}
                 >
                   {order?.status}
                 </span>

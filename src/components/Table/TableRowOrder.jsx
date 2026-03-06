@@ -59,7 +59,7 @@ function TableRowOrder({
       </td>
       <td>
         <span
-          className={`line-clamp-1 w-max py-0.5 px-2 mx-auto rounded ${statusColor[status]}`}
+          className={`line-clamp-1 w-max py-0.5 px-2 mx-auto rounded-lg ${statusColor[status]}`}
         >
           {status}
         </span>

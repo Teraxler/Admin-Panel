@@ -72,7 +72,7 @@ function Login() {
         ></div>
 
         <form
-          className="w-132.5 max-h-screen bg-white p-2.5 px-9 py-10 mt-8 rounded-md shadow text-sm font-medium"
+          className="w-132.5 max-h-screen bg-white p-2.5 px-9 py-10 mt-8 rounded-lg shadow text-sm font-medium"
           onSubmit={loginHandler}
         >
           <h2 className="text-2xl font-medium text-center mb-14">
