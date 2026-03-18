@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import { toast } from "sonner";
 import { API_URL, ITEMS_PER_PAGE } from "@/constants";
 import {
-  numberGenerator,
+  generateNumbers,
   removeItemFromList,
   searchOrder,
 } from "@/utils/array.util";
@@ -43,10 +43,10 @@ function OrderList() {
     `${API_URL}/orders`,
   );
 
-  const calcItemNumber = (index) =>
+  const calculateItemNumber = (index) =>
     (currentPage - 1) * ITEMS_PER_PAGE + index + 1;
 
-  async function deleteOrderHandler(orderId) {
+  async function handleDeleteOrder(orderId) {
     try {
       const response = await fetch(`${API_URL}/orders/${orderId}`, {
         method: "DELETE",
@@ -81,7 +81,7 @@ function OrderList() {
           </Link>
           <SearchBar
             items={orders}
-            searchHandler={searchOrder}
+            handleSearch={searchOrder}
             isItemsLoaded={isOrdersLoaded}
             setFilteredItems={setFilteredOrders}
             placeholder="Search (user, date ,status)"
@@ -93,12 +93,12 @@ function OrderList() {
               ? currentPageOrders.map((order, i) => (
                   <TableRowOrder
                     key={order.orderId}
-                    number={calcItemNumber(i)}
-                    onDelete={() => deleteOrderHandler(order.orderId)}
+                    number={calculateItemNumber(i)}
+                    onDelete={() => handleDeleteOrder(order.orderId)}
                     {...order}
                   />
                 ))
-              : numberGenerator(5, 1).map((number) => (
+              : generateNumbers(5, 1).map((number) => (
                   <TableRowOrderSkeleton key={number} />
                 ))}
           </Table>

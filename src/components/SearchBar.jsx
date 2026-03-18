@@ -5,7 +5,7 @@ const SearchBar = ({
   placeholder,
   isItemsLoaded,
   setFilteredItems,
-  searchHandler,
+  handleSearch,
 }) => {
   const [searchValue, setSearchValue] = useState("");
   const [isPending, startTransition] = useTransition();
@@ -16,7 +16,7 @@ const SearchBar = ({
     if (!isItemsLoaded) return;
 
     const timeoutId = setTimeout(() => {
-      const result = searchHandler(items, searchValue);
+      const result = handleSearch(items, searchValue);
 
       startTransition(() => setFilteredItems(result));
     }, 250);

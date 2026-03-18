@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import { API_URL } from "@/constants";
-import { phoneFormat } from "@/utils/string.util";
-import { numberGenerator } from "@/utils/array.util";
-import { formattingDateTime, normalizeDateTime } from "@/utils/dateTime";
+import { formattingPhone } from "@/utils/string.util";
+import { generateNumbers } from "@/utils/array.util";
+import { formattingDateTime, normalizeDateTime } from "@/utils/dateTime.util";
 import { useFetch } from "@/hooks/useFetch";
 import Head from "@/components/common/Head";
 import Table from "@/components/Table/Table";
@@ -40,7 +40,7 @@ function OrderDetails() {
   const normalizedDateTime = normalizeDateTime(order?.createdAt);
   const formatedDateTime = formattingDateTime(normalizedDateTime);
 
-  const calcTotalPrice = (items) => {
+  const claculateTotalPrice = (items) => {
     return items?.length
       ? items.reduce((prevValue, currentValue) => {
           return prevValue + currentValue.unitPrice * currentValue.quantity;
@@ -106,7 +106,7 @@ function OrderDetails() {
                 Total Price:
               </span>
               {isOrderLoaded ? (
-                <span>{`$${calcTotalPrice(order?.orderItems)}`}</span>
+                <span>{`$${claculateTotalPrice(order?.orderItems)}`}</span>
               ) : (
                 <Skeleton className="w-8.75 lg:w-10 skeleton--text mr-0 my-auto" />
               )}
@@ -151,7 +151,7 @@ function OrderDetails() {
               <span className="text-secondary font-medium">Phone:</span>
               {isOrderLoaded ? (
                 <span className="capitalize line-clamp-1">
-                  {order?.userPhone ? phoneFormat(order?.userPhone) : "___"}
+                  {order?.userPhone ? formattingPhone(order?.userPhone) : "___"}
                 </span>
               ) : (
                 <Skeleton className="w-24 lg:w-27 skeleton--text mr-0 my-auto" />
@@ -173,7 +173,7 @@ function OrderDetails() {
                     {...orderItem}
                   />
                 ))
-              : numberGenerator(5, 1).map((number) => (
+              : generateNumbers(5, 1).map((number) => (
                   <TableRowOrderItemSkeleton key={number} />
                 ))}
           </Table>

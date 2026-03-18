@@ -18,7 +18,7 @@ const Pagination = ({
   useEffect(() => setCurrentPage(1), [countPages]);
 
   const nextPage = () => setCurrentPage((currentPage) => currentPage + 1);
-  const previousPage = () => setCurrentPage((currentPage) => currentPage - 1);
+  const prevPage = () => setCurrentPage((currentPage) => currentPage - 1);
 
   const renderPageNumbers = () => {
     const buttons = [];
@@ -46,7 +46,7 @@ const Pagination = ({
 
   return countPages > 1 ? (
     <div className="flex justify-center gap-x-2 mt-4">
-      <PaginationButton isDisabled={currentPage === 1} onClick={previousPage}>
+      <PaginationButton isDisabled={currentPage === 1} onClick={prevPage}>
         <svg className="size-5 rotate-90">
           <use href="#chevron-down"></use>
         </svg>

@@ -49,7 +49,7 @@ function MyProfile() {
     });
   }, [isUserLoaded]);
 
-  function updateUserHandler(e) {
+  function handleUpdateUser(e) {
     try {
       e.preventDefault();
 
@@ -108,7 +108,7 @@ function MyProfile() {
 
       <form
         className="w-full bg-white p-2.5 sm:px-4 py-4 mt-8 rounded-lg shadow text-sm font-medium"
-        onSubmit={updateUserHandler}
+        onSubmit={handleUpdateUser}
       >
         <div className="flex flex-col gap-y-4 sm:gap-y-6 lg:gap-y-8 leading-6">
           <div className="flex gap-x-2 sm:gap-x-4">

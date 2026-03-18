@@ -12,7 +12,7 @@ function CategoryCareate() {
   const navigate = useNavigate();
   const [categoryName, setCategoryName] = useState("");
 
-  function createCategoryHandler(e) {
+  function handleCreateCategory(e) {
     e.preventDefault();
 
     const { success, error } = categorySchema.safeParse({ categoryName });
@@ -56,7 +56,7 @@ function CategoryCareate() {
 
       <form
         className="w-full bg-white p-2.5 sm:px-4 py-4 mt-8 rounded-lg shadow text-sm font-medium"
-        onSubmit={createCategoryHandler}
+        onSubmit={handleCreateCategory}
       >
         <div className="flex flex-col gap-y-4 sm:gap-y-6 lg:gap-y-8 leading-6">
           <div className="flex gap-x-2 sm:gap-x-4">

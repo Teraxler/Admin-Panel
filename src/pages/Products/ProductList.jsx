@@ -5,7 +5,7 @@ import { API_URL, ITEMS_PER_PAGE } from "@/constants";
 import {
   searchProduct,
   removeItemFromList,
-  numberGenerator,
+  generateNumbers,
 } from "@/utils/array.util";
 import { useFetch } from "@/hooks/useFetch";
 import { useToastMessage } from "@/hooks/useToastMessage";
@@ -38,14 +38,14 @@ function ProductList() {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [currentPageProducts, setCurrentPageProducts] = useState([]);
 
-  const calcItemNumber = (index) =>
+  const calculateItemNumber = (index) =>
     (currentPage - 1) * ITEMS_PER_PAGE + index + 1;
 
   const { data: products, isLoaded: isProductsLoaded } = useFetch(
     `${API_URL}/products`,
   );
 
-  async function deleteProductHandler(productId) {
+  async function handleDeleteProduct(productId) {
     try {
       const response = await fetch(`${API_URL}/products/${productId}`, {
         method: "DELETE",
@@ -83,7 +83,7 @@ function ProductList() {
           </Link>
           <SearchBar
             items={products}
-            searchHandler={searchProduct}
+            handleSearch={searchProduct}
             isItemsLoaded={isProductsLoaded}
             setFilteredItems={setFilteredProducts}
             placeholder={"Search (name, category)"}
@@ -96,12 +96,12 @@ function ProductList() {
                 ? currentPageProducts.map((product, i) => (
                     <TableRowProduct
                       key={product.productId}
-                      number={calcItemNumber(i)}
-                      onDelete={() => deleteProductHandler(product.productId)}
+                      number={calculateItemNumber(i)}
+                      onDelete={() => handleDeleteProduct(product.productId)}
                       {...product}
                     />
                   ))
-                : numberGenerator(5, 1).map((item) => (
+                : generateNumbers(5, 1).map((item) => (
                     <TableRowProductSkeleton key={item} />
                   ))}
             </Table>

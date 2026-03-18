@@ -1,7 +1,7 @@
-import { formattingDateTime, isDateMatch, normalizeDateTime } from "./dateTime";
+import { isDateMatch } from "./dateTime.util";
 import { isIncludes, isStartsWith, normalizeText } from "./string.util";
 
-const numberGenerator = (count, startPoint = 0) => {
+const generateNumbers = (count, startPoint = 0) => {
   const result = [];
   for (let i = startPoint; i <= count; i++) {
     result.push(i);
@@ -113,7 +113,7 @@ function removeItemFromList(list = [], measure, id) {
 
 export {
   findProduct,
-  numberGenerator,
+  generateNumbers,
   increaseProductCount,
   decreaseProductCount,
   isProductExists,

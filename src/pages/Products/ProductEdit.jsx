@@ -65,7 +65,7 @@ function ProductEdit() {
     dispatch({ type: ALL, payload: fetchedProduct });
   }, [isProductLoaded]);
 
-  function updateProductHandler(e) {
+  function handleUpdateProduct(e) {
     e.preventDefault();
 
     const formData = new FormData();
@@ -117,7 +117,7 @@ function ProductEdit() {
 
       <form
         className="w-full bg-white p-2.5 sm:px-4 py-4 mt-8 rounded-lg shadow text-sm font-medium"
-        onSubmit={updateProductHandler}
+        onSubmit={handleUpdateProduct}
       >
         <div className="flex flex-col gap-y-4 sm:gap-y-6 lg:gap-y-8 leading-6">
           <div className="flex gap-x-2 sm:gap-x-4">

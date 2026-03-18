@@ -7,7 +7,7 @@ const ProfileDropDown = ({ user, isUserLoaded }) => {
   const navigate = useNavigate();
   const [userId, setUserId] = useCookie("userId");
 
-  const logout = () => {
+  const logoutUser = () => {
     setUserId(null);
     navigate("/auth/login");
   };
@@ -66,7 +66,7 @@ const ProfileDropDown = ({ user, isUserLoaded }) => {
         <div className="border-t border-black/15"></div>
         <li
           className="flex gap-x-2 p-2 m-1 rounded-lg text-red-600 hover:bg-red-600/10 active:bg-red-600/15 transition"
-          onClick={logout}
+          onClick={logoutUser}
         >
           <svg className="size-5">
             <use href="#log-out"></use>

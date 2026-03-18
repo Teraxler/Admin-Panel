@@ -18,7 +18,7 @@ function Login() {
 
   useEffect(() => usernameInputRef.current.focus(), []);
 
-  async function login(user) {
+  async function loginUser(user) {
     try {
       const response = await fetch(`${API_URL}/auth/login`, {
         headers: {
@@ -44,7 +44,7 @@ function Login() {
     }
   }
 
-  function loginHandler(e) {
+  function handleLoginUser(e) {
     e.preventDefault();
 
     const user = {
@@ -54,7 +54,7 @@ function Login() {
 
     const { success, error } = loginSchema.safeParse(user);
 
-    if (success) return login(user);
+    if (success) return loginUser(user);
 
     toast.error(error.issues[0].message);
   }
@@ -73,7 +73,7 @@ function Login() {
 
         <form
           className="w-132.5 max-h-screen bg-white p-2.5 px-9 py-10 mt-8 rounded-lg shadow text-sm font-medium"
-          onSubmit={loginHandler}
+          onSubmit={handleLoginUser}
         >
           <h2 className="text-2xl font-medium text-center mb-14">
             Log In Account

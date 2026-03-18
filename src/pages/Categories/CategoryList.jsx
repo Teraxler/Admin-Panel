@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import { toast } from "sonner";
 import { API_URL, ITEMS_PER_PAGE } from "@/constants";
 import {
-  numberGenerator,
+  generateNumbers,
   removeItemFromList,
   searchCategory,
 } from "@/utils/array.util";
@@ -29,14 +29,14 @@ function CategoryList() {
   const [filteredCategories, setFilteredCategories] = useState([]);
   const [currentPageCategories, setCurrentPageCategories] = useState([]);
 
-  const calcItemNumber = (index) =>
+  const calculateItemNumber = (index) =>
     (currentPage - 1) * ITEMS_PER_PAGE + index + 1;
 
   const { data: categories, isLoaded: isCategoriesLoaded } = useFetch(
     `${API_URL}/categories`,
   );
 
-  async function deleteCategoryHandler(categoryId) {
+  async function deleteCategory(categoryId) {
     try {
       const response = await fetch(`${API_URL}/categories/${categoryId}`, {
         method: "DELETE",
@@ -76,7 +76,7 @@ function CategoryList() {
           <SearchBar
             items={categories}
             placeholder="Search (category)"
-            searchHandler={searchCategory}
+            handleSearch={searchCategory}
             isItemsLoaded={isCategoriesLoaded}
             setFilteredItems={setFilteredCategories}
           />
@@ -87,12 +87,12 @@ function CategoryList() {
               ? currentPageCategories.map((category, i) => (
                   <TableRowCategory
                     key={category.categoryId}
-                    number={calcItemNumber(i)}
-                    onDelete={() => deleteCategoryHandler(category.categoryId)}
+                    number={calculateItemNumber(i)}
+                    onDelete={() => deleteCategory(category.categoryId)}
                     {...category}
                   />
                 ))
-              : numberGenerator(5, 1).map((number) => (
+              : generateNumbers(5, 1).map((number) => (
                   <TableRowCategorySkeleton key={number} />
                 ))}
           </Table>

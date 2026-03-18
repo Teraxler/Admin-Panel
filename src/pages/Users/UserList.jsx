@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import { toast } from "sonner";
 import { API_URL, ITEMS_PER_PAGE } from "@/constants";
 import {
-  numberGenerator,
+  generateNumbers,
   removeItemFromList,
   searchUser,
 } from "@/utils/array.util";
@@ -38,10 +38,10 @@ function UserList() {
 
   const { data: users, isLoaded: isUsersLoaded } = useFetch(`${API_URL}/users`);
 
-  const calcItemNumber = (index) =>
+  const calculateItemNumber = (index) =>
     (currentPage - 1) * ITEMS_PER_PAGE + index + 1;
 
-  async function deleteUserHandler(userId) {
+  async function handleDeleteUser(userId) {
     try {
       const response = await fetch(`${API_URL}/users/${userId}`, {
         method: "DELETE",
@@ -77,7 +77,7 @@ function UserList() {
           <SearchBar
             items={users}
             placeholder="Search (name, username)"
-            searchHandler={searchUser}
+            handleSearch={searchUser}
             isItemsLoaded={isUsersLoaded}
             setFilteredItems={setFilteredUsers}
           />
@@ -88,12 +88,12 @@ function UserList() {
               ? currentPageUsers.map((user, i) => (
                   <TableRowUser
                     key={user.userId}
-                    number={calcItemNumber(i)}
-                    onDelete={() => deleteUserHandler(user.userId)}
+                    number={calculateItemNumber(i)}
+                    onDelete={() => handleDeleteUser(user.userId)}
                     {...user}
                   />
                 ))
-              : numberGenerator(5, 1).map((number) => (
+              : generateNumbers(5, 1).map((number) => (
                   <TableRowUserSkeleton key={number} />
                 ))}
           </Table>

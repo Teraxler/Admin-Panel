@@ -8,7 +8,7 @@ import ColumnChart from "@/components/Charts/ColumnChart";
 import TableRowOrder from "@/components/Table/TableRowOrder";
 import CircularGaugeChart from "@/components/Charts/CircularGaugeChart";
 import TableRowOrderSkeleton from "@/components/Skeleton/TableRowOrderSkeleton";
-import { numberGenerator } from "@/utils/array.util";
+import { generateNumbers } from "@/utils/array.util";
 
 const tableColumns = [
   "#",
@@ -102,7 +102,7 @@ const Dashboard = () => {
                       noAction
                     />
                   ))
-              : numberGenerator(5, 1).map((number) => (
+              : generateNumbers(5, 1).map((number) => (
                   <TableRowOrderSkeleton noAction key={number} />
                 ))}
           </Table>

@@ -2,8 +2,8 @@ function normalizeText(text) {
   return String(text).trim().toLowerCase();
 }
 
-function pad(num, len = 2) {
-  return String(num).padStart(len, 0);
+function addPadding(string, length = 2, symbol = 0) {
+  return String(string).padStart(length, symbol);
 }
 
 const isStartsWith = (mainString, param) =>
@@ -12,7 +12,7 @@ const isStartsWith = (mainString, param) =>
 const isIncludes = (mainString, param) =>
   normalizeText(mainString).includes(normalizeText(param));
 
-const phoneFormat = (phone) => {
+const formattingPhone = (phone) => {
   try {
     phone = String(phone);
     if (phone.length !== 11) throw new Error("Phone must contain 11 digit");
@@ -23,4 +23,4 @@ const phoneFormat = (phone) => {
   }
 };
 
-export { normalizeText, pad, isStartsWith, isIncludes, phoneFormat };
+export { normalizeText, addPadding, isStartsWith, isIncludes, formattingPhone };
