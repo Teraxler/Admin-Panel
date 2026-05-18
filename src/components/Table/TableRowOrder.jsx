@@ -76,7 +76,7 @@ function TableRowOrder({
               </svg>
             </Link>
             <AlertModalWarning
-              title={"Are you sure want to delete product?"}
+              title={"Are you sure want to delete Order?"}
               description={"This can't be undo!!"}
               onConfirm={onDelete}
             >
