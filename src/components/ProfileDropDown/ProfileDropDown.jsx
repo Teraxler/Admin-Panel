@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router";
 import { API_URL } from "@/constants";
 import { useCookie } from "@/hooks/useCookie";
 import Skeleton from "@/components/Skeleton/Skeleton";
+import AlertModalWarning from "../AlertModalWarning";
 
 const ProfileDropDown = ({ user, isUserLoaded }) => {
   const navigate = useNavigate();
@@ -64,15 +65,18 @@ const ProfileDropDown = ({ user, isUserLoaded }) => {
           </Link>
         </li>
         <div className="border-t border-black/15"></div>
-        <li
-          className="flex gap-x-2 p-2 m-1 rounded-lg text-red-600 hover:bg-red-600/10 active:bg-red-600/15 transition"
-          onClick={logoutUser}
+        <AlertModalWarning
+          title={"Are you sure want to Logout?"}
+          onConfirm={logoutUser}
+          confirmLabel="Log out"
         >
-          <svg className="size-5">
-            <use href="#log-out"></use>
-          </svg>
-          <span>Log out</span>
-        </li>
+          <li className="flex gap-x-2 p-2 m-1 rounded-lg text-red-600 hover:bg-red-600/10 active:bg-red-600/15 transition">
+            <svg className="size-5">
+              <use href="#log-out"></use>
+            </svg>
+            <span>Log out</span>
+          </li>
+        </AlertModalWarning>
       </ul>
     </div>
   );

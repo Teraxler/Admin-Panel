@@ -1,7 +1,13 @@
 import { AlertDialog, Button, Flex } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
 
-const AlertModalWarning = ({ title, description, onConfirm, children }) => {
+const AlertModalWarning = ({
+  title,
+  description,
+  onConfirm,
+  confirmLabel = "Delete",
+  children,
+}) => {
   return (
     <AlertDialog.Root>
       <AlertDialog.Trigger asChild>{children}</AlertDialog.Trigger>
@@ -22,7 +28,7 @@ const AlertModalWarning = ({ title, description, onConfirm, children }) => {
 
           <AlertDialog.Action asChild>
             <Button variant="solid" color="red" onClick={onConfirm}>
-              Delete
+              {confirmLabel}
             </Button>
           </AlertDialog.Action>
         </Flex>
