@@ -13,8 +13,8 @@ function Login() {
   const [userId, setUserId] = useCookie("userId");
   const usernameInputRef = useRef(null);
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("admin");
+  const [password, setPassword] = useState("Admin@2020");
 
   useEffect(() => usernameInputRef.current.focus(), []);
 
