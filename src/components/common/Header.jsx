@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { API_URL } from "@/constants";
+import { ASSETS_URL } from "@/constants";
 import AuthContext from "@/contexts/AuthContext";
 import { useScroll } from "@/hooks/useScroll";
 import ProfileDropDown from "@/components/ProfileDropDown/ProfileDropDown";
@@ -40,7 +40,7 @@ function Header({ onClick }) {
             <div className="shrink-0 rounded-xs overflow-hidden size-5 lg:size-6">
               {isUserLoaded ? (
                 <img
-                  src={`${API_URL}/images/users/user-1.png`}
+                  src={`${ASSETS_URL}/images/users/user-1.png`}
                   alt="User Profile"
                 />
               ) : (

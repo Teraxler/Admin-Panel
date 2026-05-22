@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { API_URL } from "@/constants";
+import { ASSETS_URL } from "@/constants";
 import AlertModalWarning from "@/components/AlertModalWarning";
 
 function TableRowProduct({
@@ -22,7 +22,7 @@ function TableRowProduct({
         <div className="flex items-center justify-center size-12 sm:size-15 lg:size-18 mx-auto">
           <img
             className="max-h-full rounded-lg"
-            src={`${API_URL}/images/products/${cover}`}
+            src={`${ASSETS_URL}/images/products/${cover}`}
           />
         </div>
       </td>
