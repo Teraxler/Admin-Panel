@@ -36,7 +36,6 @@ function Login() {
       navigate("/", {
         state: {
           message: "You logged in successfully",
-          messageType: "success",
         },
       });
     } catch (error) {
