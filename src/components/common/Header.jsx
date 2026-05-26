@@ -1,11 +1,15 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ASSETS_URL } from "@/constants";
 import AuthContext from "@/contexts/AuthContext";
 import { useScroll } from "@/hooks/useScroll";
 import ProfileDropDown from "@/components/ProfileDropDown/ProfileDropDown";
 import Skeleton from "@/components/Skeleton/Skeleton";
 
-function Header({ onClick }) {
+function Header({
+  onClick,
+  isProfileDropDownVisible,
+  setIsProfileDropDownVisible,
+}) {
   const { user, isUserLoaded } = useContext(AuthContext);
   const offset = useScroll();
 
@@ -35,7 +39,10 @@ function Header({ onClick }) {
             <use href="#envelop"></use>
           </svg>
         </div>
-        <div className="group relative btn btn--small btn--secondary justify-between max-lg:h-9 w-9 min-w-auto sm:w-50">
+        <div
+          className={`group relative btn btn--small btn--secondary ${isProfileDropDownVisible ? "btn--secondary--active" : ""} justify-between max-lg:h-9 w-9 min-w-auto sm:w-50`}
+          onClick={() => setIsProfileDropDownVisible((prevValue) => !prevValue)}
+        >
           <div className="flex items-center gap-x-2">
             <div className="shrink-0 rounded-xs overflow-hidden size-5 lg:size-6">
               {isUserLoaded ? (
@@ -58,7 +65,11 @@ function Header({ onClick }) {
           <svg className="hidden sm:block sm:size-4 lg:size-5 shrink-0">
             <use href="#chevron-down"></use>
           </svg>
-          <ProfileDropDown user={user} isUserLoaded={isUserLoaded} />
+          <ProfileDropDown
+            user={user}
+            isUserLoaded={isUserLoaded}
+            isVisible={isProfileDropDownVisible}
+          />
         </div>
       </div>
     </header>

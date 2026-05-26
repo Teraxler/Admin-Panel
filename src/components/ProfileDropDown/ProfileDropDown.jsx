@@ -4,7 +4,7 @@ import { useCookie } from "@/hooks/useCookie";
 import Skeleton from "@/components/Skeleton/Skeleton";
 import AlertModalWarning from "../AlertModalWarning";
 
-const ProfileDropDown = ({ user, isUserLoaded }) => {
+const ProfileDropDown = ({ user, isUserLoaded, isVisible = true }) => {
   const navigate = useNavigate();
   const [userId, setUserId] = useCookie("userId");
 
@@ -14,7 +14,9 @@ const ProfileDropDown = ({ user, isUserLoaded }) => {
   };
 
   return (
-    <div className="group-hover:visible group-hover:opacity-100 group-active:visible group-active:opacity-100 invisible opacity-0 absolute top-full right-0 bg-white rounded-lg overflow-hidden z-20 w-50 shadow-sm text-sm transition duration-300 capitalize">
+    <div
+      className={`${isVisible ? "visible opacity-100" : "invisible opacity-0"} xs:group-hover:visible xs:group-hover:opacity-100 absolute top-[calc(100%+2px)] right-0 bg-white rounded-lg overflow-hidden z-20 w-50 shadow-sm text-sm transition duration-300 capitalize`}
+    >
       <div className="flex items-center gap-x-2 p-2 m-1 cursor-default">
         <div className="shrink-0 size-5 lg:size-6 rounded-xs overflow-hidden">
           {isUserLoaded ? (

@@ -124,6 +124,9 @@
     @apply bg-white border border-neutral-400 text-text-button-inverted 
           hover:bg-neutral-100 active:bg-neutral-200;
   }
+  .btn--secondary--active {
+    @apply bg-neutral-100;
+  }
   .btn--danger {
     @apply bg-white border border-danger text-danger 
           hover:border-danger-hover hover:text-danger-hover 

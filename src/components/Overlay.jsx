@@ -1,6 +1,9 @@
-const Overlay = ({ onClick }) => {
+const Overlay = ({ onClick, className, isTransparent = false }) => {
   return (
-    <div className="bg-black/40 inset-0 absolute z-5" onClick={onClick}></div>
+    <div
+      className={`${isTransparent ? "bg-transparent" : "bg-black/40"} inset-0 absolute z-5 ${className}`}
+      onClick={onClick}
+    ></div>
   );
 };
 
