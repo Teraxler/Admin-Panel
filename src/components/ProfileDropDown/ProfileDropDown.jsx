@@ -10,7 +10,7 @@ const ProfileDropDown = ({ user, isUserLoaded, isVisible = true }) => {
 
   const logoutUser = () => {
     setUserId(null);
-    navigate("/auth/login");
+    navigate("/auth/login", { state: { message: "You logout successfully" } });
   };
 
   return (
