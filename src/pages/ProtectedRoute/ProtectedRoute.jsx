@@ -18,8 +18,15 @@ const ProtectedRoute = ({ children }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isUserLoaded && (user == null || user.role !== "ADMIN"))
-      navigate(loginPath, options);
+    if (isUserLoaded) {
+      if (user == null) {
+        options.state.message = "Please login to access panel";
+      } else if (user.role !== "ADMIN") {
+        options.state.message = "Only admin have permission access to panel";
+      }
+
+      (user == null || user.role !== "ADMIN") && navigate(loginPath, options);
+    }
   }, [isUserLoaded]);
 
   return user?.role === "ADMIN" ? children : <Loader />;
