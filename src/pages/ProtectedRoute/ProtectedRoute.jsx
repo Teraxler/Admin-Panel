@@ -25,7 +25,7 @@ const ProtectedRoute = ({ children }) => {
         options.state.message = "Only admin have permission access to panel";
       }
 
-      navigate(loginPath, options);
+      (user == null || user.role !== "ADMIN") && navigate(loginPath, options);
     }
   }, [isUserLoaded]);
 
