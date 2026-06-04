@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router";
-import { ASSETS_URL } from "@/constants";
+import { BASE_URL } from "@/constants";
 import { useCookie } from "@/hooks/useCookie";
 import Skeleton from "@/components/Skeleton/Skeleton";
 import AlertModalWarning from "../AlertModalWarning";
@@ -21,7 +21,7 @@ const ProfileDropDown = ({ user, isUserLoaded, isVisible = true }) => {
         <div className="shrink-0 size-5 lg:size-6 rounded-xs overflow-hidden">
           {isUserLoaded ? (
             <img
-              src={`${ASSETS_URL}/images/users/user-1.png`}
+              src={`${BASE_URL}/images/users/user-1.png`}
               alt="User Profile"
             />
           ) : (

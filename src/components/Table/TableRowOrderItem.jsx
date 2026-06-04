@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { ASSETS_URL } from "@/constants";
+import { BASE_URL } from "@/constants";
 
 function TableRowOrderItem({
   productId,
@@ -18,7 +18,7 @@ function TableRowOrderItem({
         <div className="flex items-center justify-center size-12 sm:size-15 lg:size-18 mx-auto">
           <img
             className="max-h-full rounded-lg"
-            src={`${ASSETS_URL}/images/products/${productCover}`}
+            src={`${BASE_URL}/images/products/${productCover}`}
           />
         </div>
       </td>

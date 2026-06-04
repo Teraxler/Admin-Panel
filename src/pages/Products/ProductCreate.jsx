@@ -1,7 +1,7 @@
 import { useEffect, useReducer } from "react";
 import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
-import { API_URL, ASSETS_URL } from "@/constants";
+import { API_URL, BASE_URL } from "@/constants";
 import { productSchema } from "@/../validators/productValidator";
 import { useFetch } from "@/hooks/useFetch";
 import Breadcrumb from "@/components/Breadcrumb";
@@ -201,7 +201,7 @@ function ProductCreate() {
                     src={
                       product.isCoverBlob
                         ? product.cover
-                        : `${ASSETS_URL}/images/products/${product.cover}`
+                        : `${BASE_URL}/images/products/${product.cover}`
                     }
                     alt={product.name}
                   />

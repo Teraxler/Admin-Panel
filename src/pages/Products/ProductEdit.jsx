@@ -2,7 +2,7 @@ import { useEffect, useReducer } from "react";
 import { Link, useParams, useNavigate } from "react-router";
 import { toast } from "sonner";
 import { productSchema } from "@/../validators/productValidator";
-import { API_URL, ASSETS_URL } from "@/constants";
+import { API_URL, BASE_URL } from "@/constants";
 import { useFetch } from "@/hooks/useFetch";
 import Breadcrumb from "@/components/Breadcrumb";
 import Head from "@/components/common/Head";
@@ -219,7 +219,7 @@ function ProductEdit() {
                     src={
                       product.isCoverBlob
                         ? product.cover
-                        : `${ASSETS_URL}/images/products/${product.cover}`
+                        : `${BASE_URL}/images/products/${product.cover}`
                     }
                     alt={name}
                   />
