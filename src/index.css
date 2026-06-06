@@ -84,7 +84,8 @@
 }
 
 @layer base {
-  body {
+  body,
+  main {
     font-family: var(--font-neue-montreal);
   }
 }
