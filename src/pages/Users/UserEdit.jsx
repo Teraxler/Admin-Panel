@@ -4,8 +4,8 @@ import { toast } from "sonner";
 import { API_URL } from "@/constants";
 import { editUserSchema } from "@/../validators/authValidator";
 import { useFetch } from "@/hooks/useFetch";
-import Breadcrumb from "@/components/Breadcrumb";
-import Head from "@/components/common/Head";
+import Breadcrumb from "@/components/common/Breadcrumb/Breadcrumb";
+import Head from "@/components/common/Head/Head";
 import userReducer from "@/reducers/user";
 import {
   NAME,
@@ -17,7 +17,7 @@ import {
   PASSWORD,
   NEW_PASSWORD,
 } from "@/actions/user";
-import Loader from "@/components/Loader";
+import Loader from "@/components/common/Loader/Loader";
 
 function UserEdit() {
   const navigate = useNavigate();

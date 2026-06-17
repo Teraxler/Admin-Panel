@@ -4,8 +4,8 @@ import { Link, useNavigate } from "react-router";
 import { API_URL } from "@/constants";
 import { categorySchema } from "@/../validators/categoryValidator";
 import { useCookie } from "@/hooks/useCookie";
-import Breadcrumb from "@/components/Breadcrumb";
-import Head from "@/components/common/Head";
+import Breadcrumb from "@/components/common/Breadcrumb/Breadcrumb";
+import Head from "@/components/common/Head/Head";
 
 function CategoryCareate() {
   const [userId, setUserId] = useCookie("userId");

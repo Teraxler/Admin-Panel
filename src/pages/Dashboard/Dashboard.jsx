@@ -1,11 +1,11 @@
 import { API_URL } from "@/constants";
 import { useFetch } from "@/hooks/useFetch";
 import { useToastMessage } from "@/hooks/useToastMessage";
-import Head from "@/components/common/Head";
-import Breadcrumb from "@/components/Breadcrumb";
+import Head from "@/components/common/Head/Head";
+import Breadcrumb from "@/components/common/Breadcrumb/Breadcrumb";
 import Table from "@/components/Table/Table";
 import ColumnChart from "@/components/Charts/ColumnChart";
-import TableRowOrder from "@/components/Table/TableRowOrder";
+import TableRowOrder from "@/components/Table/components/TableRowOrder";
 import CircularGaugeChart from "@/components/Charts/CircularGaugeChart";
 import TableRowOrderSkeleton from "@/components/Skeleton/TableRowOrderSkeleton";
 import { generateNumbers } from "@/utils/array.util";

@@ -3,8 +3,8 @@ import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
 import { API_URL } from "@/constants";
 import { registerSchema } from "@/../validators/authValidator";
-import Breadcrumb from "@/components/Breadcrumb";
-import Head from "@/components/common/Head";
+import Breadcrumb from "@/components/common/Breadcrumb/Breadcrumb";
+import Head from "@/components/common/Head/Head";
 import userReducer from "@/reducers/user";
 import {
   NAME,

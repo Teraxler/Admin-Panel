@@ -4,9 +4,9 @@ import { toast } from "sonner";
 import { API_URL } from "@/constants";
 import { categorySchema } from "@/../validators/categoryValidator";
 import { useFetch } from "@/hooks/useFetch";
-import Breadcrumb from "@/components/Breadcrumb";
-import Head from "@/components/common/Head";
-import Loader from "@/components/Loader";
+import Breadcrumb from "@/components/common/Breadcrumb/Breadcrumb";
+import Head from "@/components/common/Head/Head";
+import Loader from "@/components/common/Loader/Loader";
 
 function CategoryEdit() {
   const navigate = useNavigate();
