@@ -9,12 +9,12 @@ import {
 } from "@/utils/array.util";
 import { useFetch } from "@/hooks/useFetch";
 import { useToastMessage } from "@/hooks/useToastMessage";
-import Head from "@/components/common/Head";
+import Head from "@/components/common/Head/Head";
 import Table from "@/components/Table/Table";
-import SearchBar from "@/components/SearchBar";
-import Breadcrumb from "@/components/Breadcrumb";
+import SearchBar from "@/components/SearchBar/SearchBar";
+import Breadcrumb from "@/components/common/Breadcrumb/Breadcrumb";
 import Pagination from "@/components/Pagination/Pagination";
-import TableRowProduct from "@/components/Table/TableRowProduct";
+import TableRowProduct from "@/components/Table/components/TableRowProduct";
 import TableRowProductSkeleton from "@/components/Skeleton/TableRowProductSkeleton";
 
 const tableColumns = [

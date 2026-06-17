@@ -5,7 +5,7 @@ import { API_URL } from "@/constants";
 import { loginSchema } from "@/../validators/authValidator";
 import { useToastMessage } from "@/hooks/useToastMessage";
 import { useCookie } from "@/hooks/useCookie";
-import Head from "@/components/common/Head";
+import Head from "@/components/common/Head/Head";
 
 function Login() {
   useToastMessage();

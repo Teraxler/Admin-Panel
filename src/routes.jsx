@@ -14,7 +14,7 @@ const Login = lazy(() => import("@/pages/Auth/Login"));
 const OrderList = lazy(() => import("@/pages/Orders/OrderList"));
 const OrderDetails = lazy(() => import("@/pages/Orders/OrderDetails"));
 
-const MainLayout = lazy(() => import("@/layout/DashboardLayout.jsx"));
+const MainLayout = lazy(() => import("@/layouts/DashboardLayout.jsx"));
 
 const ProductList = lazy(() => import("@/pages/Products/ProductList"));
 const ProductEdit = lazy(() => import("@/pages/Products/ProductEdit"));

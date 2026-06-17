@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { API_URL, BASE_URL } from "@/constants";
 import { productSchema } from "@/../validators/productValidator";
 import { useFetch } from "@/hooks/useFetch";
-import Breadcrumb from "@/components/Breadcrumb";
+import Breadcrumb from "@/components/common/Breadcrumb/Breadcrumb";
 import productReducer from "@/reducers/product";
 import {
   CATEGORY_ID,
@@ -15,7 +15,7 @@ import {
   NAME,
   PRICE,
 } from "@/actions/product";
-import Head from "@/components/common/Head";
+import Head from "@/components/common/Head/Head";
 
 function ProductCreate() {
   const navigate = useNavigate();

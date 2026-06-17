@@ -3,8 +3,8 @@ import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
 import { API_URL } from "@/constants";
 import { editUserSchema } from "@/../validators/authValidator";
-import Breadcrumb from "@/components/Breadcrumb";
-import Head from "@/components/common/Head";
+import Breadcrumb from "@/components/common/Breadcrumb/Breadcrumb";
+import Head from "@/components/common/Head/Head";
 import userReducer from "@/reducers/user";
 import {
   NAME,
@@ -17,7 +17,7 @@ import {
   NEW_PASSWORD,
 } from "@/actions/user";
 import AuthContext from "@/contexts/AuthContext";
-import Loader from "@/components/Loader";
+import Loader from "@/components/common/Loader/Loader";
 
 function MyProfile() {
   const { user, isUserLoaded, setUser } = useContext(AuthContext);
