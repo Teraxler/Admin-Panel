@@ -1,9 +1,25 @@
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import { API_URL } from "@/constants";
+<<<<<<< HEAD
 import Breadcrumb from "@/components/common/Breadcrumb/Breadcrumb";
 import Head from "@/components/common/Head/Head";
 import UserForm from "@/components/Forms/UserForm";
+=======
+import { registerSchema } from "@/../validators/authValidator";
+import Breadcrumb from "@/components/Breadcrumb/Breadcrumb";
+import Head from "@/components/common/Head/Head";
+import userReducer from "@/reducers/user";
+import {
+  NAME,
+  FAMILY,
+  USERNAME,
+  EMAIL,
+  PHONE,
+  BIRTHDAY,
+  PASSWORD,
+} from "../../actions/user";
+>>>>>>> 0943c44af24d68570a5304dfce6478bcc82e8b25
 
 function UserCreate() {
   const navigate = useNavigate();
