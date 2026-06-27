@@ -1,18 +1,16 @@
-import { useState, useEffect } from "react";
-import { Link, useParams, useNavigate } from "react-router";
+import { useEffect } from "react";
+import { useParams, useNavigate } from "react-router";
 import { toast } from "sonner";
 import { API_URL } from "@/constants";
-import { categorySchema } from "@/../validators/categoryValidator";
 import { useFetch } from "@/hooks/useFetch";
 import Breadcrumb from "@/components/common/Breadcrumb/Breadcrumb";
 import Head from "@/components/common/Head/Head";
 import Loader from "@/components/common/Loader/Loader";
+import CategoryForm from "@/components/Forms/CategoryForm";
 
 function CategoryEdit() {
   const navigate = useNavigate();
   const { categoryId } = useParams();
-
-  const [categoryName, setCategoryName] = useState("");
 
   const { data: category, isLoaded: isCategoryLoaded } = useFetch(
     `${API_URL}/categories/${categoryId}`,
@@ -26,21 +24,9 @@ function CategoryEdit() {
         state: { message: "Category ID is invalid!", messageType: "error" },
       });
     }
-
-    setCategoryName(category.name);
   }, [isCategoryLoaded]);
 
-  function handleUpdateCustomer(e) {
-    e.preventDefault();
-
-    const { success, error } = categorySchema.safeParse({ categoryName });
-
-    if (success) return updateCustomer({ categoryName });
-
-    toast.error(error.issues[0].message);
-  }
-
-  async function updateCustomer(category) {
+  async function updateCategory(category) {
     try {
       const response = await fetch(`${API_URL}/categories/${categoryId}`, {
         headers: {
@@ -73,34 +59,7 @@ function CategoryEdit() {
         <Breadcrumb />
       </div>
 
-      <form
-        className="w-full bg-white p-2.5 sm:px-4 py-4 mt-8 rounded-lg shadow text-sm font-medium"
-        onSubmit={handleUpdateCustomer}
-      >
-        <div className="flex flex-col gap-y-4 sm:gap-y-6 lg:gap-y-8 leading-6">
-          <div className="flex gap-x-2 sm:gap-x-4">
-            <div className="w-1/2">
-              <label htmlFor="categoryName">Category</label>
-              <input
-                id="categoryName"
-                type="text"
-                placeholder="Cold Coffee"
-                className="input"
-                value={categoryName}
-                onChange={(e) => setCategoryName(e.target.value)}
-              />
-            </div>
-          </div>
-        </div>
-        <div className="flex justify-end gap-x-2 mt-10 sm:mt-25">
-          <button className="btn btn--small btn--secondary" type="submit">
-            Update
-          </button>
-          <Link to={"/categories"}>
-            <button className="btn btn--small btn--secondary">Cancel</button>
-          </Link>
-        </div>
-      </form>
+      <CategoryForm category={category} onSubmit={updateCategory} isEditMode />
     </>
   );
 }
