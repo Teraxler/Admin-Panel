@@ -1,5 +1,5 @@
-import { createBrowserRouter } from "react-router";
 import { lazy } from "react";
+import { createBrowserRouter } from "react-router";
 import { AuthProvider } from "@/contexts/AuthContext";
 import ProtectedRoute from "@/pages/ProtectedRoute/ProtectedRoute";
 

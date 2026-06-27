@@ -1,4 +1,4 @@
-import { Activity, useEffect } from "react";
+import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
 import { toast } from "sonner";
 import { API_URL } from "@/constants";

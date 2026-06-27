@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Chart from "react-apexcharts";
 
 const CircularGaugeChart = ({ series = [65, 35] }) => {
@@ -39,7 +39,7 @@ const CircularGaugeChart = ({ series = [65, 35] }) => {
   });
 
   return (
-    <div className="bg-green-">
+    <div>
       <Chart type="radialBar" options={options} series={series} height={220} />
     </div>
   );

@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { BASE_URL } from "@/constants";
 import AuthContext from "@/contexts/AuthContext";
 import { useScroll } from "@/hooks/useScroll";

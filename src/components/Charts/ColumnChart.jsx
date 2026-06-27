@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Chart from "react-apexcharts";
 
 const ColumnChart = () => {
@@ -55,6 +55,7 @@ const ColumnChart = () => {
       },
     },
   });
+
   return <Chart type="bar" options={options} series={series} height={250} />;
 };
 

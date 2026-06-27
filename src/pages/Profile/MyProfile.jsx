@@ -1,4 +1,4 @@
-import { Activity, useContext } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import { API_URL } from "@/constants";
