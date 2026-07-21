@@ -1,9 +1,29 @@
-import { useEffect } from "react";
+import { useMemo, useRef } from "react";
 
-export const useDeBounce = (fn, delay, dependencyList = []) => {
-  useEffect(() => {
-    const timeoutId = setTimeout(fn, delay);
+function debounce(callback, delay) {
+  let timerId;
 
-    return () => clearTimeout(timeoutId);
-  }, [...dependencyList]);
-};
+  return function (...args) {
+    timerId && clearTimeout(timerId);
+
+    timerId = setTimeout(() => callback.apply(this, args), delay);
+  };
+}
+
+function useDeBounce(callback, delay) {
+  const callbackRef = useRef();
+
+  callbackRef.current = callback;
+
+  const debouncedCallback = useMemo(() => {
+    function fn() {
+      callbackRef.current?.();
+    }
+
+    return debounce(fn, delay);
+  }, [delay]);
+
+  return debouncedCallback;
+}
+
+export default useDeBounce;

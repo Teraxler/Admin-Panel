@@ -1,13 +1,13 @@
 import { API_URL } from "@/constants";
 import { useFetch } from "@/hooks/useFetch";
 import { useToastMessage } from "@/hooks/useToastMessage";
-import Head from "@/components/common/Head/Head";
-import Breadcrumb from "@/components/common/Breadcrumb/Breadcrumb";
-import Table from "@/components/Table/Table";
-import ColumnChart from "@/components/Charts/ColumnChart";
-import TableRowOrder from "@/components/Table/components/TableRowOrder";
-import CircularGaugeChart from "@/components/Charts/CircularGaugeChart";
-import TableRowOrderSkeleton from "@/components/Skeleton/TableRowOrderSkeleton";
+import Head from "@/components/ui/Head/Head";
+import Breadcrumb from "@/components/ui/Breadcrumb/Breadcrumb";
+import Table from "@/components/ui/Table/Table";
+import ColumnChart from "@/components/ui/Charts/ColumnChart";
+import TableRowOrder from "@/features/order/components/OrderTable/OrderTableRow";
+import CircularGaugeChart from "@/components/ui/Charts/CircularGaugeChart";
+import TableRowOrderSkeleton from "@/features/order/components/OrderTable/OrderTableRowSkeleton";
 import { generateNumbers } from "@/utils/array.util";
 
 const tableColumns = [

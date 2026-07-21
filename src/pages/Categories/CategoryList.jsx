@@ -9,13 +9,13 @@ import {
 } from "@/utils/array.util";
 import { useFetch } from "@/hooks/useFetch";
 import { useToastMessage } from "@/hooks/useToastMessage";
-import Head from "@/components/common/Head/Head";
-import Table from "@/components/Table/Table";
-import SearchBar from "@/components/SearchBar/SearchBar";
-import Breadcrumb from "@/components/common/Breadcrumb/Breadcrumb";
-import Pagination from "@/components/Pagination/Pagination";
-import TableRowCategory from "@/components/Table/components/TableRowCategory";
-import TableRowCategorySkeleton from "@/components/Skeleton/TableRowCategorySkeleton";
+import Head from "@/components/ui/Head/Head";
+import Table from "@/components/ui/Table/Table";
+import SearchBar from "@/components/ui/SearchBar/SearchBar";
+import Breadcrumb from "@/components/ui/Breadcrumb/Breadcrumb";
+import Pagination from "@/components/ui/Pagination/Pagination";
+import TableRowCategory from "@/features/category/components/CategoryTable/CategoryTableRow";
+import TableRowCategorySkeleton from "@/features/category/components/CategoryTable/CategoryTableRowSkeleton";
 
 const tableColumns = ["#", "Category", ""];
 

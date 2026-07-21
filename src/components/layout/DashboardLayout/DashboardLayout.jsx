@@ -1,0 +1,46 @@
+import { useState } from "react";
+import { Outlet } from "react-router";
+import { Toaster } from "sonner";
+import Header from "@/components/layout/Header/Header";
+import Sidebar from "@/components/layout/Sidebar/Sidebar";
+import SvgIcons from "@/components/ui/SvgIcons/SvgIcons";
+import Overlay from "@/components/ui/Overlay/Overlay";
+
+function DashboardLayout() {
+  const [isProfileDropDownVisible, setIsProfileDropDownVisible] =
+    useState(false);
+
+  const [isSidebarVisible, setIsSidebarVisible] = useState(false);
+
+  const hideProfileDropDown = () => setIsProfileDropDownVisible(false);
+  const hideSidebar = () => setIsSidebarVisible(false);
+  const toggleSidebar = () => setIsSidebarVisible((prevValue) => !prevValue);
+
+  return (
+    <>
+      <SvgIcons />
+      <Toaster richColors position="top-right" />
+
+      <div className="flex bg-neutral-100 min-h-svh">
+        <Sidebar isVisible={isSidebarVisible} onClick={hideSidebar} />
+        <div className="w-[calc(100%-190px)] lg:w-[calc(100%-260px)] grow shrink">
+          <Header
+            onClick={toggleSidebar}
+            isProfileDropDownVisible={isProfileDropDownVisible}
+            setIsProfileDropDownVisible={setIsProfileDropDownVisible}
+          />
+          <main className="px-4 sm:px-6 lg:px-8 pt-4 pb-18">
+            <Outlet />
+            {isSidebarVisible ? <Overlay onClick={hideSidebar} /> : null}
+
+            {isProfileDropDownVisible ? (
+              <Overlay isTransparent onClick={hideProfileDropDown} />
+            ) : null}
+          </main>
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default DashboardLayout;

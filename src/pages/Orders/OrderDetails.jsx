@@ -5,12 +5,12 @@ import { formattingPhone } from "@/utils/string.util";
 import { generateNumbers } from "@/utils/array.util";
 import { formattingDateTime, normalizeDateTime } from "@/utils/dateTime.util";
 import { useFetch } from "@/hooks/useFetch";
-import Head from "@/components/common/Head/Head";
-import Table from "@/components/Table/Table";
-import Breadcrumb from "@/components/common/Breadcrumb/Breadcrumb";
-import Skeleton from "@/components/Skeleton/Skeleton";
-import TableRowOrderItem from "@/components/Table/components/TableRowOrderItem";
-import TableRowOrderItemSkeleton from "@/components/Skeleton/TableRowOrderItemSkeleton";
+import Head from "@/components/ui/Head/Head";
+import Table from "@/components/ui/Table/Table";
+import Breadcrumb from "@/components/ui/Breadcrumb/Breadcrumb";
+import Skeleton from "@/components/ui/Skeleton/Skeleton";
+import TableRowOrderItem from "@/features/order/components/OrderTable/OrderItemTableRow";
+import TableRowOrderItemSkeleton from "@/features/order/components/OrderTable/OrderItemTableRowSkeleton";
 
 const tableColumns = ["#", "Cover", "Name", "Quantity", "Unit Price", "Total"];
 

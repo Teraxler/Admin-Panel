@@ -3,10 +3,10 @@ import { useParams, useNavigate } from "react-router";
 import { toast } from "sonner";
 import { API_URL } from "@/constants";
 import { useFetch } from "@/hooks/useFetch";
-import Breadcrumb from "@/components/common/Breadcrumb/Breadcrumb";
-import Head from "@/components/common/Head/Head";
-import Loader from "@/components/common/Loader/Loader";
-import CategoryForm from "@/components/Forms/CategoryForm";
+import Breadcrumb from "@/components/ui/Breadcrumb/Breadcrumb";
+import Head from "@/components/ui/Head/Head";
+import Loader from "@/components/ui/Loader/Loader";
+import CategoryForm from "@/features/category/components/CategoryForm/CategoryForm";
 
 function CategoryEdit() {
   const navigate = useNavigate();

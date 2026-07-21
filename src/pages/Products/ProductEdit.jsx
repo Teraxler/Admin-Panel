@@ -3,25 +3,10 @@ import { useParams, useNavigate } from "react-router";
 import { toast } from "sonner";
 import { API_URL } from "@/constants";
 import { useFetch } from "@/hooks/useFetch";
-import Breadcrumb from "@/components/common/Breadcrumb/Breadcrumb";
-import Head from "@/components/common/Head/Head";
-<<<<<<< HEAD
-import Loader from "@/components/common/Loader/Loader";
-import ProductForm from "@/components/Forms/ProductForm";
-=======
-import productReducer from "@/reducers/product";
-import {
-  ALL,
-  CATEGORY_ID,
-  COVER,
-  COVER_FILE,
-  DESCRIPTION,
-  INVENTORY,
-  NAME,
-  PRICE,
-} from "@/actions/product";
-import Loader from "@/components/common/Loader/Loader";
->>>>>>> 0943c44af24d68570a5304dfce6478bcc82e8b25
+import Breadcrumb from "@/components/ui/Breadcrumb/Breadcrumb";
+import Head from "@/components/ui/Head/Head";
+import Loader from "@/components/ui/Loader/Loader";
+import ProductForm from "@/features/product/components/ProductForm/ProductForm";
 
 function ProductEdit() {
   const navigate = useNavigate();
