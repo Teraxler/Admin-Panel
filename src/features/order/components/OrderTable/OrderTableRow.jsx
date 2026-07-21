@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 import { formattingDateTime, normalizeDateTime } from "@/utils/dateTime.util";
-import AlertModalWarning from "@/components/ui/AlertModals/AlertModalWarning";
+import { AlertModalWarning } from "@/components/ui";
 
 const statusColor = {
   canceled: "bg-red-100 text-red-700",

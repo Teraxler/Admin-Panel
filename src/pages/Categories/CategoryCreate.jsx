@@ -2,8 +2,8 @@ import { toast } from "sonner";
 import { useNavigate } from "react-router";
 import { API_URL } from "@/constants";
 import Breadcrumb from "@/components/ui/Breadcrumb/Breadcrumb";
-import Head from "@/components/ui/Head/Head";
-import CategoryForm from "@/features/category/components/CategoryForm/CategoryForm";
+import { Head } from "@/components/ui";
+import { CategoryForm } from "@/features/category";
 
 function CategoryCreate() {
   const navigate = useNavigate();

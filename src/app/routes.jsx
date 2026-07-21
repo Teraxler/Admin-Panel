@@ -1,6 +1,6 @@
 import { lazy } from "react";
 import { createBrowserRouter } from "react-router";
-import { AuthProvider } from "@/features/auth/context/AuthContext";
+import { AuthProvider } from "@/features/auth";
 import ProtectedRoute from "@/routes/ProtectedRoute";
 
 const NotFound = lazy(() => import("@/pages/NotFound/NotFound"));

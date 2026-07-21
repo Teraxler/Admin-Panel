@@ -9,13 +9,17 @@ import {
 } from "@/utils/array.util";
 import { useFetch } from "@/hooks/useFetch";
 import { useToastMessage } from "@/hooks/useToastMessage";
-import Head from "@/components/ui/Head/Head";
-import Table from "@/components/ui/Table/Table";
-import SearchBar from "@/components/ui/SearchBar/SearchBar";
-import Breadcrumb from "@/components/ui/Breadcrumb/Breadcrumb";
-import Pagination from "@/components/ui/Pagination/Pagination";
-import TableRowCategory from "@/features/category/components/CategoryTable/CategoryTableRow";
-import TableRowCategorySkeleton from "@/features/category/components/CategoryTable/CategoryTableRowSkeleton";
+import {
+  Head,
+  Table,
+  SearchBar,
+  Breadcrumb,
+  Pagination,
+} from "@/components/ui";
+import {
+  CategoryTableRow,
+  CategoryTableRowSkeleton,
+} from "@/features/category";
 
 const tableColumns = ["#", "Category", ""];
 
@@ -85,7 +89,7 @@ function CategoryList() {
           <Table columns={tableColumns}>
             {isCategoriesLoaded
               ? currentPageCategories.map((category, i) => (
-                  <TableRowCategory
+                  <CategoryTableRow
                     key={category.categoryId}
                     number={calculateItemNumber(i)}
                     onDelete={() => deleteCategory(category.categoryId)}
@@ -93,7 +97,7 @@ function CategoryList() {
                   />
                 ))
               : generateNumbers(5, 1).map((number) => (
-                  <TableRowCategorySkeleton key={number} />
+                  <CategoryTableRowSkeleton key={number} />
                 ))}
           </Table>
           <Pagination

@@ -1,4 +1,4 @@
-import Skeleton from "@/components/ui/Skeleton/Skeleton";
+import { Skeleton } from "@/components/ui";
 
 const TableRowOrderSkeleton = ({ noAction = false }) => {
   return (

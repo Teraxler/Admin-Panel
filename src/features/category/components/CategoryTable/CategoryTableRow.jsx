@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import AlertModalWarning from "@/components/ui/AlertModals/AlertModalWarning";
+import { AlertModalWarning } from "@/components/ui";
 
 function TableRowCategory({ number, categoryId, name, onDelete }) {
   return (

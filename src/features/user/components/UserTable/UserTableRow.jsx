@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import { formattingPhone } from "@/utils/string.util";
 import { formattingDateTime, normalizeDateTime } from "@/utils/dateTime.util";
-import AlertModalWarning from "@/components/ui/AlertModals/AlertModalWarning";
+import { AlertModalWarning } from "@/components/ui";
 
 function TableRowUser({
   number,

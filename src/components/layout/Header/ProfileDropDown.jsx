@@ -1,8 +1,7 @@
 import { Link, useNavigate } from "react-router";
 import { BASE_URL } from "@/constants";
 import { useCookie } from "@/hooks/useCookie";
-import Skeleton from "@/components/ui/Skeleton/Skeleton";
-import AlertModalWarning from "../../ui/AlertModals/AlertModalWarning";
+import { Skeleton, AlertModalWarning } from "@/components/ui";
 
 const ProfileDropDown = ({ user, isUserLoaded, isVisible = true }) => {
   const navigate = useNavigate();

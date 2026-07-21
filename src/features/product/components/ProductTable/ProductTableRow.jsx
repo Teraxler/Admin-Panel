@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 import { BASE_URL } from "@/constants";
-import AlertModalWarning from "@/components/ui/AlertModals/AlertModalWarning";
+import { AlertModalWarning } from "@/components/ui";
 
 function TableRowProduct({
   productId,

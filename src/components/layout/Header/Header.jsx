@@ -3,7 +3,7 @@ import { BASE_URL } from "@/constants";
 import AuthContext from "@/features/auth/context/AuthContext";
 import { useScroll } from "@/hooks/useScroll";
 import ProfileDropDown from "./ProfileDropDown";
-import Skeleton from "@/components/ui/Skeleton/Skeleton";
+import { Skeleton } from "@/components/ui";
 
 function Header({
   onClick,

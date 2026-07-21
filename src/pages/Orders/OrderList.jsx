@@ -9,13 +9,14 @@ import {
 } from "@/utils/array.util";
 import { useFetch } from "@/hooks/useFetch";
 import { useToastMessage } from "@/hooks/useToastMessage";
-import Head from "@/components/ui/Head/Head";
-import Table from "@/components/ui/Table/Table";
-import SearchBar from "@/components/ui/SearchBar/SearchBar";
-import Breadcrumb from "@/components/ui/Breadcrumb/Breadcrumb";
-import Pagination from "@/components/ui/Pagination/Pagination";
-import TableRowOrder from "@/features/order/components/OrderTable/OrderTableRow";
-import TableRowOrderSkeleton from "@/features/order/components/OrderTable/OrderTableRowSkeleton";
+import {
+  Head,
+  Table,
+  SearchBar,
+  Breadcrumb,
+  Pagination,
+} from "@/components/ui";
+import { OrderTableRow, OrderTableRowSkeleton } from "@/features/order";
 
 const tableColumns = [
   "#",
@@ -91,7 +92,7 @@ function OrderList() {
           <Table columns={tableColumns}>
             {isOrdersLoaded
               ? currentPageOrders.map((order, i) => (
-                  <TableRowOrder
+                  <OrderTableRow
                     key={order.orderId}
                     number={calculateItemNumber(i)}
                     onDelete={() => handleDeleteOrder(order.orderId)}
@@ -99,7 +100,7 @@ function OrderList() {
                   />
                 ))
               : generateNumbers(5, 1).map((number) => (
-                  <TableRowOrderSkeleton key={number} />
+                  <OrderTableRowSkeleton key={number} />
                 ))}
           </Table>
           <Pagination

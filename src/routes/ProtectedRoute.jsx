@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router";
-import AuthContext from "@/features/auth/context/AuthContext";
-import Loader from "@/components/ui/Loader/Loader";
+import { AuthContext } from "@/features/auth";
+import { Loader } from "@/components/ui";
 
 const loginPath = "/auth/login";
 

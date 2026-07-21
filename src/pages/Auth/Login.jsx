@@ -3,8 +3,8 @@ import { Toaster, toast } from "sonner";
 import { API_URL } from "@/constants";
 import { useToastMessage } from "@/hooks/useToastMessage";
 import { useCookie } from "@/hooks/useCookie";
-import Head from "@/components/ui/Head/Head";
-import LoginForm from "@/features/auth/components/LoginForm/LoginForm";
+import { Head } from "@/components/ui";
+import { LoginForm } from "@/features/auth";
 
 function Login() {
   useToastMessage();

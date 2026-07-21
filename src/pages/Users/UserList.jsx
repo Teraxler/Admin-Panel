@@ -9,13 +9,14 @@ import {
 } from "@/utils/array.util";
 import { useFetch } from "@/hooks/useFetch";
 import { useToastMessage } from "@/hooks/useToastMessage";
-import Head from "@/components/ui/Head/Head";
-import Table from "@/components/ui/Table/Table";
-import SearchBar from "@/components/ui/SearchBar/SearchBar";
-import Breadcrumb from "@/components/ui/Breadcrumb/Breadcrumb";
-import Pagination from "@/components/ui/Pagination/Pagination";
-import TableRowUser from "@/features/user/components/UserTable/UserTableRow";
-import TableRowUserSkeleton from "@/features/user/components/UserTable/UserTableRowSkeleton";
+import {
+  Head,
+  Table,
+  SearchBar,
+  Breadcrumb,
+  Pagination,
+} from "@/components/ui";
+import { UserTableRow, UserTableRowSkeleton } from "@/features/user";
 
 const tableColumns = [
   "#",
@@ -86,7 +87,7 @@ function UserList() {
           <Table columns={tableColumns}>
             {isUsersLoaded
               ? currentPageUsers.map((user, i) => (
-                  <TableRowUser
+                  <UserTableRow
                     key={user.userId}
                     number={calculateItemNumber(i)}
                     onDelete={() => handleDeleteUser(user.userId)}
@@ -94,7 +95,7 @@ function UserList() {
                   />
                 ))
               : generateNumbers(5, 1).map((number) => (
-                  <TableRowUserSkeleton key={number} />
+                  <UserTableRowSkeleton key={number} />
                 ))}
           </Table>
           <Pagination

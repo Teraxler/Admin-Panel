@@ -1,9 +1,8 @@
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import { API_URL } from "@/constants";
-import Breadcrumb from "@/components/ui/Breadcrumb/Breadcrumb";
-import Head from "@/components/ui/Head/Head";
-import UserForm from "@/features/user/components/UserForm/UserForm";
+import { Head, Breadcrumb } from "@/components/ui";
+import { UserForm } from "@/features/user";
 
 function UserCreate() {
   const navigate = useNavigate();

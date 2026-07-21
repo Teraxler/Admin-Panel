@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { Outlet } from "react-router";
 import { Toaster } from "sonner";
-import Header from "@/components/layout/Header/Header";
-import Sidebar from "@/components/layout/Sidebar/Sidebar";
-import SvgIcons from "@/components/ui/SvgIcons/SvgIcons";
-import Overlay from "@/components/ui/Overlay/Overlay";
+import Header from "../Header/Header";
+import Sidebar from "../Sidebar/Sidebar";
+import { SvgIcons, Overlay } from "@/components/ui";
 
 function DashboardLayout() {
   const [isProfileDropDownVisible, setIsProfileDropDownVisible] =

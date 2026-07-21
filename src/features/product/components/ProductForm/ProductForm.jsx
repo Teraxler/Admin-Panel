@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import { toast } from "sonner";
 import { BASE_URL, API_URL } from "@/constants";
 import { useFetch } from "@/hooks/useFetch";
-import Loader from "@/components/ui/Loader/Loader";
+import { Loader } from "@/components/ui";
 import { productSchema } from "./validation";
 import productReducer, {
   CATEGORY_ID,

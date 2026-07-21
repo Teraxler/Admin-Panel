@@ -1,13 +1,14 @@
 import { API_URL } from "@/constants";
 import { useFetch } from "@/hooks/useFetch";
 import { useToastMessage } from "@/hooks/useToastMessage";
-import Head from "@/components/ui/Head/Head";
-import Breadcrumb from "@/components/ui/Breadcrumb/Breadcrumb";
-import Table from "@/components/ui/Table/Table";
-import ColumnChart from "@/components/ui/Charts/ColumnChart";
-import TableRowOrder from "@/features/order/components/OrderTable/OrderTableRow";
-import CircularGaugeChart from "@/components/ui/Charts/CircularGaugeChart";
-import TableRowOrderSkeleton from "@/features/order/components/OrderTable/OrderTableRowSkeleton";
+import {
+  Head,
+  Breadcrumb,
+  Table,
+  ColumnChart,
+  CircularGaugeChart,
+} from "@/components/ui";
+import { OrderTableRow, OrderTableRowSkeleton } from "@/features/order";
 import { generateNumbers } from "@/utils/array.util";
 
 const tableColumns = [
@@ -95,7 +96,7 @@ const Dashboard = () => {
                   .reverse()
                   .slice(0, 5)
                   .map((order, i) => (
-                    <TableRowOrder
+                    <OrderTableRow
                       key={order.orderId}
                       number={i + 1}
                       {...order}
@@ -103,7 +104,7 @@ const Dashboard = () => {
                     />
                   ))
               : generateNumbers(5, 1).map((number) => (
-                  <TableRowOrderSkeleton noAction key={number} />
+                  <OrderTableRowSkeleton noAction key={number} />
                 ))}
           </Table>
 

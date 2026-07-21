@@ -4,9 +4,8 @@ import { toast } from "sonner";
 import { API_URL } from "@/constants";
 import { useFetch } from "@/hooks/useFetch";
 import Breadcrumb from "@/components/ui/Breadcrumb/Breadcrumb";
-import Head from "@/components/ui/Head/Head";
-import Loader from "@/components/ui/Loader/Loader";
-import CategoryForm from "@/features/category/components/CategoryForm/CategoryForm";
+import { Head, Loader } from "@/components/ui";
+import { CategoryForm } from "@/features/category";
 
 function CategoryEdit() {
   const navigate = useNavigate();

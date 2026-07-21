@@ -1,9 +1,8 @@
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import { API_URL } from "@/constants";
-import Breadcrumb from "@/components/ui/Breadcrumb/Breadcrumb";
-import Head from "@/components/ui/Head/Head";
-import ProductForm from "@/features/product/components/ProductForm/ProductForm";
+import { Head, Breadcrumb } from "@/components/ui";
+import { ProductForm } from "@/features/product";
 
 function ProductCreate() {
   const navigate = useNavigate();

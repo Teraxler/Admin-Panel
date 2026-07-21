@@ -5,12 +5,8 @@ import { formattingPhone } from "@/utils/string.util";
 import { generateNumbers } from "@/utils/array.util";
 import { formattingDateTime, normalizeDateTime } from "@/utils/dateTime.util";
 import { useFetch } from "@/hooks/useFetch";
-import Head from "@/components/ui/Head/Head";
-import Table from "@/components/ui/Table/Table";
-import Breadcrumb from "@/components/ui/Breadcrumb/Breadcrumb";
-import Skeleton from "@/components/ui/Skeleton/Skeleton";
-import TableRowOrderItem from "@/features/order/components/OrderTable/OrderItemTableRow";
-import TableRowOrderItemSkeleton from "@/features/order/components/OrderTable/OrderItemTableRowSkeleton";
+import { Head, Table, Breadcrumb, Skeleton } from "@/components/ui";
+import { OrderItemTableRow, OrderItemTableRowSkeleton } from "@/features/order";
 
 const tableColumns = ["#", "Cover", "Name", "Quantity", "Unit Price", "Total"];
 
@@ -167,14 +163,14 @@ function OrderDetails() {
           <Table columns={tableColumns}>
             {isOrderLoaded
               ? order?.orderItems.map((orderItem, i) => (
-                  <TableRowOrderItem
+                  <OrderItemTableRow
                     key={orderItem.orderItemId}
                     number={i + 1}
                     {...orderItem}
                   />
                 ))
               : generateNumbers(5, 1).map((number) => (
-                  <TableRowOrderItemSkeleton key={number} />
+                  <OrderItemTableRowSkeleton key={number} />
                 ))}
           </Table>
         </div>

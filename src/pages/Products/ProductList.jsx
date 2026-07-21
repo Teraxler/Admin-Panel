@@ -9,13 +9,14 @@ import {
 } from "@/utils/array.util";
 import { useFetch } from "@/hooks/useFetch";
 import { useToastMessage } from "@/hooks/useToastMessage";
-import Head from "@/components/ui/Head/Head";
-import Table from "@/components/ui/Table/Table";
-import SearchBar from "@/components/ui/SearchBar/SearchBar";
-import Breadcrumb from "@/components/ui/Breadcrumb/Breadcrumb";
-import Pagination from "@/components/ui/Pagination/Pagination";
-import TableRowProduct from "@/features/product/components/ProductTable/ProductTableRow";
-import TableRowProductSkeleton from "@/features/product/components/ProductTable/ProductTableRowSkeleton";
+import {
+  Head,
+  Table,
+  SearchBar,
+  Breadcrumb,
+  Pagination,
+} from "@/components/ui";
+import { ProductTableRow, ProductTableRowSkeleton } from "@/features/product";
 
 const tableColumns = [
   "#",
@@ -94,7 +95,7 @@ function ProductList() {
             <Table columns={tableColumns}>
               {isProductsLoaded
                 ? currentPageProducts.map((product, i) => (
-                    <TableRowProduct
+                    <ProductTableRow
                       key={product.productId}
                       number={calculateItemNumber(i)}
                       onDelete={() => handleDeleteProduct(product.productId)}
@@ -102,7 +103,7 @@ function ProductList() {
                     />
                   ))
                 : generateNumbers(5, 1).map((item) => (
-                    <TableRowProductSkeleton key={item} />
+                    <ProductTableRowSkeleton key={item} />
                   ))}
             </Table>
           </div>
