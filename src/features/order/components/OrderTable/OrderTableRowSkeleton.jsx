@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui";
 
-const TableRowOrderSkeleton = ({ noAction = false }) => {
+const OrderTableRowSkeleton = ({ noAction = false }) => {
   return (
     <tr className="*:px-2 *:sm:px-4 *:lg:px-6 *:py-2">
       <td>
@@ -39,4 +39,4 @@ const TableRowOrderSkeleton = ({ noAction = false }) => {
   );
 };
 
-export default TableRowOrderSkeleton;
+export default OrderTableRowSkeleton;

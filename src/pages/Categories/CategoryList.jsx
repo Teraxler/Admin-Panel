@@ -1,61 +1,19 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import { toast } from "sonner";
-import { API_URL, ITEMS_PER_PAGE } from "@/constants";
-import {
-  generateNumbers,
-  removeItemFromList,
-  searchCategory,
-} from "@/utils/array.util";
+import { API_URL } from "@/constants";
+import { searchCategory } from "@/utils/array.util";
 import { useFetch } from "@/hooks/useFetch";
 import { useToastMessage } from "@/hooks/useToastMessage";
-import {
-  Head,
-  Table,
-  SearchBar,
-  Breadcrumb,
-  Pagination,
-} from "@/components/ui";
-import {
-  CategoryTableRow,
-  CategoryTableRowSkeleton,
-} from "@/features/category";
-
-const tableColumns = ["#", "Category", ""];
-
-const removeCategoryById = (categories, id) =>
-  removeItemFromList(categories, "categoryId", id);
+import { Head, SearchBar, Breadcrumb } from "@/components/ui";
+import { CategoryTable } from "@/features/category";
 
 function CategoryList() {
   useToastMessage();
-
-  const [currentPage, setCurrentPage] = useState(1);
   const [filteredCategories, setFilteredCategories] = useState([]);
-  const [currentPageCategories, setCurrentPageCategories] = useState([]);
-
-  const calculateItemNumber = (index) =>
-    (currentPage - 1) * ITEMS_PER_PAGE + index + 1;
 
   const { data: categories, isLoaded: isCategoriesLoaded } = useFetch(
     `${API_URL}/categories`,
   );
-
-  async function deleteCategory(categoryId) {
-    try {
-      const response = await fetch(`${API_URL}/categories/${categoryId}`, {
-        method: "DELETE",
-      });
-
-      if (!response.ok) throw new Error("Failed to delete");
-
-      setFilteredCategories((prevCategories) =>
-        removeCategoryById(prevCategories, categoryId),
-      );
-      toast.success("Category delete successfully");
-    } catch (error) {
-      toast.error("Something is wrong please try again");
-    }
-  }
 
   return (
     <>
@@ -85,35 +43,11 @@ function CategoryList() {
             setFilteredItems={setFilteredCategories}
           />
         </div>
-        <div className="p-2 sm:p-4 bg-white rounded-lg">
-          <Table columns={tableColumns}>
-            {isCategoriesLoaded
-              ? currentPageCategories.map((category, i) => (
-                  <CategoryTableRow
-                    key={category.categoryId}
-                    number={calculateItemNumber(i)}
-                    onDelete={() => deleteCategory(category.categoryId)}
-                    {...category}
-                  />
-                ))
-              : generateNumbers(5, 1).map((number) => (
-                  <CategoryTableRowSkeleton key={number} />
-                ))}
-          </Table>
-          <Pagination
-            itemsPerPage={ITEMS_PER_PAGE}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-            items={filteredCategories}
-            setCurrentPageItems={setCurrentPageCategories}
-          />
-
-          {isCategoriesLoaded && !currentPageCategories?.length ? (
-            <span className="block h-20 text-center leading-20">
-              No Category Found!!!
-            </span>
-          ) : null}
-        </div>
+        <CategoryTable
+          categories={filteredCategories}
+          setCategories={setFilteredCategories}
+          isCategoriesLoaded={isCategoriesLoaded}
+        />
       </section>
     </>
   );

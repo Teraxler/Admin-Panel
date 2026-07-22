@@ -2,7 +2,7 @@ import { Link } from "react-router";
 import { BASE_URL } from "@/constants";
 import { AlertModalWarning } from "@/components/ui";
 
-function TableRowProduct({
+function ProductTableRow({
   productId,
   name,
   categoryName,
@@ -77,4 +77,4 @@ function TableRowProduct({
   );
 }
 
-export default TableRowProduct;
+export default ProductTableRow;

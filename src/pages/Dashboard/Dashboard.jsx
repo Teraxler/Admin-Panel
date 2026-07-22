@@ -4,23 +4,10 @@ import { useToastMessage } from "@/hooks/useToastMessage";
 import {
   Head,
   Breadcrumb,
-  Table,
   ColumnChart,
   CircularGaugeChart,
 } from "@/components/ui";
-import { OrderTableRow, OrderTableRowSkeleton } from "@/features/order";
-import { generateNumbers } from "@/utils/array.util";
-
-const tableColumns = [
-  "#",
-  "User",
-  "Date",
-  "Address",
-  "Discount",
-  "Items",
-  "Total",
-  "Status",
-];
+import { OrderTable } from "@/features/order";
 
 const Dashboard = () => {
   useToastMessage();
@@ -89,31 +76,12 @@ const Dashboard = () => {
         <div className="mb-5 p-2 sm:p-4">
           <h3 className="text-xl font-medium">Recent Orders</h3>
         </div>
-        <div className="p-2 sm:p-4">
-          <Table columns={tableColumns}>
-            {isOrdersLoaded
-              ? orders
-                  .reverse()
-                  .slice(0, 5)
-                  .map((order, i) => (
-                    <OrderTableRow
-                      key={order.orderId}
-                      number={i + 1}
-                      {...order}
-                      noAction
-                    />
-                  ))
-              : generateNumbers(5, 1).map((number) => (
-                  <OrderTableRowSkeleton noAction key={number} />
-                ))}
-          </Table>
 
-          {isOrdersLoaded && !orders?.length ? (
-            <span className="h-20 block leading-20 text-center">
-              No Order Found!!!
-            </span>
-          ) : null}
-        </div>
+        <OrderTable
+          orders={orders?.reverse().slice(0, 5)}
+          isOrdersLoaded={isOrdersLoaded}
+          noAction
+        />
       </section>
     </>
   );

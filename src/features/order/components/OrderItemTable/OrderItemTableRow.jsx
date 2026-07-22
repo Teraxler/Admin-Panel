@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import { BASE_URL } from "@/constants";
 
-function TableRowOrderItem({
+function OrderItemTableRow({
   productId,
   quantity,
   unitPrice,
@@ -45,4 +45,4 @@ function TableRowOrderItem({
   );
 }
 
-export default TableRowOrderItem;
+export default OrderItemTableRow;

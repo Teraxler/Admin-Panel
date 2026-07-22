@@ -1,68 +1,20 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import { toast } from "sonner";
-import { API_URL, ITEMS_PER_PAGE } from "@/constants";
-import {
-  searchProduct,
-  removeItemFromList,
-  generateNumbers,
-} from "@/utils/array.util";
+import { API_URL } from "@/constants";
+import { searchProduct } from "@/utils/array.util";
 import { useFetch } from "@/hooks/useFetch";
 import { useToastMessage } from "@/hooks/useToastMessage";
-import {
-  Head,
-  Table,
-  SearchBar,
-  Breadcrumb,
-  Pagination,
-} from "@/components/ui";
-import { ProductTableRow, ProductTableRowSkeleton } from "@/features/product";
-
-const tableColumns = [
-  "#",
-  "Cover",
-  "Name",
-  "Category",
-  "Description",
-  "Price",
-  "Inventory",
-  "",
-];
-
-const removeProductById = (products, id) =>
-  removeItemFromList(products, "productId", id);
+import { Head, SearchBar, Breadcrumb } from "@/components/ui";
+import { ProductTable } from "@/features/product";
 
 function ProductList() {
   useToastMessage();
 
-  const [currentPage, setCurrentPage] = useState(1);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [currentPageProducts, setCurrentPageProducts] = useState([]);
-
-  const calculateItemNumber = (index) =>
-    (currentPage - 1) * ITEMS_PER_PAGE + index + 1;
 
   const { data: products, isLoaded: isProductsLoaded } = useFetch(
     `${API_URL}/products`,
   );
-
-  async function handleDeleteProduct(productId) {
-    try {
-      const response = await fetch(`${API_URL}/products/${productId}`, {
-        method: "DELETE",
-      });
-
-      if (!response.ok) throw new Error("Failed to delete");
-
-      setFilteredProducts((prevProducts) =>
-        removeProductById(prevProducts, productId),
-      );
-
-      toast.success("Product delete successfully");
-    } catch (error) {
-      toast.error("Something is wrong please try again");
-    }
-  }
 
   return (
     <>
@@ -90,37 +42,12 @@ function ProductList() {
             placeholder={"Search (name, category)"}
           />
         </div>
-        <div className="p-2 sm:p-4 bg-white rounded-lg">
-          <div className="overflow-x-auto">
-            <Table columns={tableColumns}>
-              {isProductsLoaded
-                ? currentPageProducts.map((product, i) => (
-                    <ProductTableRow
-                      key={product.productId}
-                      number={calculateItemNumber(i)}
-                      onDelete={() => handleDeleteProduct(product.productId)}
-                      {...product}
-                    />
-                  ))
-                : generateNumbers(5, 1).map((item) => (
-                    <ProductTableRowSkeleton key={item} />
-                  ))}
-            </Table>
-          </div>
-          <Pagination
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-            items={filteredProducts}
-            itemsPerPage={ITEMS_PER_PAGE}
-            setCurrentPageItems={setCurrentPageProducts}
-          />
 
-          {isProductsLoaded && !currentPageProducts?.length ? (
-            <span className="h-20 block text-center leading-20">
-              No Product Found!!!
-            </span>
-          ) : null}
-        </div>
+        <ProductTable
+          products={filteredProducts}
+          setProducts={setFilteredProducts}
+          isProductsLoaded={isProductsLoaded}
+        />
       </section>
     </>
   );

@@ -2,13 +2,10 @@ import { useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import { API_URL } from "@/constants";
 import { formattingPhone } from "@/utils/string.util";
-import { generateNumbers } from "@/utils/array.util";
 import { formattingDateTime, normalizeDateTime } from "@/utils/dateTime.util";
 import { useFetch } from "@/hooks/useFetch";
-import { Head, Table, Breadcrumb, Skeleton } from "@/components/ui";
-import { OrderItemTableRow, OrderItemTableRowSkeleton } from "@/features/order";
-
-const tableColumns = ["#", "Cover", "Name", "Quantity", "Unit Price", "Total"];
+import { Head, Breadcrumb, Skeleton } from "@/components/ui";
+import { OrderItemTable } from "@/features/order";
 
 const statusColor = {
   canceled: "bg-red-100 text-red-700",
@@ -157,24 +154,10 @@ function OrderDetails() {
         </div>
       </div>
 
-      <div className="p-2 sm:p-4 bg-white rounded-lg mt-4 sm:mt-5">
-        <h3 className="text-xl font-medium">Order Items</h3>
-        <div className="mt-5">
-          <Table columns={tableColumns}>
-            {isOrderLoaded
-              ? order?.orderItems.map((orderItem, i) => (
-                  <OrderItemTableRow
-                    key={orderItem.orderItemId}
-                    number={i + 1}
-                    {...orderItem}
-                  />
-                ))
-              : generateNumbers(5, 1).map((number) => (
-                  <OrderItemTableRowSkeleton key={number} />
-                ))}
-          </Table>
-        </div>
-      </div>
+      <OrderItemTable
+        orderItems={order?.orderItems}
+        isOrderItemesLoaded={isOrderLoaded}
+      />
     </>
   );
 }

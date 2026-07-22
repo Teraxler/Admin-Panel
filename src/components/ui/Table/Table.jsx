@@ -3,7 +3,7 @@ import TableHead from "./TableHead";
 import TableBody from "./TableBody";
 import TableHeader from "./TableHeader";
 
-function Table({ children, columns }) {
+function Table({ children, columns, noAction }) {
   return (
     <div className="overflow-x-auto scroll-thin">
       <table className="text-sm lg:text-base w-full text-center rounded-lg overflow-hidden">
@@ -12,6 +12,8 @@ function Table({ children, columns }) {
             {columns.map((col) => (
               <TableHead key={col}>{col}</TableHead>
             ))}
+
+            {!noAction && <TableHead>Actions</TableHead>}
           </TableRow>
         </TableHeader>
         <TableBody>{children}</TableBody>

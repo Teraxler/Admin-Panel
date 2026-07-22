@@ -3,7 +3,7 @@ import { formattingPhone } from "@/utils/string.util";
 import { formattingDateTime, normalizeDateTime } from "@/utils/dateTime.util";
 import { AlertModalWarning } from "@/components/ui";
 
-function TableRowUser({
+function UserTableRow({
   number,
   userId,
   name,
@@ -81,4 +81,4 @@ function TableRowUser({
   );
 }
 
-export default TableRowUser;
+export default UserTableRow;

@@ -1,66 +1,19 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import { toast } from "sonner";
-import { API_URL, ITEMS_PER_PAGE } from "@/constants";
-import {
-  generateNumbers,
-  removeItemFromList,
-  searchOrder,
-} from "@/utils/array.util";
+import { API_URL } from "@/constants";
+import { searchOrder } from "@/utils/array.util";
 import { useFetch } from "@/hooks/useFetch";
 import { useToastMessage } from "@/hooks/useToastMessage";
-import {
-  Head,
-  Table,
-  SearchBar,
-  Breadcrumb,
-  Pagination,
-} from "@/components/ui";
-import { OrderTableRow, OrderTableRowSkeleton } from "@/features/order";
-
-const tableColumns = [
-  "#",
-  "User",
-  "Date",
-  "Address",
-  "Discount",
-  "Items",
-  "Total",
-  "Status",
-  "",
-];
-
-const removeOrderById = (orders, id) =>
-  removeItemFromList(orders, "orderId", id);
+import { Head, SearchBar, Breadcrumb } from "@/components/ui";
+import { OrderTable } from "@/features/order";
 
 function OrderList() {
   useToastMessage();
-
-  const [currentPage, setCurrentPage] = useState(1);
   const [filteredOrders, setFilteredOrders] = useState([]);
-  const [currentPageOrders, setCurrentPageOrders] = useState([]);
 
   const { data: orders, isLoaded: isOrdersLoaded } = useFetch(
     `${API_URL}/orders`,
   );
-
-  const calculateItemNumber = (index) =>
-    (currentPage - 1) * ITEMS_PER_PAGE + index + 1;
-
-  async function handleDeleteOrder(orderId) {
-    try {
-      const response = await fetch(`${API_URL}/orders/${orderId}`, {
-        method: "DELETE",
-      });
-
-      if (!response.ok) throw new Error("Failed to delete");
-
-      setFilteredOrders((prevOrders) => removeOrderById(prevOrders, orderId));
-      toast.success("Order delete successfully");
-    } catch (error) {
-      toast.error("Something is wrong please try again");
-    }
-  }
 
   return (
     <>
@@ -88,35 +41,11 @@ function OrderList() {
             placeholder="Search (user, date ,status)"
           />
         </div>
-        <div className="p-2 sm:p-4 bg-white rounded-lg">
-          <Table columns={tableColumns}>
-            {isOrdersLoaded
-              ? currentPageOrders.map((order, i) => (
-                  <OrderTableRow
-                    key={order.orderId}
-                    number={calculateItemNumber(i)}
-                    onDelete={() => handleDeleteOrder(order.orderId)}
-                    {...order}
-                  />
-                ))
-              : generateNumbers(5, 1).map((number) => (
-                  <OrderTableRowSkeleton key={number} />
-                ))}
-          </Table>
-          <Pagination
-            items={filteredOrders}
-            itemsPerPage={ITEMS_PER_PAGE}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-            setCurrentPageItems={setCurrentPageOrders}
-          />
-
-          {isOrdersLoaded && !currentPageOrders?.length ? (
-            <span className="h-20 block leading-20 text-center">
-              No Order Found!!!
-            </span>
-          ) : null}
-        </div>
+        <OrderTable
+          orders={filteredOrders}
+          setOrders={setFilteredOrders}
+          isOrdersLoaded={isOrdersLoaded}
+        />
       </section>
     </>
   );

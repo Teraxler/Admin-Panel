@@ -1,62 +1,17 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import { toast } from "sonner";
-import { API_URL, ITEMS_PER_PAGE } from "@/constants";
-import {
-  generateNumbers,
-  removeItemFromList,
-  searchUser,
-} from "@/utils/array.util";
+import { API_URL } from "@/constants";
+import { searchUser } from "@/utils/array.util";
 import { useFetch } from "@/hooks/useFetch";
 import { useToastMessage } from "@/hooks/useToastMessage";
-import {
-  Head,
-  Table,
-  SearchBar,
-  Breadcrumb,
-  Pagination,
-} from "@/components/ui";
-import { UserTableRow, UserTableRowSkeleton } from "@/features/user";
-
-const tableColumns = [
-  "#",
-  "Full Name",
-  "Username",
-  "Email",
-  "Phone",
-  "Birthday",
-  "",
-];
-
-const removeUserById = (users, id) => removeItemFromList(users, "userId", id);
+import { Head, SearchBar, Breadcrumb } from "@/components/ui";
+import { UserTable } from "@/features/user";
 
 function UserList() {
   useToastMessage();
-
-  const [currentPage, setCurrentPage] = useState(1);
   const [filteredUsers, setFilteredUsers] = useState([]);
-  const [currentPageUsers, setCurrentPageUsers] = useState([]);
 
   const { data: users, isLoaded: isUsersLoaded } = useFetch(`${API_URL}/users`);
-
-  const calculateItemNumber = (index) =>
-    (currentPage - 1) * ITEMS_PER_PAGE + index + 1;
-
-  async function handleDeleteUser(userId) {
-    try {
-      const response = await fetch(`${API_URL}/users/${userId}`, {
-        method: "DELETE",
-      });
-
-      if (!response.ok) throw new Error("Failed to delete");
-
-      setFilteredUsers((prevUsers) => removeUserById(prevUsers, userId));
-
-      toast.success("User delete successfully");
-    } catch (error) {
-      toast.error("Something is wrong please try again");
-    }
-  }
 
   return (
     <>
@@ -83,35 +38,11 @@ function UserList() {
             setFilteredItems={setFilteredUsers}
           />
         </div>
-        <div className="p-2 sm:p-4 bg-white rounded-lg">
-          <Table columns={tableColumns}>
-            {isUsersLoaded
-              ? currentPageUsers.map((user, i) => (
-                  <UserTableRow
-                    key={user.userId}
-                    number={calculateItemNumber(i)}
-                    onDelete={() => handleDeleteUser(user.userId)}
-                    {...user}
-                  />
-                ))
-              : generateNumbers(5, 1).map((number) => (
-                  <UserTableRowSkeleton key={number} />
-                ))}
-          </Table>
-          <Pagination
-            items={filteredUsers}
-            itemsPerPage={ITEMS_PER_PAGE}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-            setCurrentPageItems={setCurrentPageUsers}
-          />
-
-          {isUsersLoaded && !currentPageUsers?.length ? (
-            <span className="block h-20 leading-20 text-center">
-              No User Found :{"("}
-            </span>
-          ) : null}
-        </div>
+        <UserTable
+          users={filteredUsers}
+          setUsers={setFilteredUsers}
+          isUsersLoaded={isUsersLoaded}
+        />
       </section>
     </>
   );

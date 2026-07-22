@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui";
 
-const TableRowCategorySkeleton = () => {
+const CategoryTableRowSkeleton = () => {
   return (
     <tr className="*:px-2 *:sm:px-4 *:lg:px-6 *:py-2 capitalize">
       <td>
@@ -19,4 +19,4 @@ const TableRowCategorySkeleton = () => {
   );
 };
 
-export default TableRowCategorySkeleton;
+export default CategoryTableRowSkeleton;

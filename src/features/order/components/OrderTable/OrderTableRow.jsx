@@ -8,7 +8,7 @@ const statusColor = {
   "in progress": "bg-blue-100 text-blue-700",
 };
 
-function TableRowOrder({
+function OrderTableRow({
   orderId,
   number,
   discountPercent,
@@ -93,4 +93,4 @@ function TableRowOrder({
   );
 }
 
-export default TableRowOrder;
+export default OrderTableRow;

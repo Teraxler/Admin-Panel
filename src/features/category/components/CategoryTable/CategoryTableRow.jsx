@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import { AlertModalWarning } from "@/components/ui";
 
-function TableRowCategory({ number, categoryId, name, onDelete }) {
+function CategoryTableRow({ number, categoryId, name, onDelete }) {
   return (
     <tr className="*:px-2 *:sm:px-4 *:lg:px-6 *:py-2">
       <td>
@@ -37,4 +37,4 @@ function TableRowCategory({ number, categoryId, name, onDelete }) {
   );
 }
 
-export default TableRowCategory;
+export default CategoryTableRow;
