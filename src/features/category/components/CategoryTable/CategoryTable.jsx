@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { toast } from "sonner";
 import { generateNumbers, removeItemFromList } from "@/utils/array.util";
 import { Pagination, Table } from "@/components/ui";
 import CategoryTableRow from "./CategoryTableRow";
 import CategoryTableRowSkeleton from "./CategoryTableRowSkeleton";
-import { API_URL, ITEMS_PER_PAGE } from "@/constants";
+import { ITEMS_PER_PAGE } from "@/constants";
+import { deleteCategory } from "@/services/categoryService";
 
 const tableColumns = ["#", "Category"];
 
@@ -17,20 +19,17 @@ function CategoryTable({ categories, setCategories, isCategoriesLoaded }) {
   const calculateItemNumber = (index) =>
     (currentPage - 1) * ITEMS_PER_PAGE + index + 1;
 
-  async function deleteCategory(categoryId) {
+  async function handleDeleteCategory(categoryId) {
     try {
-      const response = await fetch(`${API_URL}/categories/${categoryId}`, {
-        method: "DELETE",
-      });
-
-      if (!response.ok) throw new Error("Failed to delete");
+      await deleteCategory(categoryId);
 
       setCategories((prevCategories) =>
         removeCategoryById(prevCategories, categoryId),
       );
-      toast.success("Category delete successfully");
+
+      toast.success("Category deleted successfully");
     } catch (error) {
-      toast.error("Something is wrong please try again");
+      toast.error(error.message);
     }
   }
 
@@ -42,7 +41,7 @@ function CategoryTable({ categories, setCategories, isCategoriesLoaded }) {
               <CategoryTableRow
                 key={category.categoryId}
                 number={calculateItemNumber(i)}
-                onDelete={() => deleteCategory(category.categoryId)}
+                onDelete={() => handleDeleteCategory(category.categoryId)}
                 {...category}
               />
             ))

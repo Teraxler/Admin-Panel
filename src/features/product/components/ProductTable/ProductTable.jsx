@@ -5,6 +5,7 @@ import { removeItemFromList, generateNumbers } from "@/utils/array.util";
 import { Table, Pagination } from "@/components/ui";
 import ProductTableRowSkeleton from "./ProductTableRowSkeleton";
 import ProductTableRow from "./ProductTableRow";
+import { deleteProduct } from "@/services/productService";
 
 const tableColumns = [
   "#",
@@ -28,17 +29,13 @@ function ProductTable({ products, setProducts, isProductsLoaded }) {
 
   async function handleDeleteProduct(productId) {
     try {
-      const response = await fetch(`${API_URL}/products/${productId}`, {
-        method: "DELETE",
-      });
-
-      if (!response.ok) throw new Error("Failed to delete");
+      await deleteProduct(productId);
 
       setProducts((prevProducts) => removeProductById(prevProducts, productId));
 
-      toast.success("Product delete successfully");
+      toast.success("Product deleted successfully");
     } catch (error) {
-      toast.error("Something is wrong please try again");
+      toast.error(error.message);
     }
   }
 

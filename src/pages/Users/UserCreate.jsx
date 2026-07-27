@@ -1,23 +1,15 @@
 import { useNavigate } from "react-router";
-import { toast } from "sonner";
-import { API_URL } from "@/constants";
 import { Head, Breadcrumb } from "@/components/ui";
 import { UserForm } from "@/features/user";
+import { createUser } from "@/services/userService";
+import { toast } from "sonner";
 
 function UserCreate() {
   const navigate = useNavigate();
 
-  async function createUser(user) {
+  async function handleCreateUser(user) {
     try {
-      const response = await fetch(`${API_URL}/auth/register`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify(user),
-      });
-
-      if (!response.ok) throw await response.json();
+      await createUser(user);
 
       navigate("/users", {
         state: { message: "User created successfully" },
@@ -38,7 +30,7 @@ function UserCreate() {
         <Breadcrumb />
       </div>
 
-      <UserForm onSubmit={createUser} />
+      <UserForm onSubmit={handleCreateUser} />
     </>
   );
 }

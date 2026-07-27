@@ -5,6 +5,7 @@ import { generateNumbers, removeItemFromList } from "@/utils/array.util";
 import { Table, Pagination } from "@/components/ui";
 import OrderTableRow from "./OrderTableRow";
 import OrderTableRowSkeleton from "./OrderTableRowSkeleton";
+import { deleteOrder } from "@/services/orderService";
 
 const tableColumns = [
   "#",
@@ -29,16 +30,13 @@ function OrderTable({ orders, setOrders, isOrdersLoaded, noAction }) {
 
   async function handleDeleteOrder(orderId) {
     try {
-      const response = await fetch(`${API_URL}/orders/${orderId}`, {
-        method: "DELETE",
-      });
-
-      if (!response.ok) throw new Error("Failed to delete");
+      await deleteOrder(orderId);
 
       setOrders((prevOrders) => removeOrderById(prevOrders, orderId));
-      toast.success("Order delete successfully");
+
+      toast.success("Order deleted successfully");
     } catch (error) {
-      toast.error("Something is wrong please try again");
+      toast.error(error.message);
     }
   }
 

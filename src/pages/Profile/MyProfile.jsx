@@ -1,26 +1,18 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router";
-import { toast } from "sonner";
-import { API_URL } from "@/constants";
 import { Head, Breadcrumb, Loader } from "@/components/ui";
 import { AuthContext } from "@/features/auth";
 import { UserForm } from "@/features/user";
+import { updateUser } from "@/services/userService";
+import { toast } from "sonner";
 
 function MyProfile() {
   const { user, isUserLoaded, setUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  async function updateUser(user) {
+  async function handleUpdateUser(user) {
     try {
-      const response = await fetch(`${API_URL}/users/${user.userId}`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "PUT",
-        body: JSON.stringify(user),
-      });
-
-      if (!response.ok) throw await response.json();
+      await updateUser(user, user.userId);
 
       setUser((prevUser) => ({ ...prevUser, ...user }));
 
@@ -45,7 +37,7 @@ function MyProfile() {
         <Breadcrumb />
       </div>
 
-      <UserForm user={user} onSubmit={updateUser} isEditMode />
+      <UserForm user={user} onSubmit={handleUpdateUser} isEditMode />
     </>
   );
 }

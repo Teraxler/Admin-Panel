@@ -5,6 +5,7 @@ import { API_URL } from "@/constants";
 import { useFetch } from "@/hooks/useFetch";
 import { Head, Breadcrumb, Loader } from "@/components/ui";
 import { ProductForm } from "@/features/product";
+import { updateProduct } from "@/services/productService";
 
 function ProductEdit() {
   const navigate = useNavigate();
@@ -24,14 +25,9 @@ function ProductEdit() {
     }
   }, [isProductLoaded]);
 
-  async function updateProduct(formData) {
+  async function handleUpdateProduct(formData) {
     try {
-      const response = await fetch(`${API_URL}/products/${productId}`, {
-        method: "PUT",
-        body: formData,
-      });
-
-      if (!response.ok) throw await response.json();
+      await updateProduct(formData, productId);
 
       navigate("/products", {
         state: { message: "Product updated successfully" },
@@ -54,7 +50,11 @@ function ProductEdit() {
         <Breadcrumb />
       </div>
 
-      <ProductForm product={product} onSubmit={updateProduct} isEditMode />
+      <ProductForm
+        product={product}
+        onSubmit={handleUpdateProduct}
+        isEditMode
+      />
     </>
   );
 }

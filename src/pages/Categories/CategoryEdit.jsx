@@ -1,11 +1,12 @@
 import { useEffect } from "react";
-import { useParams, useNavigate } from "react-router";
 import { toast } from "sonner";
+import { useParams, useNavigate } from "react-router";
 import { API_URL } from "@/constants";
 import { useFetch } from "@/hooks/useFetch";
 import Breadcrumb from "@/components/ui/Breadcrumb/Breadcrumb";
 import { Head, Loader } from "@/components/ui";
 import { CategoryForm } from "@/features/category";
+import { updateCategory } from "@/services/categoryService";
 
 function CategoryEdit() {
   const navigate = useNavigate();
@@ -25,23 +26,15 @@ function CategoryEdit() {
     }
   }, [isCategoryLoaded]);
 
-  async function updateCategory(category) {
+  async function handleUpdateCategory(category) {
     try {
-      const response = await fetch(`${API_URL}/categories/${categoryId}`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "PUT",
-        body: JSON.stringify(category),
-      });
-
-      if (!response.ok) throw new Error("Network Error");
+      await updateCategory(category, categoryId);
 
       navigate("/categories", {
-        state: { message: "Customer updated successfully" },
+        state: { message: "Category updated successfully" },
       });
     } catch (error) {
-      toast.error("Something is wrong please try again");
+      toast.error(error.message);
     }
   }
 
@@ -58,7 +51,11 @@ function CategoryEdit() {
         <Breadcrumb />
       </div>
 
-      <CategoryForm category={category} onSubmit={updateCategory} isEditMode />
+      <CategoryForm
+        category={category}
+        onSubmit={handleUpdateCategory}
+        isEditMode
+      />
     </>
   );
 }

@@ -1,29 +1,20 @@
 import { useNavigate } from "react-router";
-import { Toaster, toast } from "sonner";
-import { API_URL } from "@/constants";
+import { toast, Toaster } from "sonner";
 import { useToastMessage } from "@/hooks/useToastMessage";
 import { useCookie } from "@/hooks/useCookie";
 import { Head } from "@/components/ui";
 import { LoginForm } from "@/features/auth";
+import { loginUser } from "@/services/authService";
 
 function Login() {
   useToastMessage();
   const navigate = useNavigate();
   const [userId, setUserId] = useCookie("userId");
 
-  async function loginUser(user) {
+  async function handleLoginUser(user) {
     try {
-      const response = await fetch(`${API_URL}/auth/login`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify(user),
-      });
+      const result = await loginUser(user);
 
-      if (!response.ok) throw new Error("Username or password is wrong!");
-
-      const result = await response.json();
       setUserId(result.userId);
 
       navigate("/", {
@@ -48,7 +39,7 @@ function Login() {
           className={`-z-10 fixed inset-0 bg-coffee-shop bg-no-repeat bg-cover`}
         ></div>
 
-        <LoginForm onSubmit={loginUser} />
+        <LoginForm onSubmit={handleLoginUser} />
       </main>
     </>
   );

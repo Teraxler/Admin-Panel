@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { toast } from "sonner";
-import { API_URL, ITEMS_PER_PAGE } from "@/constants";
+import { ITEMS_PER_PAGE } from "@/constants";
 import { generateNumbers, removeItemFromList } from "@/utils/array.util";
 import { Table, Pagination } from "@/components/ui";
 import UserTableRow from "./UserTableRow";
 import UserTableRowSkeleton from "./UserTableRowSkeleton";
+import { deleteUser } from "@/services/userService";
 
 const tableColumns = [
   "#",
@@ -26,17 +27,12 @@ function UserTable({ users, setUsers, isUsersLoaded }) {
 
   async function handleDeleteUser(userId) {
     try {
-      const response = await fetch(`${API_URL}/users/${userId}`, {
-        method: "DELETE",
-      });
-
-      if (!response.ok) throw new Error("Failed to delete");
-
+      await deleteUser(userId);
       setUsers((prevUsers) => removeUserById(prevUsers, userId));
 
-      toast.success("User delete successfully");
+      toast.success("User deleted successfully");
     } catch (error) {
-      toast.error("Something is wrong please try again");
+      toast.error(error.message);
     }
   }
 

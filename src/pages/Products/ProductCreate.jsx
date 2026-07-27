@@ -1,20 +1,15 @@
 import { useNavigate } from "react-router";
-import { toast } from "sonner";
-import { API_URL } from "@/constants";
 import { Head, Breadcrumb } from "@/components/ui";
 import { ProductForm } from "@/features/product";
+import { createProduct } from "@/services/productService";
+import { toast } from "sonner";
 
 function ProductCreate() {
   const navigate = useNavigate();
 
-  async function createProduct(formData) {
+  async function handleCreateProduct(formData) {
     try {
-      const response = await fetch(`${API_URL}/products`, {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) throw await response.json();
+      await createProduct(formData);
 
       navigate("/products", {
         state: { message: "Product created successfully" },
@@ -35,7 +30,7 @@ function ProductCreate() {
         <Breadcrumb />
       </div>
 
-      <ProductForm onSubmit={createProduct} />
+      <ProductForm onSubmit={handleCreateProduct} />
     </>
   );
 }

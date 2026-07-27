@@ -1,30 +1,22 @@
-import { toast } from "sonner";
 import { useNavigate } from "react-router";
-import { API_URL } from "@/constants";
+import { toast } from "sonner";
 import Breadcrumb from "@/components/ui/Breadcrumb/Breadcrumb";
 import { Head } from "@/components/ui";
 import { CategoryForm } from "@/features/category";
+import { createCategory } from "@/services/categoryService";
 
 function CategoryCreate() {
   const navigate = useNavigate();
 
-  async function createCategory(category) {
+  async function handleCreateCategory(category) {
     try {
-      const response = await fetch(`${API_URL}/categories`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify(category),
-      });
-
-      if (!response.ok) throw new Error("Network Error");
+      await createCategory(category);
 
       navigate("/categories", {
         state: { message: "Category created successfully" },
       });
     } catch (error) {
-      toast.error("Something is wrong please try again");
+      toast.error(error.message);
     }
   }
 
@@ -39,7 +31,7 @@ function CategoryCreate() {
         <Breadcrumb />
       </div>
 
-      <CategoryForm onSubmit={createCategory} />
+      <CategoryForm onSubmit={handleCreateCategory} />
     </>
   );
 }

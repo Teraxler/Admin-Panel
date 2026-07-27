@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
-import { toast } from "sonner";
 import { API_URL } from "@/constants";
 import { useFetch } from "@/hooks/useFetch";
 import { Head, Breadcrumb, Loader } from "@/components/ui";
 import { UserForm } from "@/features/user";
+import { updateUser } from "@/services/userService";
 
 function UserEdit() {
   const navigate = useNavigate();
@@ -24,24 +24,13 @@ function UserEdit() {
     }
   }, [isUserLoaded]);
 
-  async function updateUser(user) {
-    try {
-      const response = await fetch(`${API_URL}/users/${userId}`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "PUT",
-        body: JSON.stringify(user),
-      });
+  async function handleUpdateUser(user) {
+    const result = await updateUser(user, userId);
 
-      if (!response.ok) throw await response.json();
-
+    result &&
       navigate("/users", {
         state: { message: "User updated successfully" },
       });
-    } catch (error) {
-      toast.error(error.message);
-    }
   }
 
   if (!isUserLoaded) return <Loader />;
@@ -57,7 +46,7 @@ function UserEdit() {
         <Breadcrumb />
       </div>
 
-      <UserForm user={user} onSubmit={updateUser} isEditMode />
+      <UserForm user={user} onSubmit={handleUpdateUser} isEditMode />
     </>
   );
 }
