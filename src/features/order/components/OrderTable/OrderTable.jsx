@@ -5,7 +5,7 @@ import { generateNumbers, removeItemFromList } from "@/utils/array.util";
 import { Table, Pagination } from "@/components/ui";
 import OrderTableRow from "./OrderTableRow";
 import OrderTableRowSkeleton from "./OrderTableRowSkeleton";
-import { deleteOrder } from "@/services/orderService";
+import { deleteOrder } from "@/features/order/orderService";
 
 const tableColumns = [
   "#",

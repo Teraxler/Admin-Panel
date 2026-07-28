@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { toast } from "sonner";
-import { loginSchema } from "./validation";
+import { loginSchema } from "./loginFormValidation";
 
 function LoginForm({ onSubmit }) {
   const [username, setUsername] = useState("admin");

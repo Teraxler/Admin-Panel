@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router";
-import { Head, Breadcrumb } from "@/components/ui";
-import { ProductForm } from "@/features/product";
-import { createProduct } from "@/services/productService";
 import { toast } from "sonner";
+import { Head, Breadcrumb } from "@/components/ui";
+import { ProductForm } from "../components";
+import { createProduct } from "../index";
 
-function ProductCreate() {
+function ProductCreatePage() {
   const navigate = useNavigate();
 
   async function handleCreateProduct(formData) {
@@ -35,4 +35,4 @@ function ProductCreate() {
   );
 }
 
-export default ProductCreate;
+export default ProductCreatePage;

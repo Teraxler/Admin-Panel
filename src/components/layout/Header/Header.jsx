@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { BASE_URL } from "@/constants";
-import AuthContext from "@/features/auth/context/AuthContext";
+import AuthContext from "@/context/AuthContext";
 import { useScroll } from "@/hooks/useScroll";
 import ProfileDropDown from "./ProfileDropDown";
 import { Skeleton } from "@/components/ui";

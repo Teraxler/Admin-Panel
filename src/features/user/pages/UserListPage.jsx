@@ -5,9 +5,9 @@ import { searchUser } from "@/utils/array.util";
 import { useFetch } from "@/hooks/useFetch";
 import { useToastMessage } from "@/hooks/useToastMessage";
 import { Head, SearchBar, Breadcrumb } from "@/components/ui";
-import { UserTable } from "@/features/user";
+import { UserTable } from "../components";
 
-function UserList() {
+function UserListPage() {
   useToastMessage();
   const [filteredUsers, setFilteredUsers] = useState([]);
 
@@ -48,4 +48,4 @@ function UserList() {
   );
 }
 
-export default UserList;
+export default UserListPage;

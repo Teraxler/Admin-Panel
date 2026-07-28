@@ -1,7 +1,7 @@
 import { useReducer } from "react";
 import { Link } from "react-router";
 import { toast } from "sonner";
-import { editUserSchema, registerSchema } from "./validation";
+import { editUserSchema, createUserSchema } from "./userFormValidation";
 import userReducer, {
   NAME,
   FAMILY,
@@ -11,7 +11,7 @@ import userReducer, {
   BIRTHDAY,
   PASSWORD,
   NEW_PASSWORD,
-} from "./reducer";
+} from "./userFormReducer";
 
 function UserForm({ user: userInfo, onSubmit, isEditMode }) {
   const [user, dispatch] = useReducer(userReducer, {
@@ -39,7 +39,7 @@ function UserForm({ user: userInfo, onSubmit, isEditMode }) {
 
     const { success, error } = isEditMode
       ? editUserSchema.safeParse(editedUser)
-      : registerSchema.safeParse(editedUser);
+      : createUserSchema.safeParse(editedUser);
 
     if (success) return onSubmit(editedUser);
 

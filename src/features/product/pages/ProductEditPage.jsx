@@ -4,10 +4,10 @@ import { toast } from "sonner";
 import { API_URL } from "@/constants";
 import { useFetch } from "@/hooks/useFetch";
 import { Head, Breadcrumb, Loader } from "@/components/ui";
-import { ProductForm } from "@/features/product";
-import { updateProduct } from "@/services/productService";
+import { ProductForm } from "../components";
+import { updateProduct } from "../index";
 
-function ProductEdit() {
+function ProductEditPage() {
   const navigate = useNavigate();
   const { productId } = useParams();
 
@@ -59,4 +59,4 @@ function ProductEdit() {
   );
 }
 
-export default ProductEdit;
+export default ProductEditPage;

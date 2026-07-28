@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { BASE_URL, API_URL } from "@/constants";
 import { useFetch } from "@/hooks/useFetch";
 import { Loader } from "@/components/ui";
-import { productSchema } from "./validation";
+import { productSchema } from "./productFormValidation";
 import productReducer, {
   CATEGORY_ID,
   COVER,
@@ -13,7 +13,7 @@ import productReducer, {
   INVENTORY,
   NAME,
   PRICE,
-} from "./reducer";
+} from "./productFormReducer";
 
 function ProductForm({ product: productInfo, onSubmit, isEditMode }) {
   const [product, dispatch] = useReducer(productReducer, {

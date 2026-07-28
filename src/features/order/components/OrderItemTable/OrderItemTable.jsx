@@ -12,7 +12,7 @@ function OrderItemTable({ orderItems, isOrderItemesLoaded }) {
       <div className="mt-5">
         <Table columns={tableColumns} noAction>
           {isOrderItemesLoaded
-            ? orderItems.map((orderItem, i) => (
+            ? orderItems?.map((orderItem, i) => (
                 <OrderItemTableRow
                   key={orderItem.orderItemId}
                   number={i + 1}

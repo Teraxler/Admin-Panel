@@ -5,9 +5,9 @@ import { searchCategory } from "@/utils/array.util";
 import { useFetch } from "@/hooks/useFetch";
 import { useToastMessage } from "@/hooks/useToastMessage";
 import { Head, SearchBar, Breadcrumb } from "@/components/ui";
-import { CategoryTable } from "@/features/category";
+import { CategoryTable } from "../components";
 
-function CategoryList() {
+function CategoryListPage() {
   useToastMessage();
   const [filteredCategories, setFilteredCategories] = useState([]);
 
@@ -53,4 +53,4 @@ function CategoryList() {
   );
 }
 
-export default CategoryList;
+export default CategoryListPage;

@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 
-const NotFound = () => {
+const NotFoundPage = () => {
   return (
     <div className="w-svw h-svh flex justify-center items-center">
       <div className="text-center">
@@ -17,4 +17,4 @@ const NotFound = () => {
   );
 };
 
-export default NotFound;
+export default NotFoundPage;

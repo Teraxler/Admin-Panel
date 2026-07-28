@@ -7,9 +7,9 @@ import {
   ColumnChart,
   CircularGaugeChart,
 } from "@/components/ui";
-import { OrderTable } from "@/features/order";
+import OrderTable from "@/features/order/components/OrderTable/OrderTable";
 
-const Dashboard = () => {
+const DashboardPage = () => {
   useToastMessage();
   const { data: orders, isLoaded: isOrdersLoaded } = useFetch(
     `${API_URL}/orders`,
@@ -87,4 +87,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default DashboardPage;

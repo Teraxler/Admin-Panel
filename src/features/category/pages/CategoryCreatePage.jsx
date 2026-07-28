@@ -1,11 +1,10 @@
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
-import Breadcrumb from "@/components/ui/Breadcrumb/Breadcrumb";
-import { Head } from "@/components/ui";
-import { CategoryForm } from "@/features/category";
-import { createCategory } from "@/services/categoryService";
+import { Head, Breadcrumb } from "@/components/ui";
+import { CategoryForm } from "../components";
+import { createCategory } from "../index";
 
-function CategoryCreate() {
+function CategoryCreatePage() {
   const navigate = useNavigate();
 
   async function handleCreateCategory(category) {
@@ -36,4 +35,4 @@ function CategoryCreate() {
   );
 }
 
-export default CategoryCreate;
+export default CategoryCreatePage;

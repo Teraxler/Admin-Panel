@@ -1,14 +1,13 @@
 import { useEffect } from "react";
-import { toast } from "sonner";
 import { useParams, useNavigate } from "react-router";
+import { toast } from "sonner";
 import { API_URL } from "@/constants";
 import { useFetch } from "@/hooks/useFetch";
-import Breadcrumb from "@/components/ui/Breadcrumb/Breadcrumb";
-import { Head, Loader } from "@/components/ui";
-import { CategoryForm } from "@/features/category";
-import { updateCategory } from "@/services/categoryService";
+import { Head, Loader, Breadcrumb } from "@/components/ui";
+import { CategoryForm } from "../components";
+import { updateCategory } from "../index";
 
-function CategoryEdit() {
+function CategoryEditPage() {
   const navigate = useNavigate();
   const { categoryId } = useParams();
 
@@ -60,4 +59,4 @@ function CategoryEdit() {
   );
 }
 
-export default CategoryEdit;
+export default CategoryEditPage;

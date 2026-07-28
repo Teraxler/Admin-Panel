@@ -5,7 +5,7 @@ import { formattingPhone } from "@/utils/string.util";
 import { formattingDateTime, normalizeDateTime } from "@/utils/dateTime.util";
 import { useFetch } from "@/hooks/useFetch";
 import { Head, Breadcrumb, Skeleton } from "@/components/ui";
-import { OrderItemTable } from "@/features/order";
+import { OrderItemTable } from "../components";
 
 const statusColor = {
   canceled: "bg-red-100 text-red-700",
@@ -13,7 +13,7 @@ const statusColor = {
   "in progress": "bg-blue-100 text-blue-700",
 };
 
-function OrderDetails() {
+function OrderDetailPage() {
   const { orderId } = useParams();
   const navigate = useNavigate();
   const { data: order, isLoaded: isOrderLoaded } = useFetch(
@@ -162,4 +162,4 @@ function OrderDetails() {
   );
 }
 
-export default OrderDetails;
+export default OrderDetailPage;

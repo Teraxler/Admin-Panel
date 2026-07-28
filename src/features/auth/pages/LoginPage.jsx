@@ -3,10 +3,10 @@ import { toast, Toaster } from "sonner";
 import { useToastMessage } from "@/hooks/useToastMessage";
 import { useCookie } from "@/hooks/useCookie";
 import { Head } from "@/components/ui";
-import { LoginForm } from "@/features/auth";
-import { loginUser } from "@/services/authService";
+import { LoginForm } from "../components";
+import { loginUser } from "../index";
 
-function Login() {
+function LoginPage() {
   useToastMessage();
   const navigate = useNavigate();
   const [userId, setUserId] = useCookie("userId");
@@ -45,4 +45,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default LoginPage;

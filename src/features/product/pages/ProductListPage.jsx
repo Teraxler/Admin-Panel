@@ -5,9 +5,9 @@ import { searchProduct } from "@/utils/array.util";
 import { useFetch } from "@/hooks/useFetch";
 import { useToastMessage } from "@/hooks/useToastMessage";
 import { Head, SearchBar, Breadcrumb } from "@/components/ui";
-import { ProductTable } from "@/features/product";
+import { ProductTable } from "../components";
 
-function ProductList() {
+function ProductListPage() {
   useToastMessage();
 
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -53,4 +53,4 @@ function ProductList() {
   );
 }
 
-export default ProductList;
+export default ProductListPage;

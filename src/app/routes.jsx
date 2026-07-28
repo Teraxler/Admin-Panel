@@ -1,34 +1,53 @@
 import { lazy } from "react";
 import { createBrowserRouter } from "react-router";
-import { AuthProvider } from "@/features/auth";
+import { AuthProvider } from "@/context/AuthContext";
 import ProtectedRoute from "@/routes/ProtectedRoute";
-
-const NotFound = lazy(() => import("@/pages/NotFound/NotFound"));
-
-const MyProfile = lazy(() => import("@/pages/Profile/MyProfile"));
-
-const Dashboard = lazy(() => import("@/pages/Dashboard/Dashboard"));
-
-const Login = lazy(() => import("@/pages/Auth/Login"));
-
-const OrderList = lazy(() => import("@/pages/Orders/OrderList"));
-const OrderDetails = lazy(() => import("@/pages/Orders/OrderDetails"));
 
 const DashboardLayout = lazy(
   () => import("@/components/layout/DashboardLayout/DashboardLayout"),
 );
 
-const ProductList = lazy(() => import("@/pages/Products/ProductList"));
-const ProductEdit = lazy(() => import("@/pages/Products/ProductEdit"));
-const ProductCreate = lazy(() => import("@/pages/Products/ProductCreate"));
+const DashboardPage = lazy(() => import("@/pages/Dashboard/DashboardPage"));
 
-const UserList = lazy(() => import("@/pages/Users/UserList"));
-const UserEdit = lazy(() => import("@/pages/Users/UserEdit"));
-const UserCreate = lazy(() => import("@/pages/Users/UserCreate"));
+const NotFoundPage = lazy(() => import("@/pages/NotFound/NotFoundPage"));
 
-const CategoryList = lazy(() => import("@/pages/Categories/CategoryList"));
-const CategoryEdit = lazy(() => import("@/pages/Categories/CategoryEdit"));
-const CategoryCreate = lazy(() => import("@/pages/Categories/CategoryCreate"));
+const LoginPage = lazy(() => import("@/features/auth/pages/LoginPage"));
+
+const OrderListPage = lazy(
+  () => import("@/features/order/pages/OrderListPage"),
+);
+const OrderDetailPage = lazy(
+  () => import("@/features/order/pages/OrderDetailPage"),
+);
+
+const ProductListPage = lazy(
+  () => import("@/features/product/pages/ProductListPage"),
+);
+const ProductEditPage = lazy(
+  () => import("@/features/product/pages/ProductEditPage"),
+);
+const ProductCreatePage = lazy(
+  () => import("@/features/product/pages/ProductCreatePage"),
+);
+
+const UserListPage = lazy(() => import("@/features/user/pages/UserListPage"));
+const UserEditPage = lazy(() => import("@/features/user/pages/UserEditPage"));
+const UserCreatePage = lazy(
+  () => import("@/features/user/pages/UserCreatePage"),
+);
+const UserProfilePage = lazy(
+  () => import("@/features/user/pages/UserProfilePage"),
+);
+
+const CategoryListPage = lazy(
+  () => import("@/features/category/pages/CategoryListPage"),
+);
+const CategoryEditPage = lazy(
+  () => import("@/features/category/pages/CategoryEditPage"),
+);
+const CategoryCreatePage = lazy(
+  () => import("@/features/category/pages/CategoryCreatePage"),
+);
 
 export const router = createBrowserRouter([
   {
@@ -42,27 +61,27 @@ export const router = createBrowserRouter([
     ),
     handle: { breadcrumb: "Dashboard" },
     children: [
-      { path: "/", element: <Dashboard /> },
+      { path: "/", element: <DashboardPage /> },
       {
         path: "myprofile",
-        element: <MyProfile />,
+        element: <UserProfilePage />,
         handle: { breadcrumb: "My Profile" },
       },
       {
         path: "users",
         handle: { breadcrumb: "Users" },
         children: [
-          { index: true, element: <UserList /> },
+          { index: true, element: <UserListPage /> },
           {
             path: "create",
-            element: <UserCreate />,
+            element: <UserCreatePage />,
             handle: {
               breadcrumb: "New User",
             },
           },
           {
             path: ":userId",
-            element: <UserEdit />,
+            element: <UserEditPage />,
             handle: {
               breadcrumb: "User Edit",
             },
@@ -73,15 +92,15 @@ export const router = createBrowserRouter([
         path: "products",
         handle: { breadcrumb: "Products" },
         children: [
-          { index: true, element: <ProductList /> },
+          { index: true, element: <ProductListPage /> },
           {
             path: "create",
-            element: <ProductCreate />,
+            element: <ProductCreatePage />,
             handle: { breadcrumb: "Create Product" },
           },
           {
             path: ":productId",
-            element: <ProductEdit />,
+            element: <ProductEditPage />,
             handle: { breadcrumb: "Edit Product" },
           },
         ],
@@ -90,10 +109,10 @@ export const router = createBrowserRouter([
         path: "orders",
         handle: { breadcrumb: "Orders" },
         children: [
-          { index: true, element: <OrderList /> },
+          { index: true, element: <OrderListPage /> },
           {
             path: ":orderId",
-            element: <OrderDetails />,
+            element: <OrderDetailPage />,
             handle: { breadcrumb: "Order Details" },
           },
         ],
@@ -102,22 +121,28 @@ export const router = createBrowserRouter([
         path: "categories",
         handle: { breadcrumb: "Categories" },
         children: [
-          { index: true, element: <CategoryList /> },
+          { index: true, element: <CategoryListPage /> },
           {
             path: "create",
-            element: <CategoryCreate />,
+            element: <CategoryCreatePage />,
             handle: { breadcrumb: "Create Category" },
           },
           {
             path: ":categoryId",
-            element: <CategoryEdit />,
+            element: <CategoryEditPage />,
             handle: { breadcrumb: "Edit Category" },
           },
         ],
       },
     ],
   },
-  { path: "auth", children: [{ path: "login", element: <Login /> }] },
+  {
+    path: "auth",
+    children: [
+      { index: true, element: <LoginPage /> },
+      { path: "login", index: true, element: <LoginPage /> },
+    ],
+  },
 
-  { path: "*", element: <NotFound /> },
+  { path: "*", element: <NotFoundPage /> },
 ]);

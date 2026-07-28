@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router";
 import { toast } from "sonner";
-import { categorySchema } from "./validation";
+import { categorySchema } from "./categoryFormValidation";
 
 function CategoryForm({ category: categoryData, onSubmit, isEditMode }) {
   const [categoryName, setCategoryName] = useState(categoryData?.name || "");

@@ -3,10 +3,10 @@ import { useParams, useNavigate } from "react-router";
 import { API_URL } from "@/constants";
 import { useFetch } from "@/hooks/useFetch";
 import { Head, Breadcrumb, Loader } from "@/components/ui";
-import { UserForm } from "@/features/user";
-import { updateUser } from "@/services/userService";
+import { UserForm } from "@/features/user/components";
+import { updateUser } from "@/features/user";
 
-function UserEdit() {
+function UserEditPage() {
   const navigate = useNavigate();
   const { userId } = useParams();
 
@@ -51,4 +51,4 @@ function UserEdit() {
   );
 }
 
-export default UserEdit;
+export default UserEditPage;

@@ -1,6 +1,6 @@
 import * as z from "zod";
 
-const registerSchema = z.object({
+const createUserSchema = z.object({
   name: z
     .string({
       required_error: "First name is required!",
@@ -78,12 +78,8 @@ const registerSchema = z.object({
     ),
 });
 
-const loginSchema = z.object({
-  username: z.string().trim().min(1, "Username is required!"),
-  password: z.string().trim().min(1, "Password is required!"),
-});
-
-const editUserSchema = z.object({
+const editUserSchema = z
+  .object({
     name: z
       .string({
         required_error: "First name is required!",
@@ -176,4 +172,4 @@ const editUserSchema = z.object({
     },
   );
 
-export { registerSchema, loginSchema, editUserSchema };
+export { createUserSchema, editUserSchema };

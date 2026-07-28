@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router";
-import { Head, Breadcrumb } from "@/components/ui";
-import { UserForm } from "@/features/user";
-import { createUser } from "@/services/userService";
 import { toast } from "sonner";
+import { Head, Breadcrumb } from "@/components/ui";
+import { UserForm } from "../components";
+import { createUser } from "../index";
 
-function UserCreate() {
+function UserCreatePage() {
   const navigate = useNavigate();
 
   async function handleCreateUser(user) {
@@ -35,4 +35,4 @@ function UserCreate() {
   );
 }
 
-export default UserCreate;
+export default UserCreatePage;

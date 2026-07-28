@@ -1,12 +1,12 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router";
-import { Head, Breadcrumb, Loader } from "@/components/ui";
-import { AuthContext } from "@/features/auth";
-import { UserForm } from "@/features/user";
-import { updateUser } from "@/services/userService";
 import { toast } from "sonner";
+import { Head, Breadcrumb, Loader } from "@/components/ui";
+import AuthContext from "@/context/AuthContext";
+import { UserForm } from "../components";
+import { updateUser } from "../index";
 
-function MyProfile() {
+function UserProfilePage() {
   const { user, isUserLoaded, setUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -42,4 +42,4 @@ function MyProfile() {
   );
 }
 
-export default MyProfile;
+export default UserProfilePage;

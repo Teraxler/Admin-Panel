@@ -5,7 +5,7 @@ import { Pagination, Table } from "@/components/ui";
 import CategoryTableRow from "./CategoryTableRow";
 import CategoryTableRowSkeleton from "./CategoryTableRowSkeleton";
 import { ITEMS_PER_PAGE } from "@/constants";
-import { deleteCategory } from "@/services/categoryService";
+import { deleteCategory } from "@/features/category/categoryService";
 
 const tableColumns = ["#", "Category"];
 

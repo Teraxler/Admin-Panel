@@ -1,13 +1,12 @@
 import { useState } from "react";
-import { Link } from "react-router";
 import { API_URL } from "@/constants";
 import { searchOrder } from "@/utils/array.util";
 import { useFetch } from "@/hooks/useFetch";
 import { useToastMessage } from "@/hooks/useToastMessage";
 import { Head, SearchBar, Breadcrumb } from "@/components/ui";
-import { OrderTable } from "@/features/order";
+import { OrderTable } from "../components";
 
-function OrderList() {
+function OrderListPage() {
   useToastMessage();
   const [filteredOrders, setFilteredOrders] = useState([]);
 
@@ -26,13 +25,7 @@ function OrderList() {
         <Breadcrumb />
       </div>
       <section className="mt-8">
-        <div className="flex justify-between mb-4">
-          <Link to={"/orders"} className="btn btn--small btn--primary">
-            <svg className="size-4">
-              <use href="#plus"></use>
-            </svg>
-            <span className="hidden sm:inline">New Order</span>
-          </Link>
+        <div className="flex justify-end mb-4">
           <SearchBar
             items={orders}
             handleSearch={searchOrder}
@@ -51,4 +44,4 @@ function OrderList() {
   );
 }
 
-export default OrderList;
+export default OrderListPage;

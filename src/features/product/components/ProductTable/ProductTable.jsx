@@ -5,7 +5,7 @@ import { removeItemFromList, generateNumbers } from "@/utils/array.util";
 import { Table, Pagination } from "@/components/ui";
 import ProductTableRowSkeleton from "./ProductTableRowSkeleton";
 import ProductTableRow from "./ProductTableRow";
-import { deleteProduct } from "@/services/productService";
+import { deleteProduct } from "@/features/product/productService";
 
 const tableColumns = [
   "#",
