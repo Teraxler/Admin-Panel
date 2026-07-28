@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
+import { toast } from "sonner";
 import { API_URL } from "@/constants";
 import { useFetch } from "@/hooks/useFetch";
 import { Head, Breadcrumb, Loader } from "@/components/ui";
@@ -25,12 +26,15 @@ function UserEditPage() {
   }, [isUserLoaded]);
 
   async function handleUpdateUser(user) {
-    const result = await updateUser(user, userId);
+    try {
+      await updateUser(user, userId);
 
-    result &&
       navigate("/users", {
         state: { message: "User updated successfully" },
       });
+    } catch (error) {
+      toast.error(error.message);
+    }
   }
 
   if (!isUserLoaded) return <Loader />;
