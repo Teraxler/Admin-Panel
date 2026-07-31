@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import PaginationButton from "./components/PaginationButton";
 import { paginateItems } from "./paginationUtil";
+import PageNumbers from "./components/PageNumbers";
 
 const Pagination = ({
   items,
@@ -20,30 +21,6 @@ const Pagination = ({
   const nextPage = () => setCurrentPage((currentPage) => currentPage + 1);
   const prevPage = () => setCurrentPage((currentPage) => currentPage - 1);
 
-  const renderPageNumbers = () => {
-    const buttons = [];
-
-    let startIndex = currentPage - 2;
-    if (startIndex < 1) startIndex = 1;
-
-    let endIndex = currentPage + 2;
-    if (endIndex > countPages) endIndex = countPages;
-
-    for (let i = startIndex; i <= endIndex; i++) {
-      buttons.push(
-        <PaginationButton
-          key={i}
-          isActive={currentPage === i}
-          onClick={() => setCurrentPage(i)}
-        >
-          {i}
-        </PaginationButton>,
-      );
-    }
-
-    return buttons;
-  };
-
   return countPages > 1 ? (
     <div className="flex justify-center gap-x-2 mt-4">
       <PaginationButton isDisabled={currentPage === 1} onClick={prevPage}>
@@ -52,7 +29,11 @@ const Pagination = ({
         </svg>
       </PaginationButton>
 
-      {renderPageNumbers()}
+      <PageNumbers
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        countPages={countPages}
+      />
 
       <PaginationButton
         isDisabled={currentPage === countPages}
