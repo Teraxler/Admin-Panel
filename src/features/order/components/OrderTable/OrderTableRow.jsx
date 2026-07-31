@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { formattingDateTime, normalizeDateTime } from "@/utils/dateTime.util";
+import { formattingDateTime, normalizeDateTime } from "@/utils/dateTimeUtil";
 import { AlertModalWarning } from "@/components/ui";
 
 const statusColor = {

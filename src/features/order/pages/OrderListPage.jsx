@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { API_URL } from "@/constants";
-import { searchOrder } from "@/utils/array.util";
+import { searchOrder } from "@/utils/searchUtil";
 import { useFetch } from "@/hooks/useFetch";
 import { useToastMessage } from "@/hooks/useToastMessage";
 import { Head, SearchBar, Breadcrumb } from "@/components/ui";

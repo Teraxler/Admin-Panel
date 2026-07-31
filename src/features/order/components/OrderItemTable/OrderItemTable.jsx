@@ -1,4 +1,4 @@
-import { generateNumbers } from "@/utils/array.util";
+import { generateNumbers } from "@/utils/arrayUtil";
 import { Table } from "@/components/ui";
 import OrderItemTableRow from "./OrderItemTableRow";
 import OrderItemTableRowSkeleton from "./OrderItemTableRowSkeleton";

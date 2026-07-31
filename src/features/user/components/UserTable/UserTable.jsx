@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import { ITEMS_PER_PAGE } from "@/constants";
-import { generateNumbers, removeItemFromList } from "@/utils/array.util";
+import { generateNumbers, removeItemFromList } from "@/utils/arrayUtil";
 import { Table, Pagination } from "@/components/ui";
 import UserTableRow from "./UserTableRow";
 import UserTableRowSkeleton from "./UserTableRowSkeleton";

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router";
 import { API_URL } from "@/constants";
-import { searchProduct } from "@/utils/array.util";
+import { searchProduct } from "@/utils/searchUtil";
 import { useFetch } from "@/hooks/useFetch";
 import { useToastMessage } from "@/hooks/useToastMessage";
 import { Head, SearchBar, Breadcrumb } from "@/components/ui";

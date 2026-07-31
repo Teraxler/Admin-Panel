@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import PaginationButton from "./components/PaginationButton";
-import { paginateItems } from "@/utils/array.util";
+import { paginateItems } from "./paginationUtil";
 
 const Pagination = ({
   items,

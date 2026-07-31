@@ -1,4 +1,4 @@
-import { addPadding } from "./string.util.js";
+import { addPadding } from "./stringUtil.js";
 
 const WEEKDAYS = [
   "Sunday",

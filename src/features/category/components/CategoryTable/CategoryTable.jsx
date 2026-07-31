@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { toast } from "sonner";
-import { generateNumbers, removeItemFromList } from "@/utils/array.util";
+import { generateNumbers, removeItemFromList } from "@/utils/arrayUtil";
 import { Pagination, Table } from "@/components/ui";
 import CategoryTableRow from "./CategoryTableRow";
 import CategoryTableRowSkeleton from "./CategoryTableRowSkeleton";

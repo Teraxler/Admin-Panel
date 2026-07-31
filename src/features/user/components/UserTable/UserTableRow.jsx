@@ -1,6 +1,6 @@
 import { Link } from "react-router";
-import { formattingPhone } from "@/utils/string.util";
-import { formattingDateTime, normalizeDateTime } from "@/utils/dateTime.util";
+import { formattingPhone } from "@/utils/stringUtil";
+import { formattingDateTime, normalizeDateTime } from "@/utils/dateTimeUtil";
 import { AlertModalWarning } from "@/components/ui";
 
 function UserTableRow({

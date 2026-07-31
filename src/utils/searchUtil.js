@@ -1,52 +1,5 @@
-import { isDateMatch } from "./dateTime.util";
-import { isIncludes, isStartsWith, normalizeText } from "./string.util";
-
-const generateNumbers = (count, startPoint = 0) => {
-  const result = [];
-  for (let i = startPoint; i <= count; i++) {
-    result.push(i);
-  }
-  return result;
-};
-
-const paginateItems = (items, currentPage, itemsPerPage) => {
-  const start = (currentPage - 1) * itemsPerPage;
-  const end = currentPage * itemsPerPage;
-
-  return items?.slice(start, end) ?? [];
-};
-
-function findProduct(list, productId) {
-  return list.find((product) => product.productId === productId);
-}
-
-function increaseProductCount(list, productId) {
-  return list.map((product) => {
-    product.productId === productId &&
-      product.inventory > product.count &&
-      product.count++;
-
-    return product;
-  });
-}
-
-function decreaseProductCount(list, productId) {
-  return list.reduce((list, product) => {
-    product.productId === productId && product.count--;
-
-    return product.count > 0 ? [...list, product] : [...list];
-  }, []);
-}
-
-function isProductExists(list, productId) {
-  return list.some((product) => product.productId === productId);
-}
-
-function filterProductsByCategory(products = [], category) {
-  return products.filter(
-    (product) => category == null || product.category === category,
-  );
-}
+import { isDateMatch } from "./dateTimeUtil";
+import { isIncludes, isStartsWith, normalizeText } from "./stringUtil";
 
 const searchProduct = (products = [], param) => {
   if (param.trim() === "") return products;
@@ -107,21 +60,4 @@ const searchCategory = (categories = [], param) => {
   return categories?.filter((category) => isIncludes(category.name, param));
 };
 
-function removeItemFromList(list = [], measure, id) {
-  return list.filter((item) => item[measure] !== id);
-}
-
-export {
-  findProduct,
-  generateNumbers,
-  increaseProductCount,
-  decreaseProductCount,
-  isProductExists,
-  filterProductsByCategory,
-  removeItemFromList,
-  searchProduct,
-  searchUser,
-  searchCategory,
-  searchOrder,
-  paginateItems,
-};
+export { searchCategory, searchOrder, searchProduct, searchUser };

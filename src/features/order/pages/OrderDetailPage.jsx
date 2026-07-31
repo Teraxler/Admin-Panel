@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import { API_URL } from "@/constants";
-import { formattingPhone } from "@/utils/string.util";
-import { formattingDateTime, normalizeDateTime } from "@/utils/dateTime.util";
+import { formattingPhone } from "@/utils/stringUtil";
+import { formattingDateTime, normalizeDateTime } from "@/utils/dateTimeUtil";
+import { claculateTotalPrice } from "../orderUtil";
 import { useFetch } from "@/hooks/useFetch";
 import { Head, Breadcrumb, Skeleton } from "@/components/ui";
 import { OrderItemTable } from "../components";
@@ -32,14 +33,6 @@ function OrderDetailPage() {
 
   const normalizedDateTime = normalizeDateTime(order?.createdAt);
   const formatedDateTime = formattingDateTime(normalizedDateTime);
-
-  const claculateTotalPrice = (items) => {
-    return items?.length
-      ? items.reduce((prevValue, currentValue) => {
-          return prevValue + currentValue.unitPrice * currentValue.quantity;
-        }, 0)
-      : 0;
-  };
 
   return (
     <>

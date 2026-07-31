@@ -1,4 +1,4 @@
-import { getCookie } from "@/utils/cookie.util";
+import { getCookie } from "@/utils/cookieUtil";
 import { useEffect, useState } from "react";
 
 export const useCookie = (key, maxAgeDay = 30) => {
