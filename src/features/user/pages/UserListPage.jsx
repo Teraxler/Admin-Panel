@@ -24,7 +24,11 @@ function UserListPage() {
       </div>
       <section className="mt-8">
         <div className="flex justify-between mb-4">
-          <Link to={"/users/create"} className="btn btn--small btn--primary">
+          <Link
+            aria-label="New User"
+            to={"/users/create"}
+            className="btn btn--small btn--primary"
+          >
             <svg className="size-4">
               <use href="#plus"></use>
             </svg>

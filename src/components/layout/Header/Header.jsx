@@ -19,14 +19,15 @@ function Header({
         offset > 0 ? "shadow-md" : ""
       }`}
     >
-      <div
+      <button
+        aria-label="Menu"
         className="btn btn--square btn--secondary xs:hidden"
         onClick={onClick}
       >
         <svg className="size-5 lg:size-6">
           <use href="#bars-3"></use>
         </svg>
-      </div>
+      </button>
       <div className="flex gap-x-2 ml-auto">
         <div className="btn btn--square btn--secondary relative">
           <div className="absolute size-1.5 lg:size-2 rounded-full bg-racing-red right-2 top-2"></div>
@@ -48,6 +49,8 @@ function Header({
               {isUserLoaded ? (
                 <img
                   src={`${BASE_URL}/images/users/user-1.png`}
+                  width={20}
+                  height={20}
                   alt="User Profile"
                 />
               ) : (

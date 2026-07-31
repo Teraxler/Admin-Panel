@@ -17,7 +17,10 @@ function OrderItemTableRow({
       <td>
         <div className="flex items-center justify-center size-12 sm:size-15 lg:size-18 mx-auto">
           <img
+            width={60}
+            height={60}
             className="max-h-full rounded-lg"
+            alt={productName}
             src={`${BASE_URL}/images/products/${productCover}`}
           />
         </div>

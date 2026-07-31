@@ -12,6 +12,7 @@ const PageNumbers = ({ currentPage, setCurrentPage, countPages }) => {
   for (let i = startIndex; i <= endIndex; i++) {
     buttons.push(
       <PaginationButton
+        arial-label={`Page ${i}`}
         key={i}
         isActive={currentPage === i}
         onClick={() => setCurrentPage(i)}

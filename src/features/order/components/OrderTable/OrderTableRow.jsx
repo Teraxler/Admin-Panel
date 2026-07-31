@@ -68,6 +68,7 @@ function OrderTableRow({
         <td>
           <div className="flex justify-center gap-x-2">
             <Link
+              aria-label="Detail"
               to={`/orders/${orderId}`}
               className="btn btn--square btn--secondary"
             >
@@ -80,7 +81,10 @@ function OrderTableRow({
               description={"This can't be undo!!"}
               onConfirm={onDelete}
             >
-              <button className="btn btn--square btn--secondary">
+              <button
+                aria-label="Delete"
+                className="btn btn--square btn--secondary"
+              >
                 <svg className="size-4 lg:size-5 text-red-600">
                   <use href="#trash"></use>
                 </svg>

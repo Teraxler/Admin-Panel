@@ -1,7 +1,14 @@
-const PaginationButton = ({ children, isActive, isDisabled, onClick }) => {
+const PaginationButton = ({
+  children,
+  isActive,
+  isDisabled,
+  onClick,
+  "arial-label": ariaLabel,
+}) => {
   return (
     <button
       type="button"
+      aria-label={ariaLabel}
       onClick={onClick}
       className={`btn btn--square ${
         isDisabled

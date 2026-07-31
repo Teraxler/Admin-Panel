@@ -22,6 +22,9 @@ function ProductTableRow({
         <div className="flex items-center justify-center size-12 sm:size-15 lg:size-18 mx-auto">
           <img
             className="max-h-full rounded-lg"
+            alt={name}
+            width={60}
+            height={60}
             src={`${BASE_URL}/images/products/${cover}`}
           />
         </div>
@@ -53,6 +56,7 @@ function ProductTableRow({
       <td>
         <div className="flex justify-center gap-x-2">
           <Link
+            aria-label="Edit"
             to={`/products/${productId}`}
             className="btn btn--square btn--secondary"
           >
@@ -65,7 +69,10 @@ function ProductTableRow({
             description={"This can't be undo!!"}
             onConfirm={onDelete}
           >
-            <button className="btn btn--square btn--secondary">
+            <button
+              aria-label="Delete"
+              className="btn btn--square btn--secondary"
+            >
               <svg className="size-4 lg:size-5 text-red-600">
                 <use href="#trash"></use>
               </svg>

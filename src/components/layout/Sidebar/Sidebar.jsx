@@ -16,6 +16,7 @@ function Sidebar({ isVisible, onClick }) {
           <NavLink
             to="/"
             onClick={onClick}
+            aria-label="Dashboard page"
             className={({ isActive }) =>
               `flex items-center gap-x-2 p-3 rounded-lg ${
                 isActive ? "bg-gunmental" : "hover:bg-gunmental transition"
@@ -34,6 +35,7 @@ function Sidebar({ isVisible, onClick }) {
           <NavLink
             to="/users"
             onClick={onClick}
+            aria-label="Users page"
             className={({ isActive }) =>
               `flex items-center gap-x-2 p-3 rounded-lg ${
                 isActive ? "bg-gunmental" : "hover:bg-gunmental transition"
@@ -52,6 +54,7 @@ function Sidebar({ isVisible, onClick }) {
           <NavLink
             to="/products"
             onClick={onClick}
+            aria-label="Products page"
             className={({ isActive }) =>
               `flex items-center gap-x-2 p-3 rounded-lg ${
                 isActive ? "bg-gunmental" : "hover:bg-gunmental transition"
@@ -70,6 +73,7 @@ function Sidebar({ isVisible, onClick }) {
           <NavLink
             to="/orders"
             onClick={onClick}
+            aria-label="Orders page"
             className={({ isActive }) =>
               `flex items-center gap-x-2 p-3 rounded-lg ${
                 isActive ? "bg-gunmental" : "hover:bg-gunmental transition"
@@ -88,6 +92,7 @@ function Sidebar({ isVisible, onClick }) {
           <NavLink
             to="/categories"
             onClick={onClick}
+            aria-label="Categories page"
             className={({ isActive }) =>
               `flex items-center gap-x-2 p-3 rounded-lg ${
                 isActive ? "bg-gunmental" : "hover:bg-gunmental transition"

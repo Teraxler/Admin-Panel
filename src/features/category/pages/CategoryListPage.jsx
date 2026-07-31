@@ -27,6 +27,7 @@ function CategoryListPage() {
       <section className="mt-8">
         <div className="flex justify-between mb-4">
           <Link
+            aria-label="New Category"
             to={"/categories/create"}
             className="btn btn--small btn--primary"
           >

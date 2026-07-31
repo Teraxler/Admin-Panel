@@ -30,6 +30,7 @@ const SearchBar = ({
     <div>
       <form className="relative flex bg-white">
         <label
+          aria-label="Serach"
           htmlFor="search-input"
           className="absolute left-3 top-0 bottom-0 my-auto size-4 cursor-text"
         >

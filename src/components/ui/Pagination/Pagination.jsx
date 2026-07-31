@@ -23,7 +23,11 @@ const Pagination = ({
 
   return countPages > 1 ? (
     <div className="flex justify-center gap-x-2 mt-4">
-      <PaginationButton isDisabled={currentPage === 1} onClick={prevPage}>
+      <PaginationButton
+        arial-label={"Previous Page"}
+        isDisabled={currentPage === 1}
+        onClick={prevPage}
+      >
         <svg className="size-5 rotate-90">
           <use href="#chevron-down"></use>
         </svg>
@@ -36,6 +40,7 @@ const Pagination = ({
       />
 
       <PaginationButton
+        arial-label={"Next Page"}
         isDisabled={currentPage === countPages}
         onClick={nextPage}
       >
