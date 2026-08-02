@@ -47,7 +47,7 @@ export const useFetch = (url) => {
     return () => {
       controller.abort();
     };
-  }, []);
+  }, [url]);
 
   return { data, isLoaded, error, setData };
 };
@@ -96,7 +96,7 @@ export const useFetchRecursive = (url) => {
     return () => {
       controller.abort();
     };
-  }, []);
+  }, [url]);
 
   return [data, isLoaded, error, setData];
 };

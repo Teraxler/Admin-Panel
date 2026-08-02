@@ -14,5 +14,5 @@ export const useToastMessage = () => {
 
       navigate(location.pathname, { replace: true, state: null });
     }
-  }, []);
+  }, [location.pathname, location.state, navigate]);
 };

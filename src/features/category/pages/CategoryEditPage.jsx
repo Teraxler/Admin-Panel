@@ -23,7 +23,7 @@ function CategoryEditPage() {
         state: { message: "Category ID is invalid!", messageType: "error" },
       });
     }
-  }, [isCategoryLoaded]);
+  }, [isCategoryLoaded, category, navigate]);
 
   async function handleUpdateCategory(category) {
     try {

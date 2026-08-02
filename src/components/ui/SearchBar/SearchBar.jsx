@@ -10,7 +10,10 @@ const SearchBar = ({
   const [searchValue, setSearchValue] = useState("");
   const [isPending, startTransition] = useTransition();
 
-  useEffect(() => setFilteredItems(items), [isItemsLoaded]);
+  useEffect(
+    () => setFilteredItems(items),
+    [isItemsLoaded, items, setFilteredItems],
+  );
 
   useEffect(() => {
     if (!isItemsLoaded) return;
@@ -22,7 +25,7 @@ const SearchBar = ({
     }, 250);
 
     return () => clearTimeout(timeoutId);
-  }, [searchValue]);
+  }, [isItemsLoaded, searchValue, items, handleSearch, setFilteredItems]);
 
   const updateSearchValue = (e) => setSearchValue(e.target.value);
 

@@ -27,7 +27,7 @@ const ProtectedRoute = ({ children }) => {
 
       (user == null || user.role !== "ADMIN") && navigate(loginPath, options);
     }
-  }, [isUserLoaded]);
+  }, [isUserLoaded, user, navigate]);
 
   return user?.role === "ADMIN" ? children : <Loader />;
 };

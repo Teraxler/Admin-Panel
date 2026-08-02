@@ -23,7 +23,7 @@ function ProductEditPage() {
         state: { message: "Product ID is invalid!", messageType: "error" },
       });
     }
-  }, [isProductLoaded]);
+  }, [isProductLoaded, product, navigate]);
 
   async function handleUpdateProduct(formData) {
     try {

@@ -29,7 +29,7 @@ function OrderDetailPage() {
         state: { message: "Order ID is invalid!", messageType: "error" },
       });
     }
-  }, [isOrderLoaded]);
+  }, [isOrderLoaded, order, navigate]);
 
   const normalizedDateTime = normalizeDateTime(order?.createdAt);
   const formatedDateTime = formattingDateTime(normalizedDateTime);

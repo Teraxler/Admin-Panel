@@ -7,7 +7,7 @@ export const useCookie = (key, maxAgeDay = 30) => {
 
   useEffect(() => {
     document.cookie = `${key}=${cookie}; max-age=${maxAge}; path=/; secure;`;
-  }, [cookie]);
+  }, [key, cookie, maxAge]);
 
   return [cookie, setCookie];
 };

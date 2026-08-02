@@ -23,7 +23,7 @@ function UserEditPage() {
         state: { message: "User ID is invalid!", messageType: "error" },
       });
     }
-  }, [isUserLoaded]);
+  }, [isUserLoaded, user, navigate]);
 
   async function handleUpdateUser(user) {
     try {

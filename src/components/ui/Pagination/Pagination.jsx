@@ -14,9 +14,9 @@ const Pagination = ({
 
   useEffect(() => {
     setCurrentPageItems(() => paginateItems(items, currentPage, itemsPerPage));
-  }, [currentPage, items]);
+  }, [currentPage, items, itemsPerPage, setCurrentPageItems]);
 
-  useEffect(() => setCurrentPage(1), [countPages]);
+  useEffect(() => setCurrentPage(1), [countPages, setCurrentPage]);
 
   const nextPage = () => setCurrentPage((currentPage) => currentPage + 1);
   const prevPage = () => setCurrentPage((currentPage) => currentPage - 1);
