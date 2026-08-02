@@ -4,7 +4,8 @@ import { API_URL } from "@/constants";
 import { searchProduct } from "@/utils/searchUtil";
 import { useFetch } from "@/hooks/useFetch";
 import { useToastMessage } from "@/hooks/useToastMessage";
-import { Head, SearchBar, Breadcrumb } from "@/components/ui";
+import { SearchBar } from "@/components";
+import { Head, Breadcrumb } from "@/components/ui";
 import { ProductTable } from "../components";
 
 function ProductListPage() {

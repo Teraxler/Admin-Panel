@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { toast } from "sonner";
 import { generateNumbers, removeItemFromList } from "@/utils/arrayUtil";
-import { Pagination, Table } from "@/components/ui";
+import { Pagination } from "@/components";
+import { Table } from "@/components/ui";
 import CategoryTableRow from "./CategoryTableRow";
 import CategoryTableRowSkeleton from "./CategoryTableRowSkeleton";
 import { ITEMS_PER_PAGE } from "@/constants";
