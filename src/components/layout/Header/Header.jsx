@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { BASE_URL } from "@/constants";
 import AuthContext from "@/context/AuthContext";
-import { useScroll } from "@/hooks/useScroll";
+import { useIsWindowScrolled } from "@/hooks/useIsWindowScrolled";
 import ProfileDropDown from "./ProfileDropDown";
 import { Skeleton } from "@/components/ui";
 
@@ -11,12 +11,12 @@ function Header({
   setIsProfileDropDownVisible,
 }) {
   const { user, isUserLoaded } = useContext(AuthContext);
-  const offset = useScroll();
+  const isWindowScrolled = useIsWindowScrolled();
 
   return (
     <header
       className={`flex justify-between py-3 px-4 sm:px-6 lg:px-8 sticky top-0 bg-white z-10 transition-shadow duration-75 ${
-        offset > 0 ? "shadow-md" : ""
+        isWindowScrolled ? "shadow-md" : ""
       }`}
     >
       <button
