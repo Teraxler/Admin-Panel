@@ -1,4 +1,4 @@
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 
 function debounce(callback, delay) {
   let timerId;
@@ -13,7 +13,9 @@ function debounce(callback, delay) {
 function useDeBounce(callback, delay) {
   const callbackRef = useRef();
 
-  callbackRef.current = callback;
+  useEffect(() => {
+    callbackRef.current = callback;
+  }, [callback]);
 
   const debouncedCallback = useMemo(() => {
     function fn() {

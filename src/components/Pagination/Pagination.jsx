@@ -4,7 +4,7 @@ import { paginateItems } from "./paginationUtil";
 import PageNumbers from "./components/PageNumbers";
 
 const Pagination = ({
-  items,
+  items = [],
   setCurrentPageItems,
   itemsPerPage,
   currentPage,
@@ -16,13 +16,16 @@ const Pagination = ({
     setCurrentPageItems(() => paginateItems(items, currentPage, itemsPerPage));
   }, [currentPage, items, itemsPerPage, setCurrentPageItems]);
 
-  useEffect(() => setCurrentPage(1), [countPages, setCurrentPage]);
+  useEffect(
+    () => setCurrentPage(1),
+    [setCurrentPage, items.length, countPages],
+  );
 
   const nextPage = () => setCurrentPage((currentPage) => currentPage + 1);
   const prevPage = () => setCurrentPage((currentPage) => currentPage - 1);
 
   return countPages > 1 ? (
-    <div className="flex justify-center gap-x-2 mt-4">
+    <div role="pagination" className="flex justify-center gap-x-2 mt-4">
       <PaginationButton
         arial-label={"Previous Page"}
         isDisabled={currentPage === 1}

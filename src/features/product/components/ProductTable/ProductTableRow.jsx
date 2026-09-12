@@ -1,6 +1,7 @@
-import { Link } from "react-router";
 import { BASE_URL } from "@/constants";
 import { AlertModalWarning } from "@/components/ui";
+import Link from "next/link";
+import Image from "next/image";
 
 function ProductTableRow({
   productId,
@@ -20,7 +21,7 @@ function ProductTableRow({
       </td>
       <td>
         <div className="flex items-center justify-center size-12 sm:size-15 lg:size-18 mx-auto">
-          <img
+          <Image
             className="max-h-full rounded-lg"
             alt={name}
             width={60}
@@ -57,7 +58,7 @@ function ProductTableRow({
         <div className="flex justify-center gap-x-2">
           <Link
             aria-label="Edit"
-            to={`/products/${productId}`}
+            href={`/products/${productId}`}
             className="btn btn--square btn--secondary"
           >
             <svg className="size-4 lg:size-5">

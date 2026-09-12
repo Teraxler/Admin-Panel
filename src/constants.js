@@ -1,5 +1,5 @@
-const API_URL = import.meta.env.VITE_API_URL;
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const ITEMS_PER_PAGE = 5;
 

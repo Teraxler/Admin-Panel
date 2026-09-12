@@ -1,22 +1,48 @@
 import { createContext } from "react";
-import { API_URL } from "@/constants";
 import { useFetch } from "@/hooks/useFetch";
 import { useCookie } from "@/hooks/useCookie";
+import { getUser } from "@/features/user/userService";
+import { loginUser } from "@/features/auth";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [userId, setUserId] = useCookie("userId");
+  const [userId, setCookie] = useCookie("userId");
 
   const {
     data: user,
-    isLoaded: isUserLoaded,
+    status,
     error,
     setData: setUser,
-  } = useFetch(`${API_URL}/users/${userId}`);
+    refetch,
+    reset,
+  } = useFetch({ fn: async () => await getUser(userId), dependencies: [userId] });
+
+  const login = async ({ username, password }) => {
+    const user = await loginUser({ username, password });
+
+    setCookie(user.userId);
+    setUser(user);
+    // await refetch();
+  };
+
+  const logout = () => {
+    setCookie(null);
+    reset();
+  };
 
   return (
-    <AuthContext value={{ user, isUserLoaded, error, setUser }}>
+    <AuthContext
+      value={{
+        user,
+        status,
+        error,
+        setUser,
+        logout,
+        login,
+        refreshUser: refetch,
+      }}
+    >
       {children}
     </AuthContext>
   );

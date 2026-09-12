@@ -1,5 +1,19 @@
+"use client";
+
+import dynamic from "next/dynamic";
 import { useState } from "react";
-import Chart from "react-apexcharts";
+import { Skeleton } from "@/components/ui";
+
+const Chart = dynamic(() => import("react-apexcharts"), {
+  ssr: false,
+  loading: () => (
+    <div className="flex items-center h-55.75">
+      <Skeleton className="rounded-full bg-transparent border-7 border-gray-200 w-45 h-45 p-1.25">
+        <Skeleton className="rounded-full bg-transparent border-7 border-gray-200" />
+      </Skeleton>
+    </div>
+  ),
+});
 
 const CircularGaugeChart = ({ series = [65, 35] }) => {
   const [options, setOptions] = useState({

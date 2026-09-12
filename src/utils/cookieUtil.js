@@ -1,4 +1,6 @@
 const getCookie = (key) => {
+  if (typeof window === "undefined") return;
+
   let cookieMap = {};
 
   const cookies = document.cookie.split(";");

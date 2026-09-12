@@ -1,5 +1,4 @@
-import { useReducer } from "react";
-import { Link } from "react-router";
+import { useReducer, useState } from "react";
 import { toast } from "sonner";
 import { editUserSchema, createUserSchema } from "./userFormValidation";
 import userReducer, {
@@ -12,8 +11,13 @@ import userReducer, {
   PASSWORD,
   NEW_PASSWORD,
 } from "./userFormReducer";
+import { useRouter } from "next/router";
 
 function UserForm({ user: userInfo, onSubmit, isEditMode }) {
+  const router = useRouter();
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const [user, dispatch] = useReducer(userReducer, {
     userId: userInfo?.userId || "",
     name: userInfo?.name || "",
@@ -26,8 +30,9 @@ function UserForm({ user: userInfo, onSubmit, isEditMode }) {
     newPassword: "",
   });
 
-  function handleSubmitForm(e) {
+  async function handleSubmitForm(e) {
     e.preventDefault();
+    setIsSubmitting(true);
 
     const editedUser = {
       ...user,
@@ -41,9 +46,10 @@ function UserForm({ user: userInfo, onSubmit, isEditMode }) {
       ? editUserSchema.safeParse(editedUser)
       : createUserSchema.safeParse(editedUser);
 
-    if (success) return onSubmit(editedUser);
+    if (success) await onSubmit(editedUser);
+    if (!success) toast.error(error.issues[0].message);
 
-    toast.error(error.issues[0].message);
+    setIsSubmitting(false);
   }
 
   return (
@@ -135,7 +141,7 @@ function UserForm({ user: userInfo, onSubmit, isEditMode }) {
             <input
               id="email"
               type="email"
-              placeholder="johnfrans@gmail.com"
+              placeholder="john@gmail.com"
               inputMode="email"
               className="input"
               value={user.email}
@@ -179,12 +185,20 @@ function UserForm({ user: userInfo, onSubmit, isEditMode }) {
       <div
         className={`flex justify-end gap-x-2 mt-10 ${isEditMode ? "sm:mt-25" : ""}`}
       >
-        <button className="btn btn--small btn--secondary" type="submit">
-          {isEditMode ? "Update" : "Create"}
+        <button
+          disabled={isSubmitting}
+          className="btn btn--small btn--secondary"
+          type="submit"
+        >
+          {isSubmitting ? "Submitting" : isEditMode ? "Update" : "Create"}
         </button>
-        <Link to={-1}>
-          <button className="btn btn--small btn--secondary">Cancel</button>
-        </Link>
+        <button
+          type="button"
+          onClick={() => router.back()}
+          className="btn btn--small btn--secondary"
+        >
+          Cancel
+        </button>
       </div>
     </form>
   );

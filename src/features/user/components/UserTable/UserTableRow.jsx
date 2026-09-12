@@ -1,7 +1,8 @@
-import { Link } from "react-router";
+
 import { formattingPhone } from "@/utils/stringUtil";
 import { formattingDateTime, normalizeDateTime } from "@/utils/dateTimeUtil";
 import { AlertModalWarning } from "@/components/ui";
+import Link from "next/link";
 
 function UserTableRow({
   number,
@@ -57,7 +58,7 @@ function UserTableRow({
           <div className="flex justify-center gap-x-2">
             <Link
               aria-label="Edit"
-              to={`/users/${userId}`}
+              href={`/users/${userId}`}
               className="btn btn--square btn--secondary"
             >
               <svg className="size-4 lg:size-5">

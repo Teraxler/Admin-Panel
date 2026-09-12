@@ -5,12 +5,16 @@ import { loginSchema } from "./loginFormValidation";
 function LoginForm({ onSubmit }) {
   const [username, setUsername] = useState("admin");
   const [password, setPassword] = useState("Admin@2020");
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const usernameInputRef = useRef(null);
 
   useEffect(() => usernameInputRef.current.focus(), []);
 
-  function handleLoginUser(e) {
+  async function handleLoginUser(e) {
     e.preventDefault();
+    setIsSubmitting(true);
 
     const user = {
       username,
@@ -19,9 +23,10 @@ function LoginForm({ onSubmit }) {
 
     const { success, error } = loginSchema.safeParse(user);
 
-    if (success) return onSubmit(user);
+    if (success) await onSubmit(user);
+    if (!success) toast.error(error.issues[0].message);
 
-    toast.error(error.issues[0].message);
+    setIsSubmitting(false);
   }
 
   return (
@@ -56,8 +61,12 @@ function LoginForm({ onSubmit }) {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button className="btn btn--small btn--secondary mt-6 mx-auto w-35">
-          Log In
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="btn btn--small btn--secondary mt-6 mx-auto w-35"
+        >
+          {isSubmitting ? "Submitting" : "Log In"}
         </button>
       </div>
     </form>

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useContext } from "react";
 import { BASE_URL } from "@/constants";
 import AuthContext from "@/context/AuthContext";
@@ -10,8 +11,13 @@ function Header({
   isProfileDropDownVisible,
   setIsProfileDropDownVisible,
 }) {
-  const { user, isUserLoaded } = useContext(AuthContext);
+  const { user, status: userStatus } = useContext(AuthContext);
   const isWindowScrolled = useIsWindowScrolled();
+
+  const handleDropDownVisiblity = (clickEvent) => {
+    if (["pen", "touch"].includes(clickEvent.pointerType))
+      setIsProfileDropDownVisible((prevValue) => !prevValue);
+  };
 
   return (
     <header
@@ -20,7 +26,7 @@ function Header({
       }`}
     >
       <button
-        aria-label="Menu"
+        aria-label="Toggle menu"
         className="btn btn--square btn--secondary xs:hidden"
         onClick={onClick}
       >
@@ -42,12 +48,12 @@ function Header({
         </div>
         <div
           className={`group relative btn btn--small btn--secondary ${isProfileDropDownVisible ? "btn--secondary--active" : ""} justify-between max-lg:h-9 w-9 min-w-auto sm:w-50`}
-          onClick={() => setIsProfileDropDownVisible((prevValue) => !prevValue)}
+          onPointerDown={handleDropDownVisiblity}
         >
           <div className="flex items-center gap-x-2">
             <div className="shrink-0 rounded-xs overflow-hidden size-5 lg:size-6">
-              {isUserLoaded ? (
-                <img
+              {userStatus === "success" ? (
+                <Image
                   src={`${BASE_URL}/images/users/user-1.png`}
                   width={20}
                   height={20}
@@ -57,7 +63,7 @@ function Header({
                 <Skeleton className={"rounded-xs"} />
               )}
             </div>
-            {isUserLoaded ? (
+            {userStatus === "success" ? (
               <span className="capitalize hidden sm:line-clamp-1">
                 {`${user?.name} ${user?.family}`}
               </span>
@@ -70,7 +76,7 @@ function Header({
           </svg>
           <ProfileDropDown
             user={user}
-            isUserLoaded={isUserLoaded}
+            isUserLoaded={userStatus === "success"}
             isVisible={isProfileDropDownVisible}
           />
         </div>

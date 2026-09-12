@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import Link from "next/link";
 import { AlertModalWarning } from "@/components/ui";
 
 function CategoryTableRow({ number, categoryId, name, onDelete }) {
@@ -14,7 +14,7 @@ function CategoryTableRow({ number, categoryId, name, onDelete }) {
         <div className="flex justify-center gap-x-2">
           <Link
             aria-label="Edit"
-            to={`/categories/${categoryId}`}
+            href={`/categories/${categoryId}`}
             className="btn btn--square btn--secondary"
           >
             <svg className="size-4 lg:size-5">

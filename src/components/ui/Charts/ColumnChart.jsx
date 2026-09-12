@@ -1,5 +1,13 @@
+"use client";
+
+import dynamic from "next/dynamic";
 import { useState } from "react";
-import Chart from "react-apexcharts";
+import { Skeleton } from "@/components/ui";
+
+const Chart = dynamic(() => import("react-apexcharts"), {
+  ssr: false,
+  loading: () => <Skeleton className="w-full h-66.25" />,
+});
 
 const ColumnChart = () => {
   const [series, setSeries] = useState([

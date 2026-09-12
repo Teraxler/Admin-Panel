@@ -1,5 +1,6 @@
-import { useEffect, useReducer } from "react";
-import { Link } from "react-router";
+import { useRouter } from "next/router";
+import Image from "next/image";
+import { useEffect, useReducer, useState } from "react";
 import { toast } from "sonner";
 import { BASE_URL, API_URL } from "@/constants";
 import { useFetch } from "@/hooks/useFetch";
@@ -14,8 +15,18 @@ import productReducer, {
   NAME,
   PRICE,
 } from "./productFormReducer";
+import { getAllCategories } from "@/features/category/categoryService";
 
 function ProductForm({ product: productInfo, onSubmit, isEditMode }) {
+  const router = useRouter();
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const { data: categories, status: categoriesStatus } = useFetch({
+    fn: getAllCategories,
+    dependencies: [],
+  });
+
   const [product, dispatch] = useReducer(productReducer, {
     productId: productInfo?.productId,
     name: productInfo?.name || "",
@@ -28,10 +39,6 @@ function ProductForm({ product: productInfo, onSubmit, isEditMode }) {
     isCoverBlob: false,
   });
 
-  const { data: categories, isLoaded: isCategoriesLoaded } = useFetch(
-    `${API_URL}/categories`,
-  );
-
   useEffect(() => {
     if (!product.coverFile) return;
 
@@ -43,8 +50,9 @@ function ProductForm({ product: productInfo, onSubmit, isEditMode }) {
     };
   }, [product.coverFile]);
 
-  function handleSubmitForm(e) {
+  async function handleSubmitForm(e) {
     e.preventDefault();
+    setIsSubmitting(true);
 
     const formData = new FormData();
     formData.append("name", product.name);
@@ -58,12 +66,13 @@ function ProductForm({ product: productInfo, onSubmit, isEditMode }) {
 
     const { success, error } = productSchema.safeParse(editedProduct);
 
-    if (success) return onSubmit(formData);
+    if (success) await onSubmit(formData);
+    if (!success) toast.error(error.issues[0].message);
 
-    toast.error(error.issues[0].message);
+    setIsSubmitting(false);
   }
 
-  if (!isCategoriesLoaded) return <Loader />;
+  if (["idle", "pending"].includes(categoriesStatus)) return <Loader />;
 
   return (
     <form
@@ -96,7 +105,7 @@ function ProductForm({ product: productInfo, onSubmit, isEditMode }) {
               className="input"
             >
               <option value={""}>Please Select Category</option>
-              {isCategoriesLoaded
+              {categoriesStatus === "success"
                 ? categories?.length &&
                   categories.map((category) => (
                     <option
@@ -165,14 +174,16 @@ function ProductForm({ product: productInfo, onSubmit, isEditMode }) {
             <span>Cover</span>
             <div className="input flex items-center justify-center size-27">
               {product.cover ? (
-                <img
+                <Image
                   className="max-w-full max-h-full rounded-lg"
+                  width={82}
+                  height={90}
+                  alt={product.name}
                   src={
                     product.isCoverBlob
                       ? product.cover
                       : `${BASE_URL}/images/products/${product.cover}`
                   }
-                  alt={product.name}
                 />
               ) : (
                 <svg className="w-full h-full">
@@ -192,12 +203,22 @@ function ProductForm({ product: productInfo, onSubmit, isEditMode }) {
         </div>
       </div>
       <div className="flex justify-end gap-x-2">
-        <button className="btn btn--small btn--secondary" type="submit">
-          {isEditMode ? "Update" : "Create"}
+        <button
+          disabled={isSubmitting}
+          className="btn btn--small btn--secondary"
+          type="submit"
+        >
+          {/* {isEditMode ? "Update" : "Create"} */}
+          {isSubmitting ? "Loading" : isEditMode ? "Update" : "Create"}
         </button>
-        <Link to={-1}>
-          <button className="btn btn--small btn--secondary">Cancel</button>
-        </Link>
+
+        <button
+          type="button"
+          onClick={() => router.back()}
+          className="btn btn--small btn--secondary"
+        >
+          Cancel
+        </button>
       </div>
     </form>
   );

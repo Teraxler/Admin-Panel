@@ -1,27 +1,35 @@
-import { Link, useNavigate } from "react-router";
+import { useRouter } from "next/router";
+import Link from "next/link";
+import Image from "next/image";
+import { useContext } from "react";
+import { toast } from "sonner";
 import { BASE_URL } from "@/constants";
-import { useCookie } from "@/hooks/useCookie";
 import { Skeleton, AlertModalWarning } from "@/components/ui";
+import AuthContext from "@/context/AuthContext";
 
 const ProfileDropDown = ({ user, isUserLoaded, isVisible = true }) => {
-  const navigate = useNavigate();
-  const [userId, setUserId] = useCookie("userId");
+  const { logout } = useContext(AuthContext);
+  const router = useRouter();
 
-  const logoutUser = () => {
-    setUserId(null);
-    navigate("/auth/login", { state: { message: "You logout successfully" } });
+  const handleLogout = () => {
+    logout();
+    toast.success("You logout successfully");
+    router.push("/auth/login");
   };
 
   return (
     <div
+      role="Dropdown"
       className={`${isVisible ? "visible opacity-100" : "invisible opacity-0"} xs:group-hover:visible xs:group-hover:opacity-100 absolute top-[calc(100%+2px)] right-0 bg-white rounded-lg overflow-hidden z-20 w-50 shadow-sm text-sm transition duration-300 capitalize`}
     >
       <div className="flex items-center gap-x-2 p-2 m-1 cursor-default">
         <div className="shrink-0 size-5 lg:size-6 rounded-xs overflow-hidden">
           {isUserLoaded ? (
-            <img
+            <Image
               src={`${BASE_URL}/images/users/user-1.png`}
               alt="User Profile"
+              width={24}
+              height={24}
             />
           ) : (
             <Skeleton className="rounded-xs" />
@@ -49,7 +57,7 @@ const ProfileDropDown = ({ user, isUserLoaded, isVisible = true }) => {
         <li>
           <Link
             className="flex gap-x-2 p-2 m-1 rounded-lg hover:bg-neutral-100 active:bg-neutral-200 transition"
-            to={`/myprofile`}
+            href={`/myprofile`}
           >
             <svg className="size-5">
               <use href="#user"></use>
@@ -58,7 +66,10 @@ const ProfileDropDown = ({ user, isUserLoaded, isVisible = true }) => {
           </Link>
         </li>
         <li>
-          <Link className="flex gap-x-2 p-2 m-1 rounded-lg hover:bg-neutral-100 active:bg-neutral-200 transition">
+          <Link
+            href="/settings"
+            className="flex gap-x-2 p-2 m-1 rounded-lg hover:bg-neutral-100 active:bg-neutral-200 transition"
+          >
             <svg className="size-5">
               <use href="#settings"></use>
             </svg>
@@ -68,7 +79,7 @@ const ProfileDropDown = ({ user, isUserLoaded, isVisible = true }) => {
         <div className="border-t border-black/15"></div>
         <AlertModalWarning
           title={"Are you sure want to Logout?"}
-          onConfirm={logoutUser}
+          onConfirm={handleLogout}
           confirmLabel="Log out"
         >
           <li className="flex gap-x-2 p-2 m-1 rounded-lg text-red-600 hover:bg-red-600/10 active:bg-red-600/15 transition">

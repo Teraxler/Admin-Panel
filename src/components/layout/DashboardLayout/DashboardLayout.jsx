@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Outlet } from "react-router";
 import { Toaster } from "sonner";
 import Header from "../Header/Header";
 import Sidebar from "../Sidebar/Sidebar";
 import { SvgIcons, Overlay } from "@/components/ui";
+import ProtectedRoute from "@/routes/ProtectedRoute";
 
-function DashboardLayout() {
+function DashboardLayout({ children }) {
   const [isProfileDropDownVisible, setIsProfileDropDownVisible] =
     useState(false);
 
@@ -17,27 +17,28 @@ function DashboardLayout() {
 
   return (
     <>
-      <SvgIcons />
-      <Toaster richColors position="top-right" />
+      <ProtectedRoute>
+        <SvgIcons />
 
-      <div className="flex bg-neutral-100 min-h-svh">
-        <Sidebar isVisible={isSidebarVisible} onClick={hideSidebar} />
-        <div className="w-[calc(100%-190px)] lg:w-[calc(100%-260px)] grow shrink">
-          <Header
-            onClick={toggleSidebar}
-            isProfileDropDownVisible={isProfileDropDownVisible}
-            setIsProfileDropDownVisible={setIsProfileDropDownVisible}
-          />
-          <main className="px-4 sm:px-6 lg:px-8 pt-4 pb-18">
-            <Outlet />
-            {isSidebarVisible ? <Overlay onClick={hideSidebar} /> : null}
+        <div className="flex bg-neutral-100 min-h-svh">
+          <Sidebar isVisible={isSidebarVisible} onClick={hideSidebar} />
+          <div className="w-[calc(100%-190px)] lg:w-[calc(100%-260px)] grow shrink">
+            <Header
+              onClick={toggleSidebar}
+              isProfileDropDownVisible={isProfileDropDownVisible}
+              setIsProfileDropDownVisible={setIsProfileDropDownVisible}
+            />
+            <main className="px-4 sm:px-6 lg:px-8 pt-4 pb-18">
+              {children}
+              {isSidebarVisible ? <Overlay onClick={hideSidebar} /> : null}
 
-            {isProfileDropDownVisible ? (
-              <Overlay isTransparent onClick={hideProfileDropDown} />
-            ) : null}
-          </main>
+              {isProfileDropDownVisible ? (
+                <Overlay isTransparent onClick={hideProfileDropDown} />
+              ) : null}
+            </main>
+          </div>
         </div>
-      </div>
+      </ProtectedRoute>
     </>
   );
 }

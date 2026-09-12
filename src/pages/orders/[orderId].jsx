@@ -1,0 +1,170 @@
+import { useEffect } from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { toast } from "sonner";
+import { formattingPhone } from "@/utils/stringUtil";
+import { formattingDateTime, normalizeDateTime } from "@/utils/dateTimeUtil";
+import { Head, Breadcrumb, Skeleton } from "@/components/ui";
+import { claculateTotalPrice } from "@/features/order/orderUtil";
+import { OrderItemTable } from "@/features/order/components";
+import { getAllOrders, getOrder } from "@/features/order/orderService";
+
+const statusColor = {
+  canceled: "bg-red-100 text-red-700",
+  delivered: "bg-green-100 text-green-700",
+  "in progress": "bg-blue-100 text-blue-700",
+};
+
+export const getStaticPaths = async () => {
+  const orders = await getAllOrders();
+
+  const paths = orders.map((order) => ({
+    params: { orderId: order.orderId },
+  }));
+
+  return { paths, fallback: true };
+};
+
+export const getStaticProps = async ({ params }) => {
+  const order = await getOrder(params.orderId);
+
+  return {
+    props: { order },
+  };
+};
+
+function OrderDetailPage({ order }) {
+  const router = useRouter();
+
+  useEffect(() => {
+    if (order == null) {
+      toast.error("Order ID is invalid!");
+      router.push("/orders");
+    }
+  }, [order, router]);
+
+  const normalizedDateTime = normalizeDateTime(order?.createdAt);
+  const formatedDateTime = formattingDateTime(normalizedDateTime);
+
+  return (
+    <>
+      <Head>
+        <title>Admin Panel - Order Details</title>
+      </Head>
+      <div>
+        <h1 className="title">Order Details</h1>
+        <Breadcrumb />
+      </div>
+
+      <div className="flex flex-col md:flex-row gap-4 sm:gap-5 mt-5 text-sm lg:text-base">
+        <div className="flex-1 p-2 sm:p-4 bg-white rounded-lg">
+          <h3 className="text-xl font-medium">Order</h3>
+          <div className="flex flex-col mt-5 *:last:min-h-5.75 *:last:sm:min-h-auto *:not-last:h-7.75 *:not-last:lg:h-9.25 *:not-last:pb-1.5 *:sm:not-last:pb-2 *:not-last:mb-1.5 *:sm:not-last:mb-2 divide-y divide-neutral-200">
+            <div className="flex justify-between gap-x-2.5">
+              <span className="text-secondary font-medium">Data:</span>
+              {true ? (
+                <span className="line-clamp-1">{`${formatedDateTime?.monthName} ${formatedDateTime?.day}, ${formatedDateTime?.year}`}</span>
+              ) : (
+                <Skeleton className="w-26.25 lg:w-30 skeleton--text mr-0 my-auto" />
+              )}
+            </div>
+            <div className="flex justify-between gap-x-2.5">
+              <span className="text-secondary font-medium">Address:</span>
+
+              {true ? (
+                <span className="line-clamp-1" title={order?.deliveredAddress}>
+                  {order?.deliveredAddress}
+                </span>
+              ) : (
+                <Skeleton className="w-40 lg:w-50 skeleton--text mr-0 my-auto" />
+              )}
+            </div>
+            <div className="flex justify-between gap-x-2.5">
+              <span className="text-secondary font-medium">Status:</span>
+              {true ? (
+                <span
+                  className={`line-clamp-1 w-max py-0.5 px-2 my-auto rounded-lg ${statusColor[order?.status]}`}
+                >
+                  {order?.status}
+                </span>
+              ) : (
+                <Skeleton className="w-21.25 lg:w-24.25 skeleton--text my-1.25 lg:my-1.5 mr-0" />
+              )}
+            </div>
+            <div className="flex justify-between gap-x-2.5">
+              <span className="text-secondary font-medium">Discount:</span>
+              {true ? (
+                <span>{`${order?.discountPercent}%`}</span>
+              ) : (
+                <Skeleton className="w-6 lg:w-7 skeleton--text mr-0 my-auto" />
+              )}
+            </div>
+            <div className="flex justify-between gap-x-2.5">
+              <span className="text-secondary font-medium text-nowrap">
+                Total Price:
+              </span>
+              {true ? (
+                <span>{`$${claculateTotalPrice(order?.orderItems)}`}</span>
+              ) : (
+                <Skeleton className="w-8.75 lg:w-10 skeleton--text mr-0 my-auto" />
+              )}
+            </div>
+          </div>
+        </div>
+        <div className="flex-1 p-2 sm:p-4 bg-white rounded-lg">
+          <h3 className="text-xl font-medium">User</h3>
+          <div className="flex flex-col mt-5 *:last:min-h-5.75 *:last:sm:min-h-auto *:not-last:h-7.75 *:not-last:lg:h-9.25 *:not-last:pb-1.5 *:sm:not-last:pb-2 *:not-last:mb-1.5 *:sm:not-last:mb-2 divide-y divide-neutral-200">
+            <div className="flex justify-between gap-x-2.5">
+              <span className="text-secondary font-medium text-nowrap">
+                Full Name:
+              </span>
+              {true ? (
+                <Link
+                  className="capitalize line-clamp-1"
+                  href={`/users/${order?.userId}`}
+                >
+                  {order?.userName} {order?.userFamily}
+                </Link>
+              ) : (
+                <Skeleton className="w-26 lg:w-30 skeleton--text mr-0 my-auto" />
+              )}
+            </div>
+            <div className="flex justify-between gap-x-2.5">
+              <span className="text-secondary font-medium">Username:</span>
+              {true ? (
+                <span className="line-clamp-1">{order?.userUsername}</span>
+              ) : (
+                <Skeleton className="w-17.5 lg:w-20 skeleton--text mr-0 my-auto" />
+              )}
+            </div>
+            <div className="flex justify-between gap-x-2.5">
+              <span className="text-secondary font-medium">Email:</span>
+              {true ? (
+                <span className="line-clamp-1">{order?.userEmail}</span>
+              ) : (
+                <Skeleton className="w-41 lg:w-50 skeleton--text mr-0 my-auto" />
+              )}
+            </div>
+            <div className="flex justify-between gap-x-2.5">
+              <span className="text-secondary font-medium">Phone:</span>
+              {true ? (
+                <span className="capitalize line-clamp-1">
+                  {order?.userPhone ? formattingPhone(order?.userPhone) : "___"}
+                </span>
+              ) : (
+                <Skeleton className="w-24 lg:w-27 skeleton--text mr-0 my-auto" />
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <OrderItemTable
+        orderItems={order?.orderItems}
+        isOrderItemesLoaded={true}
+      />
+    </>
+  );
+}
+
+export default OrderDetailPage;

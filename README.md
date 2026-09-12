@@ -1,6 +1,6 @@
 # Admin Panel [Live](https://teraxler.runflare.run/auth/login)
 
-Developed with `HTML`, `CSS`, `JS`, `Tailwind CSS` & `React`
+Developed with `HTML`, `CSS`, `JS`, `Tailwind CSS`, `React` & `Next.js`
 
 ## Dashboard
 

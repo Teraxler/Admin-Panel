@@ -17,6 +17,28 @@ export async function createCategory(category) {
   return result;
 }
 
+export async function getCategory(id) {
+  const response = await fetch(`${API_URL}/categories/${id}`);
+
+  const result = await response.json();
+
+  if (!response.ok)
+    throw new Error(result.message || "Failed to get category.");
+
+  return result;
+}
+
+export async function getAllCategories() {
+  const response = await fetch(`${API_URL}/categories`);
+
+  const result = await response.json();
+
+  if (!response.ok)
+    throw new Error(result.message || "Failed to get all categories.");
+
+  return result;
+}
+
 export async function updateCategory(category, categoryId) {
   const response = await fetch(`${API_URL}/categories/${categoryId}`, {
     headers: {

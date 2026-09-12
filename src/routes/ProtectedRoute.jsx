@@ -1,33 +1,29 @@
 import { useContext, useEffect } from "react";
-import { useNavigate } from "react-router";
+import { toast } from "sonner";
 import AuthContext from "@/context/AuthContext";
 import { Loader } from "@/components/ui";
-
-const loginPath = "/auth/login";
-
-const options = {
-  state: {
-    message: "Please login to access panel",
-    messageType: "error",
-  },
-  replace: true,
-};
+import { useRouter } from "next/router";
 
 const ProtectedRoute = ({ children }) => {
-  const { user, isUserLoaded } = useContext(AuthContext);
-  const navigate = useNavigate();
+  const { user, status } = useContext(AuthContext);
+  const router = useRouter();
 
   useEffect(() => {
-    if (isUserLoaded) {
-      if (user == null) {
-        options.state.message = "Please login to access panel";
-      } else if (user.role !== "ADMIN") {
-        options.state.message = "Only admin have permission access to panel";
-      }
-
-      (user == null || user.role !== "ADMIN") && navigate(loginPath, options);
+    if (status === "failed") {
+      toast.error("Please login to access panel");
+      router.replace("/auth/login");
+      return;
     }
-  }, [isUserLoaded, user, navigate]);
+
+    console.log("🚀 ~ ProtectedRoute ~ status:", status)
+    console.log("🚀 ~ ProtectedRoute ~ user:", user)
+
+    if (status === "success" && user.role !== "ADMIN") {
+      toast.error("Only admin have permission access to panel");
+      router.replace("/auth/login");
+      return;
+    }
+  }, [status, user, router]);
 
   return user?.role === "ADMIN" ? children : <Loader />;
 };

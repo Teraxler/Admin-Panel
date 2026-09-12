@@ -1,19 +1,23 @@
 import { useState } from "react";
-import { Link } from "react-router";
+import Link from "next/link";
 import { toast } from "sonner";
 import { categorySchema } from "./categoryFormValidation";
 
 function CategoryForm({ category: categoryData, onSubmit, isEditMode }) {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const [categoryName, setCategoryName] = useState(categoryData?.name || "");
 
-  function handleSubmitForm(e) {
+  async function handleSubmitForm(e) {
     e.preventDefault();
+    setIsSubmitting(true);
 
     const { success, error } = categorySchema.safeParse({ categoryName });
 
-    if (success) return onSubmit({ ...categoryData, name: categoryName });
+    if (success) await onSubmit({ ...categoryData, name: categoryName });
+    if (!success) toast.error(error.issues[0].message);
 
-    toast.error(error.issues[0].message);
+    setIsSubmitting(false);
   }
 
   return (
@@ -37,11 +41,17 @@ function CategoryForm({ category: categoryData, onSubmit, isEditMode }) {
         </div>
       </div>
       <div className="flex justify-end gap-x-2 mt-10 sm:mt-25">
-        <button className="btn btn--small btn--secondary" type="submit">
-          {isEditMode ? "Update" : "Create"}
+        <button
+          disabled={isSubmitting}
+          className="btn btn--small btn--secondary"
+          type="submit"
+        >
+          {isSubmitting ? "Submitting" : isEditMode ? "Update" : "Create"}
         </button>
-        <Link to={"/categories"}>
-          <button className="btn btn--small btn--secondary">Cancel</button>
+        <Link href={"/categories"}>
+          <button type="button" className="btn btn--small btn--secondary">
+            Cancel
+          </button>
         </Link>
       </div>
     </form>

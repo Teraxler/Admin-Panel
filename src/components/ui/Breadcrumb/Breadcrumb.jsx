@@ -1,27 +1,27 @@
+import { breadcrumbPath } from "@/utils/urlUtil";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { Fragment } from "react";
-import { Link, useMatches } from "react-router";
 
-const Breadcrumb = () => {
-  const matches = useMatches();
-  const filteredMatches = matches.filter((match) => match.handle);
+const Breadcrumb = ({ indexPathName }) => {
+  const { pathname } = useRouter();
+  const breadcrumbs = breadcrumbPath(pathname, indexPathName);
 
   return (
-    <div className="flex items-center gap-x-1 text-slate-grey text-sm lg:text-base">
-      {filteredMatches.map((match, i) => {
-        if (filteredMatches.length === i + 1) {
-          return (
-            <span className="text-black" key={match.id}>
-              {match.handle?.breadcrumb}
-            </span>
-          );
-        }
-
+    <div  className="flex items-center capitalize gap-x-1 text-slate-grey text-sm lg:text-base">
+      {breadcrumbs.map((breadcrumb, i) => {
         return (
-          <Fragment key={match.id}>
-            <Link to={match.pathname}>{match.handle?.breadcrumb}</Link>
-            <svg className="size-4 -rotate-90">
-              <use href="#chevron-down"></use>
-            </svg>
+          <Fragment key={breadcrumb.path}>
+            {breadcrumbs.length === i + 1 ? (
+              <span className="text-black">{breadcrumb.label}</span>
+            ) : (
+              <>
+                <Link href={breadcrumb.path}>{breadcrumb.label}</Link>
+                <svg className="size-4 -rotate-90">
+                  <use href="#chevron-down"></use>
+                </svg>
+              </>
+            )}
           </Fragment>
         );
       })}

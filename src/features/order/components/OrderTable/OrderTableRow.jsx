@@ -1,4 +1,5 @@
-import { Link } from "react-router";
+
+import Link from "next/link";
 import { formattingDateTime, normalizeDateTime } from "@/utils/dateTimeUtil";
 import { AlertModalWarning } from "@/components/ui";
 
@@ -69,7 +70,7 @@ function OrderTableRow({
           <div className="flex justify-center gap-x-2">
             <Link
               aria-label="Detail"
-              to={`/orders/${orderId}`}
+              href={`/orders/${orderId}`}
               className="btn btn--square btn--secondary"
             >
               <svg className="size-4 lg:size-5">
