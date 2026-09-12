@@ -15,9 +15,6 @@ const ProtectedRoute = ({ children }) => {
       return;
     }
 
-    console.log("🚀 ~ ProtectedRoute ~ status:", status)
-    console.log("🚀 ~ ProtectedRoute ~ user:", user)
-
     if (status === "success" && user.role !== "ADMIN") {
       toast.error("Only admin have permission access to panel");
       router.replace("/auth/login");

@@ -208,7 +208,6 @@ function ProductForm({ product: productInfo, onSubmit, isEditMode }) {
           className="btn btn--small btn--secondary"
           type="submit"
         >
-          {/* {isEditMode ? "Update" : "Create"} */}
           {isSubmitting ? "Loading" : isEditMode ? "Update" : "Create"}
         </button>
 
