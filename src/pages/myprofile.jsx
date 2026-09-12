@@ -7,7 +7,7 @@ import { UserForm } from "@/features/user/components";
 import { updateUser } from "@/features/user/index";
 
 function UserProfilePage() {
-  const { user, status, setUser } = useContext(AuthContext);
+  const { user, status: userStatus, setUser } = useContext(AuthContext);
   const router = useRouter();
 
   async function handleUpdateUser(user) {
@@ -23,20 +23,24 @@ function UserProfilePage() {
     }
   }
 
-  if (status === "idle" || status === "pending") return <Loader />;
-
   return (
     <>
       <Head>
         <title>Admin Panel - My Profile</title>
       </Head>
 
-      <div>
-        <h1 className="title">My Profile</h1>
-        <Breadcrumb />
-      </div>
+      {["idle", "pending"].includes(userStatus) && <Loader />}
 
-      <UserForm user={user} onSubmit={handleUpdateUser} isEditMode />
+      {userStatus === "success" && (
+        <>
+          <div>
+            <h1 className="title">My Profile</h1>
+            <Breadcrumb />
+          </div>
+
+          <UserForm user={user} onSubmit={handleUpdateUser} isEditMode />
+        </>
+      )}
     </>
   );
 }

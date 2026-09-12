@@ -1,44 +1,34 @@
 import { useEffect } from "react";
 import { toast } from "sonner";
-
 import { Head, Breadcrumb, Loader } from "@/components/ui";
 import { ProductForm } from "../../features/product/components";
 import { updateProduct } from "../../features/product/index";
 import { useRouter } from "next/router";
-import { getAllProducts, getProduct } from "@/features/product/productService";
+import { useFetch } from "@/hooks/useFetch";
+import { getProduct } from "../../features/product/productService";
 
-export const getStaticPaths = async () => {
-  const products = await getAllProducts();
-
-  const paths = products.map((product) => ({
-    params: { productId: product.productId },
-  }));
-
-  return { paths, fallback: true };
-};
-
-export const getStaticProps = async ({ params }) => {
-  const product = await getProduct(params.productId);
-
-  return { props: { product, productId: params.productId } };
-};
-
-function ProductEditPage({ product, productId }) {
+function ProductEditPage() {
   const router = useRouter();
+  const { productId } = router.query;
+
+  const { data: product, status: productStatus } = useFetch({
+    fn: () => getProduct(productId),
+    dependencies: [productId],
+  });
 
   useEffect(() => {
-    if (product == null) {
-      toast.error("Product ID is invalid!");
-      router.replace("/products");
-    }
-  }, [product, router]);
+    if (productStatus !== "failed") return;
+
+    toast.error("Product ID is invalid!");
+    router.replace("/products");
+  }, [productStatus, router]);
 
   async function handleUpdateProduct(formData) {
     try {
       await updateProduct(formData, productId);
 
       toast.success("Product updated successfully");
-      router.push("/products");
+      router.replace("/products");
     } catch (error) {
       toast.error(error.message);
     }
@@ -50,16 +40,22 @@ function ProductEditPage({ product, productId }) {
         <title>Admin Panel - Edit Product</title>
       </Head>
 
-      <div>
-        <h1 className="title">Edit Product</h1>
-        <Breadcrumb />
-      </div>
+      {["idle", "pending"].includes(productStatus) && <Loader />}
 
-      <ProductForm
-        product={product}
-        onSubmit={handleUpdateProduct}
-        isEditMode
-      />
+      {productStatus === "success" && (
+        <>
+          <div>
+            <h1 className="title">Edit Product</h1>
+            <Breadcrumb />
+          </div>
+
+          <ProductForm
+            product={product}
+            onSubmit={handleUpdateProduct}
+            isEditMode
+          />
+        </>
+      )}
     </>
   );
 }

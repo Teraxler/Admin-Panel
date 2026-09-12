@@ -17,10 +17,10 @@ function CategoryEditPage() {
   });
 
   useEffect(() => {
-    if (categoryStatus === "failed") {
-      toast.error("Category ID is invalid!");
-      router.replace("/categories");
-    }
+    if (categoryStatus !== "failed") return;
+
+    toast.error("Category ID is invalid!");
+    router.replace("/categories");
   }, [categoryStatus, router]);
 
   async function handleUpdateCategory(category) {
@@ -28,13 +28,11 @@ function CategoryEditPage() {
       await updateCategory(category, categoryId);
 
       toast.success("Category updated successfully");
-      router.push("/categories");
+      router.replace("/categories");
     } catch (error) {
       toast.error(error.message);
     }
   }
-
-  if (["idle", "pending"].includes(categoryStatus)) return <Loader />;
 
   return (
     <>
@@ -42,16 +40,22 @@ function CategoryEditPage() {
         <title>Admin Panel - Edit Category</title>
       </Head>
 
-      <div>
-        <h1 className="font-medium text-4xl">Edit Cateogry</h1>
-        <Breadcrumb />
-      </div>
+      {["idle", "pending"].includes(categoryStatus) && <Loader />}
 
-      <CategoryForm
-        category={category}
-        onSubmit={handleUpdateCategory}
-        isEditMode
-      />
+      {categoryStatus === "success" && (
+        <>
+          <div>
+            <h1 className="font-medium text-4xl">Edit Cateogry</h1>
+            <Breadcrumb />
+          </div>
+
+          <CategoryForm
+            category={category}
+            onSubmit={handleUpdateCategory}
+            isEditMode
+          />
+        </>
+      )}
     </>
   );
 }

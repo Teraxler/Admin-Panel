@@ -4,38 +4,24 @@ import { toast } from "sonner";
 import { Head, Breadcrumb, Loader } from "@/components/ui";
 import { UserForm } from "@/features/user/components";
 import { updateUser } from "@/features/user";
-import { getAllUsers, getUser } from "@/features/user/userService";
+import { useFetch } from "@/hooks/useFetch";
+import { getUser } from "@/features/user/userService";
 
-export const getStaticPaths = async () => {
-  const users = await getAllUsers();
-
-  const paths = users.map((user) => ({
-    params: { userId: user.userId },
-  }));
-
-  return { paths, fallback: true };
-  // return { paths: [], fallback: true };
-};
-
-export const getStaticProps = async ({ params }) => {
-  const user = await getUser(params.userId);
-
-  return {
-    props: { user },
-    revalidate: 60,
-  };
-};
-
-function UserEditPage({ user }) {
+export default function UserEditPage() {
   const router = useRouter();
   const { userId } = router.query;
 
+  const { data: user, status: userStatus } = useFetch({
+    fn: () => getUser(userId),
+    dependencies: [userId],
+  });
+
   useEffect(() => {
-    if (user != null) return;
+    if (userStatus !== "failed") return;
 
     toast.error("User ID is invalid!");
-    router.push("/users");
-  }, [user, router]);
+    router.replace("/users");
+  }, [userStatus, router]);
 
   async function handleUpdateUser(user) {
     try {
@@ -54,14 +40,18 @@ function UserEditPage({ user }) {
         <title>Admin Panel - Edit User</title>
       </Head>
 
-      <div>
-        <h1 className="title">Edit User</h1>
-        <Breadcrumb />
-      </div>
+      {["idle", "pending"].includes(userStatus) && <Loader />}
 
-      <UserForm user={user} onSubmit={handleUpdateUser} isEditMode />
+      {userStatus === "success" && (
+        <>
+          <div>
+            <h1 className="title">Edit User</h1>
+            <Breadcrumb />
+          </div>
+
+          <UserForm user={user} onSubmit={handleUpdateUser} isEditMode />
+        </>
+      )}
     </>
   );
 }
-
-export default UserEditPage;

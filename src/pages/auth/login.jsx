@@ -1,5 +1,3 @@
-"use client";
-
 import { useRouter } from "next/router";
 import { useContext } from "react";
 import { toast } from "sonner";

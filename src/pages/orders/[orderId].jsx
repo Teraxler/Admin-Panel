@@ -1,13 +1,15 @@
-import { useEffect } from "react";
-import Link from "next/link";
 import { useRouter } from "next/router";
+import Link from "next/link";
+import { useEffect } from "react";
 import { toast } from "sonner";
 import { formattingPhone } from "@/utils/stringUtil";
 import { formattingDateTime, normalizeDateTime } from "@/utils/dateTimeUtil";
 import { Head, Breadcrumb, Skeleton } from "@/components/ui";
 import { claculateTotalPrice } from "@/features/order/orderUtil";
 import { OrderItemTable } from "@/features/order/components";
-import { getAllOrders, getOrder } from "@/features/order/orderService";
+import { getOrder } from "@/features/order/orderService";
+import { useFetch } from "../../hooks/useFetch";
+import { success } from "zod";
 
 const statusColor = {
   canceled: "bg-red-100 text-red-700",
@@ -15,33 +17,21 @@ const statusColor = {
   "in progress": "bg-blue-100 text-blue-700",
 };
 
-export const getStaticPaths = async () => {
-  const orders = await getAllOrders();
-
-  const paths = orders.map((order) => ({
-    params: { orderId: order.orderId },
-  }));
-
-  return { paths, fallback: true };
-};
-
-export const getStaticProps = async ({ params }) => {
-  const order = await getOrder(params.orderId);
-
-  return {
-    props: { order },
-  };
-};
-
-function OrderDetailPage({ order }) {
+function OrderDetailPage() {
   const router = useRouter();
+  const { orderId } = router.query;
+
+  const { data: order, status: orderStatus } = useFetch({
+    fn: () => getOrder(orderId),
+    dependencies: [orderId],
+  });
 
   useEffect(() => {
-    if (order == null) {
-      toast.error("Order ID is invalid!");
-      router.push("/orders");
-    }
-  }, [order, router]);
+    if (orderStatus !== "failed") return;
+
+    toast.error("Order ID is invalid!");
+    router.replace("/orders");
+  }, [orderStatus, router]);
 
   const normalizedDateTime = normalizeDateTime(order?.createdAt);
   const formatedDateTime = formattingDateTime(normalizedDateTime);
@@ -51,6 +41,7 @@ function OrderDetailPage({ order }) {
       <Head>
         <title>Admin Panel - Order Details</title>
       </Head>
+
       <div>
         <h1 className="title">Order Details</h1>
         <Breadcrumb />
@@ -62,7 +53,7 @@ function OrderDetailPage({ order }) {
           <div className="flex flex-col mt-5 *:last:min-h-5.75 *:last:sm:min-h-auto *:not-last:h-7.75 *:not-last:lg:h-9.25 *:not-last:pb-1.5 *:sm:not-last:pb-2 *:not-last:mb-1.5 *:sm:not-last:mb-2 divide-y divide-neutral-200">
             <div className="flex justify-between gap-x-2.5">
               <span className="text-secondary font-medium">Data:</span>
-              {true ? (
+              {orderStatus === "success" ? (
                 <span className="line-clamp-1">{`${formatedDateTime?.monthName} ${formatedDateTime?.day}, ${formatedDateTime?.year}`}</span>
               ) : (
                 <Skeleton className="w-26.25 lg:w-30 skeleton--text mr-0 my-auto" />
@@ -71,7 +62,7 @@ function OrderDetailPage({ order }) {
             <div className="flex justify-between gap-x-2.5">
               <span className="text-secondary font-medium">Address:</span>
 
-              {true ? (
+              {orderStatus === "success" ? (
                 <span className="line-clamp-1" title={order?.deliveredAddress}>
                   {order?.deliveredAddress}
                 </span>
@@ -81,7 +72,7 @@ function OrderDetailPage({ order }) {
             </div>
             <div className="flex justify-between gap-x-2.5">
               <span className="text-secondary font-medium">Status:</span>
-              {true ? (
+              {orderStatus === "success" ? (
                 <span
                   className={`line-clamp-1 w-max py-0.5 px-2 my-auto rounded-lg ${statusColor[order?.status]}`}
                 >
@@ -93,7 +84,7 @@ function OrderDetailPage({ order }) {
             </div>
             <div className="flex justify-between gap-x-2.5">
               <span className="text-secondary font-medium">Discount:</span>
-              {true ? (
+              {orderStatus === "success" ? (
                 <span>{`${order?.discountPercent}%`}</span>
               ) : (
                 <Skeleton className="w-6 lg:w-7 skeleton--text mr-0 my-auto" />
@@ -103,7 +94,7 @@ function OrderDetailPage({ order }) {
               <span className="text-secondary font-medium text-nowrap">
                 Total Price:
               </span>
-              {true ? (
+              {orderStatus === "success" ? (
                 <span>{`$${claculateTotalPrice(order?.orderItems)}`}</span>
               ) : (
                 <Skeleton className="w-8.75 lg:w-10 skeleton--text mr-0 my-auto" />
@@ -118,7 +109,7 @@ function OrderDetailPage({ order }) {
               <span className="text-secondary font-medium text-nowrap">
                 Full Name:
               </span>
-              {true ? (
+              {orderStatus === "success" ? (
                 <Link
                   className="capitalize line-clamp-1"
                   href={`/users/${order?.userId}`}
@@ -131,7 +122,7 @@ function OrderDetailPage({ order }) {
             </div>
             <div className="flex justify-between gap-x-2.5">
               <span className="text-secondary font-medium">Username:</span>
-              {true ? (
+              {orderStatus === "success" ? (
                 <span className="line-clamp-1">{order?.userUsername}</span>
               ) : (
                 <Skeleton className="w-17.5 lg:w-20 skeleton--text mr-0 my-auto" />
@@ -139,7 +130,7 @@ function OrderDetailPage({ order }) {
             </div>
             <div className="flex justify-between gap-x-2.5">
               <span className="text-secondary font-medium">Email:</span>
-              {true ? (
+              {orderStatus === "success" ? (
                 <span className="line-clamp-1">{order?.userEmail}</span>
               ) : (
                 <Skeleton className="w-41 lg:w-50 skeleton--text mr-0 my-auto" />
@@ -147,7 +138,7 @@ function OrderDetailPage({ order }) {
             </div>
             <div className="flex justify-between gap-x-2.5">
               <span className="text-secondary font-medium">Phone:</span>
-              {true ? (
+              {orderStatus === "success" ? (
                 <span className="capitalize line-clamp-1">
                   {order?.userPhone ? formattingPhone(order?.userPhone) : "___"}
                 </span>
@@ -161,7 +152,7 @@ function OrderDetailPage({ order }) {
 
       <OrderItemTable
         orderItems={order?.orderItems}
-        isOrderItemesLoaded={true}
+        isOrderItemesLoaded={orderStatus === "success"}
       />
     </>
   );
