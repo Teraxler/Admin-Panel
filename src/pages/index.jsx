@@ -6,14 +6,14 @@ import {
 } from "@/components/ui";
 import OrderTable from "@/features/order/components/OrderTable/OrderTable";
 import { getAllOrders } from "@/features/order/orderService";
+import { useFetch } from "@/hooks/useFetch";
 
-export const getServerSideProps = async () => {
-  const orders = await getAllOrders();
+const DashboardPage = () => {
+  const { data: orders, status: ordersStatus } = useFetch({
+    fn: getAllOrders,
+    dependencies: [],
+  });
 
-  return { props: { orders } };
-};
-
-const DashboardPage = ({ orders }) => {
   return (
     <>
       <Head>
@@ -78,7 +78,7 @@ const DashboardPage = ({ orders }) => {
 
         <OrderTable
           orders={orders?.reverse().slice(0, 5)}
-          isOrdersLoaded={true}
+          isOrdersLoaded={ordersStatus === "success"}
           noAction
         />
       </section>

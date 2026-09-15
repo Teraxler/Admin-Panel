@@ -26,7 +26,7 @@ function ProductTableRow({
             alt={name}
             width={60}
             height={60}
-            src={`${BASE_URL}/images/products/${cover}`}
+            src={`${BASE_URL}/uploads/images/products/${cover}`}
           />
         </div>
       </td>
