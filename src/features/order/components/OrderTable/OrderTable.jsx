@@ -7,6 +7,7 @@ import { Table } from "@/components/ui";
 import OrderTableRow from "./OrderTableRow";
 import OrderTableRowSkeleton from "./OrderTableRowSkeleton";
 import { deleteOrder } from "@/features/order/orderService";
+import { useStorageContext } from "@/context/StorageContext";
 
 const tableColumns = [
   "#",
@@ -23,6 +24,7 @@ const removeOrderById = (orders, id) =>
   removeItemFromList(orders, "orderId", id);
 
 function OrderTable({ orders, setOrders, isOrdersLoaded, noAction }) {
+  const storageContext = useStorageContext();
   const [currentPage, setCurrentPage] = useState(1);
   const [currentPageOrders, setCurrentPageOrders] = useState([]);
 
@@ -31,7 +33,7 @@ function OrderTable({ orders, setOrders, isOrdersLoaded, noAction }) {
 
   async function handleDeleteOrder(orderId) {
     try {
-      await deleteOrder(orderId);
+      await deleteOrder(storageContext, orderId);
 
       setOrders((prevOrders) => removeOrderById(prevOrders, orderId));
 

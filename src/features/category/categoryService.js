@@ -1,70 +1,48 @@
-import { API_URL } from "@/constants";
+import { deleteItem, findItem, updateItem } from "@/utils/arrayUtil";
+import { delay } from "@/utils/delay";
 
-export async function createCategory(category) {
-  const response = await fetch(`${API_URL}/categories`, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-    method: "POST",
-    body: JSON.stringify(category),
-  });
+export async function createCategory([storage, setStorage], category) {
+  return await delay(() => {
+    setStorage((prev) => ({
+      ...prev,
+      categories: [...prev.categories, category],
+    }));
 
-  const result = await response.json();
-
-  if (!response.ok)
-    throw new Error(result.message || "Failed to create category.");
-
-  return result;
+    return category;
+  }, 500);
 }
 
-export async function getCategory(id) {
-  const response = await fetch(`${API_URL}/categories/${id}`);
-
-  const result = await response.json();
-
-  if (!response.ok)
-    throw new Error(result.message || "Failed to get category.");
-
-  return result;
+export async function getCategory([storage, setStorage], id) {
+  return await delay(() => findItem(storage.categories, "categoryId", id), 350);
 }
 
-export async function getAllCategories() {
-  const response = await fetch(`${API_URL}/categories`);
-
-  const result = await response.json();
-
-  if (!response.ok)
-    throw new Error(result.message || "Failed to get all categories.");
-
-  return result;
+export async function getAllCategories([storage, setStorage]) {
+  return await delay(() => storage.categories, 500);
 }
 
-export async function updateCategory(category, categoryId) {
-  const response = await fetch(`${API_URL}/categories/${categoryId}`, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-    method: "PUT",
-    body: JSON.stringify(category),
-  });
+export async function updateCategory(
+  [storage, setStorage],
+  category,
+  categoryId,
+) {
+  return await delay(() => {
+    const newState = updateItem(storage.categories, "categoryId", {
+      id: categoryId,
+      ...category,
+    });
 
-  const result = await response.json();
+    setStorage((prev) => ({ ...prev, categories: newState }));
 
-  if (!response.ok)
-    throw new Error(result.message || "Failed to update category.");
-
-  return result;
+    return newState;
+  }, 500);
 }
 
-export async function deleteCategory(categoryId) {
-  const response = await fetch(`${API_URL}/categories/${categoryId}`, {
-    method: "DELETE",
-  });
+export async function deleteCategory([storage, setStorage], categoryId) {
+  return await delay(() => {
+    const newState = deleteItem(storage.categories, "categoryId", categoryId);
 
-  const result = await response.json();
+    setStorage((prev) => ({ ...prev, categories: newState }));
 
-  if (!response.ok)
-    throw new Error(result.message || "Failed to delete category.");
-
-  return result;
+    return newState;
+  }, 400);
 }

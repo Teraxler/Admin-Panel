@@ -10,6 +10,7 @@ import { OrderItemTable } from "@/features/order/components";
 import { getOrder } from "@/features/order/orderService";
 import { useFetch } from "../../hooks/useFetch";
 import { success } from "zod";
+import { useStorageContext } from "@/context/StorageContext";
 
 const statusColor = {
   canceled: "bg-red-100 text-red-700",
@@ -18,11 +19,12 @@ const statusColor = {
 };
 
 function OrderDetailPage() {
+  const storageContext = useStorageContext();
   const router = useRouter();
   const { orderId } = router.query;
 
   const { data: order, status: orderStatus } = useFetch({
-    fn: () => getOrder(orderId),
+    fn: async () => await getOrder(storageContext, orderId),
     dependencies: [orderId],
   });
 

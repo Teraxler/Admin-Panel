@@ -6,13 +6,16 @@ import { updateProduct } from "../../features/product/index";
 import { useRouter } from "next/router";
 import { useFetch } from "@/hooks/useFetch";
 import { getProduct } from "../../features/product/productService";
+import { useStorageContext } from "@/context/StorageContext";
 
 function ProductEditPage() {
+  const storageContext = useStorageContext();
+
   const router = useRouter();
   const { productId } = router.query;
 
   const { data: product, status: productStatus } = useFetch({
-    fn: () => getProduct(productId),
+    fn: async () => await getProduct(storageContext, productId),
     dependencies: [productId],
   });
 
@@ -25,7 +28,7 @@ function ProductEditPage() {
 
   async function handleUpdateProduct(formData) {
     try {
-      await updateProduct(formData, productId);
+      await updateProduct(storageContext, formData, productId);
 
       toast.success("Product updated successfully");
       router.replace("/products");

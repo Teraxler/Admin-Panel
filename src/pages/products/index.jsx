@@ -5,16 +5,17 @@ import { Head, Breadcrumb } from "@/components/ui";
 import { ProductTable } from "../../features/product/components";
 import Link from "next/link";
 import { getAllProducts } from "@/features/product/productService";
+import { useFetch } from "@/hooks/useFetch";
+import { useStorageContext } from "@/context/StorageContext";
 
-export const getServerSideProps = async () => {
-  const products = await getAllProducts();
+function ProductListPage() {
+  const storageContext = useStorageContext();
 
-  return {
-    props: { products },
-  };
-};
+  const { data: products, status } = useFetch({
+    fn: async () => await getAllProducts(storageContext),
+    dependencies: [],
+  });
 
-function ProductListPage({ products }) {
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   return (
@@ -42,7 +43,7 @@ function ProductListPage({ products }) {
           <SearchBar
             items={products}
             handleSearch={searchProduct}
-            isItemsLoaded={true}
+            isItemsLoaded={status === "success"}
             setFilteredItems={setFilteredProducts}
             placeholder={"Search (name, category)"}
           />
@@ -51,7 +52,7 @@ function ProductListPage({ products }) {
         <ProductTable
           products={filteredProducts}
           setProducts={setFilteredProducts}
-          isProductsLoaded={true}
+          isProductsLoaded={status === "success"}
         />
       </section>
     </>

@@ -1,12 +1,14 @@
-import { createContext } from "react";
+import { createContext, useContext } from "react";
 import { useFetch } from "@/hooks/useFetch";
 import { useCookie } from "@/hooks/useCookie";
-import { getUser } from "@/features/user/userService";
 import { loginUser } from "@/features/auth";
+import { useStorageContext } from "@/context/StorageContext";
+import { getUser } from "@/features/user/userService";
 
 const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
+const AuthProvider = ({ children }) => {
+  const storageContext = useStorageContext();
   const [userId, setCookie] = useCookie("userId");
 
   const {
@@ -16,14 +18,16 @@ export const AuthProvider = ({ children }) => {
     setData: setUser,
     refetch,
     reset,
-  } = useFetch({ fn: async () => await getUser(userId), dependencies: [userId] });
+  } = useFetch({
+    fn: async () => await getUser(storageContext, userId),
+    dependencies: [userId],
+  });
 
   const login = async ({ username, password }) => {
-    const user = await loginUser({ username, password });
+    const user = await loginUser(storageContext, { username, password });
 
     setCookie(user.userId);
     setUser(user);
-    // await refetch();
   };
 
   const logout = () => {
@@ -47,5 +51,16 @@ export const AuthProvider = ({ children }) => {
     </AuthContext>
   );
 };
+
+const useAuthContext = () => {
+  const context = useContext(AuthContext);
+
+  if (context == null)
+    throw new Error("useAuthContext must use within AuthProvider");
+
+  return context;
+};
+
+export { AuthProvider, useAuthContext };
 
 export default AuthContext;

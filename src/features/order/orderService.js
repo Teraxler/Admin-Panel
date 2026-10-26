@@ -1,35 +1,20 @@
-import { API_URL } from "@/constants";
+import { deleteItem, findItem } from "@/utils/arrayUtil";
+import { delay } from "@/utils/delay";
 
-export async function getOrder(orderId) {
-  const response = await fetch(`${API_URL}/orders/${orderId}`);
-
-  const result = await response.json();
-
-  if (!response.ok) throw new Error(result.message || "Failed to get order.");
-
-  return result;
+export async function getOrder([storage, setStorage], id) {
+  return await delay(() => findItem(storage.orders, "orderId", id), 350);
 }
 
-export async function getAllOrders() {
-  const response = await fetch(`${API_URL}/orders`);
-
-  const result = await response.json();
-
-  if (!response.ok)
-    throw new Error(result.message || "Failed to get all orders.");
-
-  return result;
+export async function getAllOrders([storage, setStorage]) {
+  return await delay(() => storage.orders, 500);
 }
 
-export async function deleteOrder(orderId) {
-  const response = await fetch(`${API_URL}/orders/${orderId}`, {
-    method: "DELETE",
-  });
+export async function deleteOrder([storage, setStorage], orderId) {
+  return await delay(() => {
+    const newState = deleteItem(storage.orders, "orderId", orderId);
 
-  const result = await response.json();
+    setStorage((prev) => ({ ...prev, orders: newState }));
 
-  if (!response.ok)
-    throw new Error(result.message || "Failed to delete order.");
-
-  return result;
+    return newState;
+  }, 400);
 }

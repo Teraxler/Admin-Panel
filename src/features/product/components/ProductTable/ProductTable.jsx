@@ -7,6 +7,7 @@ import { Table } from "@/components/ui";
 import ProductTableRowSkeleton from "./ProductTableRowSkeleton";
 import ProductTableRow from "./ProductTableRow";
 import { deleteProduct } from "@/features/product/productService";
+import { useStorageContext } from "@/context/StorageContext";
 
 const tableColumns = [
   "#",
@@ -22,6 +23,7 @@ const removeProductById = (products, id) =>
   removeItemFromList(products, "productId", id);
 
 function ProductTable({ products, setProducts, isProductsLoaded }) {
+  const storageContext = useStorageContext();
   const [currentPage, setCurrentPage] = useState(1);
   const [currentPageProducts, setCurrentPageProducts] = useState([]);
 
@@ -30,7 +32,7 @@ function ProductTable({ products, setProducts, isProductsLoaded }) {
 
   async function handleDeleteProduct(productId) {
     try {
-      await deleteProduct(productId);
+      await deleteProduct(storageContext, productId);
 
       setProducts((prevProducts) => removeProductById(prevProducts, productId));
 

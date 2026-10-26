@@ -7,6 +7,7 @@ import CategoryTableRow from "./CategoryTableRow";
 import CategoryTableRowSkeleton from "./CategoryTableRowSkeleton";
 import { ITEMS_PER_PAGE } from "@/constants";
 import { deleteCategory } from "@/features/category/categoryService";
+import { useStorageContext } from "@/context/StorageContext";
 
 const tableColumns = ["#", "Category"];
 
@@ -14,6 +15,7 @@ const removeCategoryById = (categories, id) =>
   removeItemFromList(categories, "categoryId", id);
 
 function CategoryTable({ categories, setCategories, isCategoriesLoaded }) {
+  const storageContext = useStorageContext();
   const [currentPage, setCurrentPage] = useState(1);
   const [currentPageCategories, setCurrentPageCategories] = useState([]);
 
@@ -22,7 +24,7 @@ function CategoryTable({ categories, setCategories, isCategoriesLoaded }) {
 
   async function handleDeleteCategory(categoryId) {
     try {
-      await deleteCategory(categoryId);
+      await deleteCategory(storageContext, categoryId);
 
       setCategories((prevCategories) =>
         removeCategoryById(prevCategories, categoryId),

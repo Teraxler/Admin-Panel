@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Toaster } from "sonner";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import Header from "../Header/Header";
 import Sidebar from "../Sidebar/Sidebar";
 import { SvgIcons, Overlay } from "@/components/ui";
@@ -8,6 +8,12 @@ import ProtectedRoute from "@/routes/ProtectedRoute";
 function DashboardLayout({ children }) {
   const [isProfileDropDownVisible, setIsProfileDropDownVisible] =
     useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      toast.info("This is a demo version", { position: "bottom-right" });
+    }, 1000);
+  }, []);
 
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);
 

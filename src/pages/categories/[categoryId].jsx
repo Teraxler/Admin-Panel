@@ -6,13 +6,15 @@ import { Head, Loader, Breadcrumb } from "@/components/ui";
 import { CategoryForm } from "@/features/category/components";
 import { updateCategory } from "@/features/category/index";
 import { getCategory } from "@/features/category/categoryService";
+import { useStorageContext } from "@/context/StorageContext";
 
 function CategoryEditPage() {
+  const storageContext = useStorageContext();
   const router = useRouter();
   const { categoryId } = router.query;
 
   const { data: category, status: categoryStatus } = useFetch({
-    fn: () => getCategory(categoryId),
+    fn: async () => await getCategory(storageContext, categoryId),
     dependencies: [categoryId],
   });
 
@@ -25,7 +27,7 @@ function CategoryEditPage() {
 
   async function handleUpdateCategory(category) {
     try {
-      await updateCategory(category, categoryId);
+      await updateCategory(storageContext, category, categoryId);
 
       toast.success("Category updated successfully");
       router.replace("/categories");

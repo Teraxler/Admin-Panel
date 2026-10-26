@@ -6,13 +6,15 @@ import { UserForm } from "@/features/user/components";
 import { updateUser } from "@/features/user";
 import { useFetch } from "@/hooks/useFetch";
 import { getUser } from "@/features/user/userService";
+import { useStorageContext } from "@/context/StorageContext";
 
 export default function UserEditPage() {
+  const storageContext = useStorageContext();
   const router = useRouter();
   const { userId } = router.query;
 
   const { data: user, status: userStatus } = useFetch({
-    fn: () => getUser(userId),
+    fn: async () => await getUser(storageContext, userId),
     dependencies: [userId],
   });
 
@@ -25,7 +27,7 @@ export default function UserEditPage() {
 
   async function handleUpdateUser(user) {
     try {
-      await updateUser(user, userId);
+      await updateUser(storageContext, user, userId);
 
       toast.success("User updated successfully");
       router.push("/users");

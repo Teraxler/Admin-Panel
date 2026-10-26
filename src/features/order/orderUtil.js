@@ -5,4 +5,8 @@ const claculateTotalPrice = (items = []) => {
   );
 };
 
-export { claculateTotalPrice };
+const claculateTotalItems = (items = []) => {
+  return items.reduce((total, item) => total + item.quantity, 0);
+};
+
+export { claculateTotalPrice, claculateTotalItems };

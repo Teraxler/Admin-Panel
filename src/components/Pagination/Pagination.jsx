@@ -14,11 +14,11 @@ const Pagination = ({
 
   useEffect(() => {
     setCurrentPageItems(() => paginateItems(items, currentPage, itemsPerPage));
-  }, [currentPage, items, itemsPerPage, setCurrentPageItems]);
+  }, [currentPage, items?.length, itemsPerPage, setCurrentPageItems]);
 
   useEffect(
     () => setCurrentPage(1),
-    [setCurrentPage, items.length, countPages],
+    [setCurrentPage, items?.length, countPages],
   );
 
   const nextPage = () => setCurrentPage((currentPage) => currentPage + 1);

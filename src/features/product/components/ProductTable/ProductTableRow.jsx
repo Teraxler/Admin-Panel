@@ -13,6 +13,7 @@ function ProductTableRow({
   number,
   inventory,
   onDelete,
+  isCoverBlob,
 }) {
   return (
     <tr className="*:px-2 *:sm:px-4 *:lg:px-6 *:py-2 capitalize">
@@ -26,7 +27,7 @@ function ProductTableRow({
             alt={name}
             width={60}
             height={60}
-            src={`${BASE_URL}/images/products/${cover}`}
+            src={isCoverBlob ? cover : `${BASE_URL}/images/products/${cover}`}
           />
         </div>
       </td>

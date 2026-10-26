@@ -1,62 +1,44 @@
-import { API_URL } from "@/constants";
+import { deleteItem, findItem, updateItem } from "@/utils/arrayUtil";
+import { delay } from "@/utils/delay";
 
-export async function createProduct(formData) {
-  const response = await fetch(`${API_URL}/products`, {
-    method: "POST",
-    body: formData,
-  });
+export async function createProduct([storage, setStorage], product) {
+  return await delay(() => {
+    setStorage((prev) => ({
+      ...prev,
+      products: [...prev.products, product],
+    }));
 
-  const result = await response.json();
-
-  if (!response.ok)
-    throw new Error(result.message || "Failed to create product.");
-
-  return result;
+    return product;
+  }, 500);
 }
 
-export async function getProduct(id) {
-  const response = await fetch(`${API_URL}/products/${id}`);
-
-  if (!response.ok) throw new Error("Failed to get product.");
-  const result = await response.json();
-
-  return result;
+export async function getProduct([storage, setStorage], id) {
+  return await delay(() => findItem(storage.products, "productId", id), 350);
 }
 
-export async function getAllProducts() {
-  const response = await fetch(`${API_URL}/products`);
-
-  const result = await response.json();
-
-  if (!response.ok)
-    throw new Error(result.message || "Failed to get all products.");
-
-  return result;
+export async function getAllProducts([storage, setStorage]) {
+  return await delay(() => storage.products, 500);
 }
 
-export async function updateProduct(formData, productId) {
-  const response = await fetch(`${API_URL}/products/${productId}`, {
-    method: "PUT",
-    body: formData,
-  });
+export async function updateProduct([storage, setStorage], product, productId) {
+  return await delay(() => {
+    const newState = updateItem(storage.products, "productId", {
+      id: productId,
+      ...product,
+    });
 
-  const result = await response.json();
+    setStorage((prev) => ({ ...prev, products: newState }));
 
-  if (!response.ok)
-    throw new Error(result.message || "Failed to update product.");
-
-  return result;
+    return newState;
+  }, 500);
 }
 
-export async function deleteProduct(productId) {
-  const response = await fetch(`${API_URL}/products/${productId}`, {
-    method: "DELETE",
-  });
+export async function deleteProduct([storage, setStorage], productId) {
+  return await delay(() => {
+    const newState = deleteItem(storage.products, "productId", productId);
 
-  const result = await response.json();
+    setStorage((prev) => ({ ...prev, products: newState }));
 
-  if (!response.ok)
-    throw new Error(result.message || "Failed to delete product.");
-
-  return response.ok;
+    return newState;
+  }, 400);
 }

@@ -7,7 +7,7 @@ import { useFetch } from "@/hooks/useFetch";
 import { Loader } from "@/components/ui";
 import { productSchema } from "./productFormValidation";
 import productReducer, {
-  CATEGORY_ID,
+  CATEGORY_NAME,
   COVER,
   COVER_FILE,
   DESCRIPTION,
@@ -16,14 +16,16 @@ import productReducer, {
   PRICE,
 } from "./productFormReducer";
 import { getAllCategories } from "@/features/category/categoryService";
+import { useStorageContext } from "@/context/StorageContext";
 
 function ProductForm({ product: productInfo, onSubmit, isEditMode }) {
+  const storageContext = useStorageContext();
   const router = useRouter();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { data: categories, status: categoriesStatus } = useFetch({
-    fn: getAllCategories,
+    fn: async () => await getAllCategories(storageContext),
     dependencies: [],
   });
 
@@ -32,11 +34,11 @@ function ProductForm({ product: productInfo, onSubmit, isEditMode }) {
     name: productInfo?.name || "",
     price: productInfo?.price || "",
     cover: productInfo?.cover || "",
-    categoryId: productInfo?.categoryId || "",
+    categoryName: productInfo?.categoryName || "",
     inventory: productInfo?.inventory || "",
     description: productInfo?.description || "",
     coverFile: null,
-    isCoverBlob: false,
+    isCoverBlob: productInfo?.isCoverBlob || false,
   });
 
   useEffect(() => {
@@ -54,19 +56,14 @@ function ProductForm({ product: productInfo, onSubmit, isEditMode }) {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const formData = new FormData();
-    formData.append("name", product.name);
-    formData.append("price", product.price);
-    formData.append("inventory", product.inventory);
-    formData.append("categoryId", product.categoryId);
-    formData.append("description", product.description);
-    product.isCoverBlob && formData.append("cover", product.coverFile);
+    const { success, error } = productSchema.safeParse(product);
 
-    const editedProduct = Object.fromEntries(formData.entries());
+    const editedProduct = {
+      ...product,
+      coverFile: null,
+    };
 
-    const { success, error } = productSchema.safeParse(editedProduct);
-
-    if (success) await onSubmit(formData);
+    if (success) await onSubmit(editedProduct);
     if (!success) toast.error(error.issues[0].message);
 
     setIsSubmitting(false);
@@ -99,9 +96,9 @@ function ProductForm({ product: productInfo, onSubmit, isEditMode }) {
             <select
               id="category"
               onChange={(e) =>
-                dispatch({ type: CATEGORY_ID, payload: e.target.value })
+                dispatch({ type: CATEGORY_NAME, payload: e.target.value })
               }
-              value={product.categoryId ?? ""}
+              value={product.categoryName ?? ""}
               className="input"
             >
               <option value={""}>Please Select Category</option>
@@ -109,7 +106,7 @@ function ProductForm({ product: productInfo, onSubmit, isEditMode }) {
                 ? categories?.length &&
                   categories.map((category) => (
                     <option
-                      value={category.categoryId}
+                      value={category.name}
                       key={category.categoryId}
                       className="capitalize"
                     >

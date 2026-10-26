@@ -2,7 +2,7 @@ export const NAME = "NAME";
 export const PRICE = "PRCIE";
 export const COVER = "COVER";
 export const COVER_FILE = "COVER_FILE";
-export const CATEGORY_ID = "CATEGORY_ID";
+export const CATEGORY_NAME = "CATEGORY_NAME";
 export const INVENTORY = "INVENTORY";
 export const DESCRIPTION = "DESCRIPTION";
 export const ALL = "ALL";
@@ -36,10 +36,10 @@ const productReducer = (product, action) => {
         coverFile: payload,
       };
     }
-    case CATEGORY_ID: {
+    case CATEGORY_NAME: {
       return {
         ...product,
-        categoryId: payload,
+        categoryName: payload,
       };
     }
     case INVENTORY: {

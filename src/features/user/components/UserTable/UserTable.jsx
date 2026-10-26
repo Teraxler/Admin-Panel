@@ -7,6 +7,7 @@ import { Table } from "@/components/ui";
 import UserTableRow from "./UserTableRow";
 import UserTableRowSkeleton from "./UserTableRowSkeleton";
 import { deleteUser } from "@/features/user/userService";
+import { useStorageContext } from "@/context/StorageContext";
 
 const tableColumns = [
   "#",
@@ -20,6 +21,7 @@ const tableColumns = [
 const removeUserById = (users, id) => removeItemFromList(users, "userId", id);
 
 function UserTable({ users, setUsers, isUsersLoaded }) {
+  const storageContext = useStorageContext();
   const [currentPage, setCurrentPage] = useState(1);
   const [currentPageUsers, setCurrentPageUsers] = useState([]);
 
@@ -28,7 +30,7 @@ function UserTable({ users, setUsers, isUsersLoaded }) {
 
   async function handleDeleteUser(userId) {
     try {
-      await deleteUser(userId);
+      await deleteUser(storageContext, userId);
       setUsers((prevUsers) => removeUserById(prevUsers, userId));
 
       toast.success("User deleted successfully");

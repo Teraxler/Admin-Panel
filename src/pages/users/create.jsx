@@ -3,13 +3,15 @@ import { toast } from "sonner";
 import { Head, Breadcrumb } from "@/components/ui";
 import { createUser } from "@/features/user";
 import { UserForm } from "@/features/user/components";
+import { useStorageContext } from "@/context/StorageContext";
 
 function UserCreatePage() {
+  const storageContext = useStorageContext();
   const router = useRouter();
 
   async function handleCreateUser(user) {
     try {
-      await createUser(user);
+      await createUser(storageContext, user);
       toast.success("User created successfully");
       router.push("/users");
     } catch (error) {

@@ -3,13 +3,15 @@ import { Head, Breadcrumb } from "@/components/ui";
 import { ProductForm } from "../../features/product/components";
 import { createProduct } from "../../features/product/index";
 import { useRouter } from "next/router";
+import { useStorageContext } from "@/context/StorageContext";
 
 function ProductCreatePage() {
+  const storageContext = useStorageContext();
   const router = useRouter();
 
-  async function handleCreateProduct(formData) {
+  async function handleCreateProduct(product) {
     try {
-      await createProduct(formData);
+      await createProduct(storageContext, product);
 
       toast.success("Product created successfully");
       router.push("/products");

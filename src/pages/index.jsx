@@ -5,15 +5,18 @@ import {
   CircularGaugeChart,
 } from "@/components/ui";
 import OrderTable from "@/features/order/components/OrderTable/OrderTable";
+import { useStorageContext } from "@/context/StorageContext";
+import { useFetch } from "@/hooks/useFetch";
 import { getAllOrders } from "@/features/order/orderService";
 
-export const getServerSideProps = async () => {
-  const orders = await getAllOrders();
+const DashboardPage = () => {
+  const storageContext = useStorageContext();
 
-  return { props: { orders } };
-};
+  const { data: orders, status } = useFetch({
+    fn: async () => await getAllOrders(storageContext),
+    dependencies: [],
+  });
 
-const DashboardPage = ({ orders }) => {
   return (
     <>
       <Head>
@@ -78,7 +81,7 @@ const DashboardPage = ({ orders }) => {
 
         <OrderTable
           orders={orders?.reverse().slice(0, 5)}
-          isOrdersLoaded={true}
+          isOrdersLoaded={status === "success"}
           noAction
         />
       </section>

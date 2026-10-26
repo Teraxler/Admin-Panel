@@ -1,12 +1,11 @@
 import { useRouter } from "next/router";
-import { useContext } from "react";
 import { toast } from "sonner";
 import { Head } from "@/components/ui";
 import { LoginForm } from "@/features/auth/components";
-import AuthContext from "@/context/AuthContext";
+import { useAuthContext } from "@/context/AuthContext";
 
 function LoginPage() {
-  const { login } = useContext(AuthContext);
+  const { login } = useAuthContext();
   const router = useRouter();
 
   async function handleLoginUser(user) {

@@ -5,16 +5,17 @@ import { SearchBar } from "@/components";
 import { Head, Breadcrumb } from "@/components/ui";
 import { CategoryTable } from "@/features/category/components";
 import { getAllCategories } from "@/features/category/categoryService";
+import { useStorageContext } from "@/context/StorageContext";
+import { useFetch } from "@/hooks/useFetch";
 
-export const getServerSideProps = async () => {
-  const categories = await getAllCategories();
+function CategoryListPage() {
+  const storageContext = useStorageContext();
 
-  return {
-    props: { categories },
-  };
-};
+  const { data: categories, status } = useFetch({
+    fn: async () => await getAllCategories(storageContext),
+    dependencies: [],
+  });
 
-function CategoryListPage({ categories }) {
   const [filteredCategories, setFilteredCategories] = useState([]);
 
   return (
@@ -42,14 +43,14 @@ function CategoryListPage({ categories }) {
             items={categories}
             placeholder="Search (category)"
             handleSearch={searchCategory}
-            isItemsLoaded={true}
+            isItemsLoaded={status === "success"}
             setFilteredItems={setFilteredCategories}
           />
         </div>
         <CategoryTable
           categories={filteredCategories}
           setCategories={setFilteredCategories}
-          isCategoriesLoaded={true}
+          isCategoriesLoaded={status === "success"}
         />
       </section>
     </>

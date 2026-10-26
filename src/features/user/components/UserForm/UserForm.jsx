@@ -1,6 +1,6 @@
 import { useReducer, useState } from "react";
 import { toast } from "sonner";
-import { editUserSchema, createUserSchema } from "./userFormValidation";
+import { createUserSchema } from "./userFormValidation";
 import userReducer, {
   NAME,
   FAMILY,
@@ -9,7 +9,6 @@ import userReducer, {
   PHONE,
   BIRTHDAY,
   PASSWORD,
-  NEW_PASSWORD,
 } from "./userFormReducer";
 import { useRouter } from "next/router";
 
@@ -26,8 +25,8 @@ function UserForm({ user: userInfo, onSubmit, isEditMode }) {
     phone: userInfo?.phone || "",
     email: userInfo?.email || "",
     birthday: userInfo?.birthday?.slice(0, 10) || "",
-    password: "",
-    newPassword: "",
+    password: userInfo?.password || "",
+    role: userInfo?.role || "USER",
   });
 
   async function handleSubmitForm(e) {
@@ -38,13 +37,9 @@ function UserForm({ user: userInfo, onSubmit, isEditMode }) {
       ...user,
       phone: user.phone || null,
       birthday: user.birthday || null,
-      password: isEditMode ? user.password || null : user.password,
-      newPassword: user.newPassword || null,
     };
 
-    const { success, error } = isEditMode
-      ? editUserSchema.safeParse(editedUser)
-      : createUserSchema.safeParse(editedUser);
+    const { success, error } = createUserSchema.safeParse(editedUser);
 
     if (success) await onSubmit(editedUser);
     if (!success) toast.error(error.issues[0].message);
@@ -152,7 +147,7 @@ function UserForm({ user: userInfo, onSubmit, isEditMode }) {
           </div>
         </div>
         <div className="flex gap-x-2 sm:gap-x-4">
-          <div className="w-1/2">
+          <div className="w-1/2 pr-1 sm:pr-2">
             <label htmlFor="password">Password</label>
             <input
               id="password"
@@ -165,26 +160,9 @@ function UserForm({ user: userInfo, onSubmit, isEditMode }) {
               }
             />
           </div>
-          <div
-            className={`w-1/2 ${isEditMode ? "" : "invisible opacity-0 pointer-events-none"}`}
-          >
-            <label htmlFor="new-password">New Password</label>
-            <input
-              id="new-password"
-              type="password"
-              placeholder="****"
-              className="input"
-              value={user.newPassword}
-              onChange={(e) =>
-                dispatch({ type: NEW_PASSWORD, payload: e.target.value })
-              }
-            />
-          </div>
         </div>
       </div>
-      <div
-        className={`flex justify-end gap-x-2 mt-10 ${isEditMode ? "sm:mt-25" : ""}`}
-      >
+      <div className={`flex justify-end gap-x-2 mt-10}`}>
         <button
           disabled={isSubmitting}
           className="btn btn--small btn--secondary"

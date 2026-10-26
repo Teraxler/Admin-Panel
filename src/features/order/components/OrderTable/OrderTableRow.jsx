@@ -1,7 +1,7 @@
-
 import Link from "next/link";
 import { formattingDateTime, normalizeDateTime } from "@/utils/dateTimeUtil";
 import { AlertModalWarning } from "@/components/ui";
+import { claculateTotalItems, claculateTotalPrice } from "../../orderUtil";
 
 const statusColor = {
   canceled: "bg-red-100 text-red-700",
@@ -16,8 +16,7 @@ function OrderTableRow({
   status,
   createdAt,
   deliveredAddress,
-  itemCount,
-  totalPrice,
+  orderItems,
   userName,
   userFamily,
   onDelete,
@@ -53,10 +52,10 @@ function OrderTableRow({
         <span className="line-clamp-1">{discountPercent}%</span>
       </td>
       <td>
-        <span className="line-clamp-1">{itemCount}</span>
+        <span className="line-clamp-1">{claculateTotalItems(orderItems)}</span>
       </td>
       <td>
-        <span className="line-clamp-1">${totalPrice}</span>
+        <span className="line-clamp-1">${claculateTotalPrice(orderItems)}</span>
       </td>
       <td>
         <span

@@ -3,13 +3,15 @@ import { toast } from "sonner";
 import { Head, Breadcrumb } from "@/components/ui";
 import { CategoryForm } from "@/features/category/components";
 import { createCategory } from "@/features/category/index";
+import { useStorageContext } from "@/context/StorageContext";
 
 function CategoryCreatePage() {
+  const storageContext = useStorageContext();
   const router = useRouter();
 
   async function handleCreateCategory(category) {
     try {
-      await createCategory(category);
+      await createCategory(storageContext, category);
 
       toast.success("Category created successfully");
       router.push("/categories");

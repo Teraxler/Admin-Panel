@@ -3,6 +3,7 @@ import DashboardLayout from "@/components/layout/DashboardLayout/DashboardLayout
 import { AuthProvider } from "@/context/AuthContext";
 import "@/styles/globals.css";
 import { Toaster } from "sonner";
+import { StorageProvider } from "@/context/StorageContext";
 
 export default function App({ Component, pageProps }) {
   const appLayout =
@@ -12,7 +13,9 @@ export default function App({ Component, pageProps }) {
   return (
     <Theme>
       <Toaster richColors position="top-right" />
-      <AuthProvider>{appLayout(<Component {...pageProps} />)}</AuthProvider>
+      <StorageProvider>
+        <AuthProvider>{appLayout(<Component {...pageProps} />)}</AuthProvider>
+      </StorageProvider>
     </Theme>
   );
 }

@@ -5,16 +5,17 @@ import { SearchBar } from "@/components";
 import { Head, Breadcrumb } from "@/components/ui";
 import { UserTable } from "@/features/user/components";
 import { getAllUsers } from "@/features/user/userService";
+import { useFetch } from "@/hooks/useFetch";
+import { useStorageContext } from "@/context/StorageContext";
 
-export const getServerSideProps = async () => {
-  const users = await getAllUsers();
+function UserListPage() {
+  const storageContext = useStorageContext();
 
-  return {
-    props: { users },
-  };
-};
+  const { data: users, status } = useFetch({
+    fn: async () => await getAllUsers(storageContext),
+    dependencies: [],
+  });
 
-function UserListPage({ users }) {
   const [filteredUsers, setFilteredUsers] = useState([]);
 
   return (
@@ -42,14 +43,14 @@ function UserListPage({ users }) {
             items={users}
             placeholder="Search (name, username)"
             handleSearch={searchUser}
-            isItemsLoaded={true}
+            isItemsLoaded={status === "success"}
             setFilteredItems={setFilteredUsers}
           />
         </div>
         <UserTable
           users={filteredUsers}
           setUsers={setFilteredUsers}
-          isUsersLoaded={true}
+          isUsersLoaded={status === "success"}
         />
       </section>
     </>

@@ -1,4 +1,3 @@
-
 import { formattingPhone } from "@/utils/stringUtil";
 import { formattingDateTime, normalizeDateTime } from "@/utils/dateTimeUtil";
 import { AlertModalWarning } from "@/components/ui";
@@ -10,11 +9,14 @@ function UserTableRow({
   name,
   family,
   username,
+  role,
   email,
   phone,
   birthday,
   onDelete,
 }) {
+  if (role === "ADMIN") return null;
+
   const normalizedDateTime = birthday && normalizeDateTime(birthday);
   const formatedDateTime = birthday && formattingDateTime(normalizedDateTime);
 
