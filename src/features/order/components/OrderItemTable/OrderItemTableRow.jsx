@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { BASE_URL } from "@/constants";
+
 
 function OrderItemTableRow({
   productId,
@@ -22,7 +22,7 @@ function OrderItemTableRow({
             height={60}
             className="max-h-full rounded-lg"
             alt={productName}
-            src={`${BASE_URL}/images/products/${productCover}`}
+            src={`/images/products/${productCover}`}
           />
         </div>
       </td>

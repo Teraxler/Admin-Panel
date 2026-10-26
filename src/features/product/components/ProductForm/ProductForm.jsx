@@ -179,7 +179,7 @@ function ProductForm({ product: productInfo, onSubmit, isEditMode }) {
                   src={
                     product.isCoverBlob
                       ? product.cover
-                      : `${BASE_URL}/images/products/${product.cover}`
+                      : `/images/products/${product.cover}`
                   }
                 />
               ) : (

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useContext } from "react";
-import { BASE_URL } from "@/constants";
+
 import AuthContext from "@/context/AuthContext";
 import { useIsWindowScrolled } from "@/hooks/useIsWindowScrolled";
 import ProfileDropDown from "./ProfileDropDown";
@@ -54,7 +54,7 @@ function Header({
             <div className="shrink-0 rounded-xs overflow-hidden size-5 lg:size-6">
               {userStatus === "success" ? (
                 <Image
-                  src={`${BASE_URL}/images/users/user-1.png`}
+                  src={`/images/users/user-1.png`}
                   width={20}
                   height={20}
                   alt="User Profile"

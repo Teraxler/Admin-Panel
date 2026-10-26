@@ -1,4 +1,4 @@
-import { BASE_URL } from "@/constants";
+
 import { AlertModalWarning } from "@/components/ui";
 import Link from "next/link";
 import Image from "next/image";
@@ -27,7 +27,7 @@ function ProductTableRow({
             alt={name}
             width={60}
             height={60}
-            src={isCoverBlob ? cover : `${BASE_URL}/images/products/${cover}`}
+            src={isCoverBlob ? cover : `/images/products/${cover}`}
           />
         </div>
       </td>

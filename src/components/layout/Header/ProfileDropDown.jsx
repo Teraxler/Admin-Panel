@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useContext } from "react";
 import { toast } from "sonner";
-import { BASE_URL } from "@/constants";
+
 import { Skeleton, AlertModalWarning } from "@/components/ui";
 import AuthContext from "@/context/AuthContext";
 
@@ -26,7 +26,7 @@ const ProfileDropDown = ({ user, isUserLoaded, isVisible = true }) => {
         <div className="shrink-0 size-5 lg:size-6 rounded-xs overflow-hidden">
           {isUserLoaded ? (
             <Image
-              src={`${BASE_URL}/images/users/user-1.png`}
+              src={`/images/users/user-1.png`}
               alt="User Profile"
               width={24}
               height={24}

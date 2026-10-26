@@ -5,8 +5,7 @@ const nextConfig = {
 
   images: {
     dangerouslyAllowLocalIP: true,
-    formats: ["image/avif", "image/webp"],
-    remotePatterns: [new URL(`${process.env.NEXT_PUBLIC_BASE_URL}/images/**`)],
+    formats: ["image/webp", "image/avif"],
   },
 };
 
