@@ -22,7 +22,7 @@ function OrderItemTableRow({
             height={60}
             className="max-h-full rounded-lg"
             alt={productName}
-            src={`${BASE_URL}/images/products/${productCover}`}
+            src={`${BASE_URL}/uploads/images/products/${productCover}`}
           />
         </div>
       </td>

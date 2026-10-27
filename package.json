@@ -5,13 +5,20 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
+    "start": "cross-env NODE_ENV=production node server.js",
+    "lint": "eslint",
+    "server": "cross-env NODE_ENV=development node server.js"
   },
   "dependencies": {
     "@radix-ui/themes": "^3.2.1",
     "apexcharts": "^5.4.0",
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mssql": "^12.7.2",
+    "multer": "^2.3.0",
     "next": "16.3.3",
+    "nodemon": "^3.1.14",
     "react": "19.2.8",
     "react-apexcharts": "^1.9.0",
     "react-dom": "19.2.8",
@@ -20,6 +27,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "cross-env": "^10.1.0",
     "eslint": "^9",
     "eslint-config-next": "16.3.3",
     "tailwindcss": "^4"

@@ -34,7 +34,7 @@ function Sidebar({ isVisible, onClick }) {
 
   return (
     <aside
-      className={`max-w-60 shrink-0 -left-41 top-9 xs:top-0 fixed xs:sticky bottom-0 h-dvh  text-white text-sm font-medium uppercase bg-carbon-black px-3 md:px-5 lg:px-8 pt-9.5 md:pt-3 pb-3 transition-all duration-200 z-10 ${
+      className={`font-neue-montreal max-w-60 shrink-0 -left-41 top-9 xs:top-0 fixed xs:sticky bottom-0 h-dvh  text-white text-sm font-medium uppercase bg-carbon-black px-3 md:px-5 lg:px-8 pt-9.5 md:pt-3 pb-3 transition-all duration-200 z-10 ${
         isVisible ? "left-0" : "-left-41"
       }`}
     >

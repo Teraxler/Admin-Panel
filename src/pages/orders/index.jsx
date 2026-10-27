@@ -4,16 +4,14 @@ import { SearchBar } from "@/components";
 import { Head, Breadcrumb } from "@/components/ui";
 import { OrderTable } from "@/features/order/components";
 import { getAllOrders } from "@/features/order/orderService";
+import { useFetch } from "@/hooks/useFetch";
 
-export const getServerSideProps = async () => {
-  const orders = await getAllOrders();
+function OrderListPage() {
+  const { data: orders, status: ordersStatus } = useFetch({
+    fn: getAllOrders,
+    dependencies: [],
+  });
 
-  return {
-    props: { orders },
-  };
-};
-
-function OrderListPage({ orders }) {
   const [filteredOrders, setFilteredOrders] = useState([]);
 
   return (
@@ -31,7 +29,7 @@ function OrderListPage({ orders }) {
           <SearchBar
             items={orders}
             handleSearch={searchOrder}
-            isItemsLoaded={true}
+            isItemsLoaded={ordersStatus === "success"}
             setFilteredItems={setFilteredOrders}
             placeholder="Search (user, date ,status)"
           />
@@ -39,7 +37,7 @@ function OrderListPage({ orders }) {
         <OrderTable
           orders={filteredOrders}
           setOrders={setFilteredOrders}
-          isOrdersLoaded={true}
+          isOrdersLoaded={ordersStatus === "success"}
         />
       </section>
     </>

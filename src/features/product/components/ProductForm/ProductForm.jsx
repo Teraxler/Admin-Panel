@@ -182,7 +182,7 @@ function ProductForm({ product: productInfo, onSubmit, isEditMode }) {
                   src={
                     product.isCoverBlob
                       ? product.cover
-                      : `${BASE_URL}/images/products/${product.cover}`
+                      : `${BASE_URL}/uploads/images/products/${product.cover}`
                   }
                 />
               ) : (
@@ -208,7 +208,7 @@ function ProductForm({ product: productInfo, onSubmit, isEditMode }) {
           className="btn btn--small btn--secondary"
           type="submit"
         >
-          {isSubmitting ? "Loading" : isEditMode ? "Update" : "Create"}
+          {isSubmitting ? "Submitting" : isEditMode ? "Update" : "Create"}
         </button>
 
         <button
