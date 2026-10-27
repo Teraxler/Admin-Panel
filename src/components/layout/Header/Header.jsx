@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { useContext } from "react";
-
 import AuthContext from "@/context/AuthContext";
 import { useIsWindowScrolled } from "@/hooks/useIsWindowScrolled";
 import ProfileDropDown from "./ProfileDropDown";
@@ -21,7 +20,7 @@ function Header({
 
   return (
     <header
-      className={`flex justify-between py-3 px-4 sm:px-6 lg:px-8 sticky top-0 bg-white z-10 transition-shadow duration-75 ${
+      className={`font-neue-montreal flex justify-between py-3 px-4 sm:px-6 lg:px-8 sticky top-0 bg-white z-10 transition-shadow duration-75 ${
         isWindowScrolled ? "shadow-md" : ""
       }`}
     >
@@ -46,38 +45,42 @@ function Header({
             <use href="#envelop"></use>
           </svg>
         </div>
-        <div
-          className={`group relative btn btn--small btn--secondary ${isProfileDropDownVisible ? "btn--secondary--active" : ""} justify-between max-lg:h-9 w-9 min-w-auto sm:w-50`}
-          onPointerDown={handleDropDownVisiblity}
-        >
-          <div className="flex items-center gap-x-2">
-            <div className="shrink-0 rounded-xs overflow-hidden size-5 lg:size-6">
+        <div className={`group relative`}>
+          <div
+            className={`flex items-center justify-between h-9 lg:h-10 w-9 min-w-auto sm:w-50 btn btn--small btn--secondary 
+              ${isProfileDropDownVisible ? "btn--secondary--active" : ""}`}
+            onPointerDown={handleDropDownVisiblity}
+          >
+            <div className="flex items-center gap-x-2">
+              <div className="shrink-0 rounded-xs overflow-hidden size-5 lg:size-6">
+                {userStatus === "success" ? (
+                  <Image
+                    src={`/images/users/user-1.png`}
+                    width={24}
+                    height={24}
+                    alt="User Profile"
+                  />
+                ) : (
+                  <Skeleton className={"rounded-xs"} />
+                )}
+              </div>
               {userStatus === "success" ? (
-                <Image
-                  src={`/images/users/user-1.png`}
-                  width={20}
-                  height={20}
-                  alt="User Profile"
-                />
+                <span className="capitalize hidden sm:line-clamp-1">
+                  {`${user?.name} ${user?.family}`}
+                </span>
               ) : (
-                <Skeleton className={"rounded-xs"} />
+                <Skeleton className="hidden sm:block w-22 h-3.5 rounded-lg" />
               )}
             </div>
-            {userStatus === "success" ? (
-              <span className="capitalize hidden sm:line-clamp-1">
-                {`${user?.name} ${user?.family}`}
-              </span>
-            ) : (
-              <Skeleton className="hidden sm:block w-22 h-3.5 rounded-lg" />
-            )}
+            <svg className="hidden sm:block sm:size-4 lg:size-5 shrink-0">
+              <use href="#chevron-down"></use>
+            </svg>
           </div>
-          <svg className="hidden sm:block sm:size-4 lg:size-5 shrink-0">
-            <use href="#chevron-down"></use>
-          </svg>
           <ProfileDropDown
             user={user}
             isUserLoaded={userStatus === "success"}
             isVisible={isProfileDropDownVisible}
+            setVisiblity={setIsProfileDropDownVisible}
           />
         </div>
       </div>

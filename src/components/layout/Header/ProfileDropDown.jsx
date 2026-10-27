@@ -3,11 +3,15 @@ import Link from "next/link";
 import Image from "next/image";
 import { useContext } from "react";
 import { toast } from "sonner";
-
 import { Skeleton, AlertModalWarning } from "@/components/ui";
 import AuthContext from "@/context/AuthContext";
 
-const ProfileDropDown = ({ user, isUserLoaded, isVisible = true }) => {
+const ProfileDropDown = ({
+  user,
+  isUserLoaded,
+  isVisible = true,
+  setVisiblity,
+}) => {
   const { logout } = useContext(AuthContext);
   const router = useRouter();
 
@@ -56,8 +60,9 @@ const ProfileDropDown = ({ user, isUserLoaded, isVisible = true }) => {
       <ul className="border-t border-black/15">
         <li>
           <Link
+            href="/myprofile"
+            onClick={() => setVisiblity(false)}
             className="flex gap-x-2 p-2 m-1 rounded-lg hover:bg-neutral-100 active:bg-neutral-200 transition"
-            href={`/myprofile`}
           >
             <svg className="size-5">
               <use href="#user"></use>
@@ -68,6 +73,7 @@ const ProfileDropDown = ({ user, isUserLoaded, isVisible = true }) => {
         <li>
           <Link
             href="/settings"
+            onClick={() => setVisiblity(false)}
             className="flex gap-x-2 p-2 m-1 rounded-lg hover:bg-neutral-100 active:bg-neutral-200 transition"
           >
             <svg className="size-5">
