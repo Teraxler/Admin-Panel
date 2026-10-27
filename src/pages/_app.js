@@ -4,6 +4,7 @@ import { AuthProvider } from "@/context/AuthContext";
 import "@/styles/globals.css";
 import { Toaster } from "sonner";
 import { StorageProvider } from "@/context/StorageContext";
+import { Analytics } from "@vercel/analytics/next";
 
 export default function App({ Component, pageProps }) {
   const appLayout =
@@ -11,11 +12,15 @@ export default function App({ Component, pageProps }) {
     ((page) => <DashboardLayout>{page}</DashboardLayout>);
 
   return (
-    <Theme>
-      <Toaster richColors position="top-right" />
-      <StorageProvider>
-        <AuthProvider>{appLayout(<Component {...pageProps} />)}</AuthProvider>
-      </StorageProvider>
-    </Theme>
+    <>
+      <Theme>
+        <Toaster richColors position="top-right" />
+        <StorageProvider>
+          <AuthProvider>{appLayout(<Component {...pageProps} />)}</AuthProvider>
+        </StorageProvider>
+      </Theme>
+
+      <Analytics />
+    </>
   );
 }
