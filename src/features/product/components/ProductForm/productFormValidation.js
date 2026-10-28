@@ -8,8 +8,8 @@ export const productSchema = z.object({
       required_error: "Name is required",
       invalid_type_error: "Name must be text",
     })
-    .min(3, "Name must be minium contain 3 charactor")
-    .regex(/[a-zA-Z]{3,30}/, "Name must be maxium contain 30 charactor"),
+    .min(3, "Name must be minimum contain 3 characters")
+    .regex(/[a-zA-Z]{3,30}/, "Name must be maximum contain 30 characters"),
 
   description: z.string().min(3, "Description is required"),
 

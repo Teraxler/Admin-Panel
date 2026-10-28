@@ -7,11 +7,11 @@ exports.registerSchema = z.object({
       invalid_type_error: "First name must be text not number or ...",
     })
     .trim()
-    .min(3, "First name must be minium contain 3 charactor")
-    .max(30, "First name must be maxium contain 30 charactor")
+    .min(3, "First name must be minimum contain 3 characters")
+    .max(30, "First name must be maximum contain 30 characters")
     .regex(
       /^[a-zA-Z\s]+$/,
-      "First name must not have number or special charactors",
+      "First name must not have number or special characters",
     ),
 
   family: z
@@ -20,11 +20,11 @@ exports.registerSchema = z.object({
       invalid_type_error: "Last name must be text not number or ...",
     })
     .trim()
-    .min(3, "Last name must be minium contain 3 charactor")
-    .max(30, "Last name must be maxium contain 30 charactor")
+    .min(3, "Last name must be minimum contain 3 characters")
+    .max(30, "Last name must be maximum contain 30 characters")
     .regex(
       /^[a-zA-Z\s]+$/,
-      "Last name must not have number or special charactors",
+      "Last name must not have number or special characters",
     ),
 
   username: z
@@ -33,9 +33,9 @@ exports.registerSchema = z.object({
       invalid_type_error: "username must be text not number or ...",
     })
     .trim()
-    .min(3, "username must be minium contain 3 charactor")
-    .max(20, "username must be maxium contain 20 charactor")
-    .regex(/^[a-zA-Z0-9_]+$/, "username can contain charactors, numbers and _"),
+    .min(3, "username must be minimum contain 3 characters")
+    .max(20, "username must be maximum contain 20 characters")
+    .regex(/^[a-zA-Z0-9_]+$/, "username can contain characters, numbers and _"),
 
   birthday: z.iso.date("Please enter a valid date").nullable(),
     
@@ -47,5 +47,5 @@ exports.registerSchema = z.object({
 
   email: z
     .email("Please enter valid email")
-    .max(50, "Email must be maxium 50 charactors"),
+    .max(50, "Email must be maximum 50 characters"),
 });
