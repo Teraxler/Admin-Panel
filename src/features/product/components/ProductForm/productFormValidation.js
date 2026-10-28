@@ -1,5 +1,7 @@
 import * as z from "zod";
 
+const MB = 1000 ** 2;
+
 export const productSchema = z.object({
   name: z
     .string({
@@ -20,4 +22,14 @@ export const productSchema = z.object({
     (val) => Number(val),
     z.number("Inventory must be number").positive("Inventory must be positive"),
   ),
+
+  cover: z
+    .file()
+    .max(5 * MB, "Product cover must be less than 5MB.")
+    .mime(
+      ["image/webp", "image/jpeg", "image/png"],
+      "Product cover format must be one of (png, jpg/jpeg, webp).",
+    )
+    .optional()
+    .nullable(),
 });
