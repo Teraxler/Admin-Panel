@@ -1,6 +1,6 @@
 # Admin Panel [Live](https://teraxler-admin-panel.vercel.app/auth/login)
 
-Developed with `HTML`, `CSS`, `JS`, `Tailwind CSS`, `React` & `Next.js`
+A full-stack admin dashboard for managing coffee shop operations, built with Next.js, React, and Express. Focused on maintainable architecture and reusable components.
 
 ## Dashboard
 
